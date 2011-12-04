@@ -1,0 +1,8 @@
+bjam debug release --with-program_options link=shared stage
+
+bjam debug release -sZLIB_BINARY=zdll -sZLIB_INCLUDE=C:/zlib-1.2.3/include \ -sZLIB_LIBPATH=C:/zlib-1.2.3/lib -sBZIP2_BINARY=bzip2 \ -sBZIP2_INCLUDE=C:/bzip2-1.0.5/include -sBZIP2_LIBPATH=C:/bzip2-1.0.5/lib
+
+error C3861: InitializeCriticalSectionAndSpinCount spin_lock.cpp
+
+
+scons mongoclient --sharedclient /BOOST_ALL_DYN_LINK --libpath=C:\boost-1.42.0\lib --cpppath=C:\boost-1.42.0

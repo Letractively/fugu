@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\src\entrypoint.cpp" />
+    <ClCompile Include="..\..\src\user.cpp">
+      <Filter>models\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dbmanager.cpp">
+      <Filter>models\db</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\connection.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\controller.cpp">
+      <Filter>controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\session.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\requesthrouter.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\querycontext.h">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\http_parser.c">
+      <Filter>net\request</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\httpparseradapter.cpp">
+      <Filter>net\request</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\httprequest.cpp">
+      <Filter>net\request</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\httpresponse.cpp">
+      <Filter>net\response</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\httpmessage.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\response.cpp">
+      <Filter>net\response</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\webapplication.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\logger.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="net">
+      <UniqueIdentifier>{640b6ea7-1913-4079-a1aa-93357fc9a6dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{c7857e05-3c83-47ac-991e-deee42a3672b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="models">
+      <UniqueIdentifier>{d4a5ba95-f4a4-44f0-9d50-9e8fe80bd61f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="models\core">
+      <UniqueIdentifier>{4c9ba150-3c87-48e1-af82-8e7ff6781a19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="models\db">
+      <UniqueIdentifier>{0c30033a-6fcd-4497-9770-28a45d868b30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine">
+      <UniqueIdentifier>{30472b92-2643-4212-b238-ad06cbc514fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="controllers">
+      <UniqueIdentifier>{1830ae2f-c55b-43ae-8f78-319326fcbcd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="views">
+      <UniqueIdentifier>{318199b1-92e5-470c-96f9-dcaf6231d378}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\request">
+      <UniqueIdentifier>{ae30d91e-e86b-4ee3-bdc1-6d374ef3ddbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\response">
+      <UniqueIdentifier>{9303f12b-c40b-460c-80a8-1bb7e1f7496c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\user.h">
+      <Filter>models\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\iterators.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\connection.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dbmanager.h">
+      <Filter>models\db</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\controller.h">
+      <Filter>controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\prerequisites.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\session.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\requesthrouter.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\view.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\http_parser.h">
+      <Filter>net\request</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\httpparseradapter.h">
+      <Filter>net\request</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\httprequest.h">
+      <Filter>net\request</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\httpresponse.h">
+      <Filter>net\response</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\response.h">
+      <Filter>net\response</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\httpmessage.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\webapplication.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\logger.h">
+      <Filter>common</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

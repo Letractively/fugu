@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fuguservice", "fuguservice.vcxproj", "{5074CE3E-05F5-31BA-BA79-1AD54C3416F7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db", "db", "{035376CC-C104-4195-91A0-26621071913F}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\db\CreateDefaultUsers.js = ..\..\db\CreateDefaultUsers.js
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		debug_shared|Win32 = debug_shared|Win32
+		release_shared|Win32 = release_shared|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5074CE3E-05F5-31BA-BA79-1AD54C3416F7}.debug_shared|Win32.ActiveCfg = debug_shared|Win32
+		{5074CE3E-05F5-31BA-BA79-1AD54C3416F7}.release_shared|Win32.ActiveCfg = release_shared|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
