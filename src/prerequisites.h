@@ -13,7 +13,8 @@
 namespace fugu {
 
 class User;
-class HttpHeader;
+class Request;
+class Response;
 class HttpRequest;
 class HttpResponse;
 class WebServer;
@@ -23,8 +24,9 @@ class Session;
 class SessionManager;
 class Connection;
 class Controller;
-class Response;
 typedef Response* ResponsePtr;
+typedef boost::shared_ptr<Request> RequestPtr;
+typedef boost::shared_ptr<HttpRequest> HttpRequestPtr;
 typedef boost::shared_ptr<QueryContext> QueryContextPtr;
 typedef boost::shared_ptr<Session> SessionPtr;
 typedef boost::shared_ptr<Connection> ConnectionPtr;

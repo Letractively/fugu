@@ -6,8 +6,9 @@
 
 namespace fugu {
 
-Session::Session()
-	:_id(boost::lexical_cast<std::string>(boost::uuids::random_generator()()) )
+Session::Session(UserPtr user)
+	:_user(user)
+	,_id(boost::lexical_cast<std::string>(boost::uuids::random_generator()()) )
 	,_signUpAt(boost::posix_time::second_clock::universal_time())
 	,_lastActivityAt(boost::posix_time::second_clock::universal_time())
 {
@@ -40,7 +41,21 @@ SessionManager::~SessionManager()
 {
 }
 
-SessionPtr SessionManager::GetSession(const std::string& sessionId, ConnectionPtr connection)
+SessionPtr SessionManager::CreateSession(UserPtr user)
+{
+	SessionPtr session(new Session(user));
+	{
+		// Get upgradable access
+		boost::upgrade_lock<boost::shared_mutex> lock(_access);
+		// Get exclusive access
+		boost::upgrade_to_unique_lock<boost::shared_mutex> uniqueLock(lock);
+		_sessions.insert(std::make_pair<std::string, SessionPtr>(session->Id(), session));
+	}
+
+	return session;
+}
+
+SessionPtr SessionManager::GetSession(const std::string& sessionId)
 {
 	SessionPtr session;
 	{
@@ -50,7 +65,6 @@ SessionPtr SessionManager::GetSession(const std::string& sessionId, ConnectionPt
 		if(iter != _sessions.end())
 			return iter->second;
 	}
-	
 
 	return SessionPtr();
 }

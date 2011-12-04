@@ -17,15 +17,18 @@ public:
 	const std::string ResourceUrl() const { return _resourceUrl; }
 
 private:
+	ResponsePtr OKResponse();
+
+private:
 	std::string _resourceUrl;
 };
 
 class PingControllerFactory : public ControllerFactory
 {
 protected:			
-	virtual Controller* CreateImpl(const std::string url)=0;
+	Controller* CreateImpl(const std::string url);
 public:
-	virtual const std::string& ResourceUrl() const=0;
+	const std::string& ResourceUrl() const;
 
 };
 

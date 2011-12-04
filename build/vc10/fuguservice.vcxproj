@@ -29,6 +29,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\connection.cpp" />
     <ClCompile Include="..\..\src\controller.cpp" />
+    <ClCompile Include="..\..\src\controllermanager.cpp" />
     <ClCompile Include="..\..\src\dbmanager.cpp" />
     <ClCompile Include="..\..\src\entrypoint.cpp" />
     <ClCompile Include="..\..\src\exception.cpp" />
@@ -36,6 +37,7 @@
     <ClCompile Include="..\..\src\httpparseradapter.cpp" />
     <ClCompile Include="..\..\src\http_parser.c" />
     <ClCompile Include="..\..\src\logger.cpp" />
+    <ClCompile Include="..\..\src\nedmalloc\nedmalloc.c" />
     <ClCompile Include="..\..\src\pingcontroller.cpp" />
     <ClCompile Include="..\..\src\querycontext.h" />
     <ClCompile Include="..\..\src\httpresponse.cpp" />
@@ -49,6 +51,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\connection.h" />
     <ClInclude Include="..\..\src\controller.h" />
+    <ClInclude Include="..\..\src\controllermanager.h" />
     <ClInclude Include="..\..\src\dbmanager.h" />
     <ClInclude Include="..\..\src\exception.h" />
     <ClInclude Include="..\..\src\httpmessage.h" />
@@ -56,6 +59,7 @@
     <ClInclude Include="..\..\src\http_parser.h" />
     <ClInclude Include="..\..\src\iterators.h" />
     <ClInclude Include="..\..\src\logger.h" />
+    <ClInclude Include="..\..\src\nedmalloc\nedmalloc.h" />
     <ClInclude Include="..\..\src\pingcontroller.h" />
     <ClInclude Include="..\..\src\prerequisites.h" />
     <ClInclude Include="..\..\src\httpresponse.h" />
@@ -64,7 +68,6 @@
     <ClInclude Include="..\..\src\response.h" />
     <ClInclude Include="..\..\src\session.h" />
     <ClInclude Include="..\..\src\user.h" />
-    <ClInclude Include="..\..\src\view.h" />
     <ClInclude Include="..\..\src\webapplication.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

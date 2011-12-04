@@ -7,7 +7,7 @@
 
 namespace fugu {
 
-class Controller// : private boost::noncopyable
+class Controller : private boost::noncopyable
 {
 friend class ControllerFactory;
 
@@ -38,16 +38,6 @@ public:
 	virtual const std::string& ResourceUrl() const=0;
 	virtual ControllerPtr Create(const std::string url);
 	bool HasRights(UserPtr user);
-};
-
-typedef ControllerFactory* ControllerFactoryPtr;
-typedef std::map<std::string, ControllerFactoryPtr> ControllerFactories;
-
-class ControllerManager : private boost::noncopyable
-{
-	public:
-		void RegisterFactory(ControllerFactoryPtr factory);
-		ControllerPtr ProcessRequest(const std::string url, QueryContextPtr ctx);
 };
 
 }

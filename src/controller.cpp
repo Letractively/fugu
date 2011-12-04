@@ -1,5 +1,5 @@
 #include "controller.h"
-#include <exception>
+#include <exception.h>
 
 namespace fugu {
 
@@ -13,26 +13,22 @@ namespace fugu {
 
 	ResponsePtr Controller::Get(QueryContextPtr ctx)
 	{
-		//throw std::exception("GET does't inplemented for handle resource: " + _resourceUrl);
-		return NULL;
+		FUGU_THROW("GET does't inplemented for handle resource: " + _resourceUrl, "Controller::Get");
 	}
 
 	ResponsePtr Controller::Put(QueryContextPtr ctx)
 	{
-		//throw std::exception("GET does't inplemented for handle resource: " + _resourceUrl);
-		return NULL;
+		FUGU_THROW("PUT does't inplemented for handle resource: " + _resourceUrl, "Controller::Get");
 	}
 
 	ResponsePtr Controller::Delete(QueryContextPtr ctx)
 	{
-		//throw std::exception("GET does't inplemented for handle resource: " + _resourceUrl);
-		return NULL;
+		FUGU_THROW("DELETE does't inplemented for handle resource: " + _resourceUrl, "Controller::Get");
 	}
 
 	ResponsePtr Controller::Post(QueryContextPtr ctx)
 	{
-		//throw std::exception("GET does't inplemented for handle resource: " + _resourceUrl);
-		return NULL;
+		FUGU_THROW("POST does't inplemented for handle resource: " + _resourceUrl, "Controller::Get");
 	}
 
 	ResponsePtr Controller::View()
@@ -59,7 +55,7 @@ namespace fugu {
 	{
 		ControllerPtr controller(CreateImpl(url));
 		controller->_resourceUrl = url;
-		return ControllerPtr();
+		return controller;
 	}
 
 	bool ControllerFactory::HasRights(UserPtr user)

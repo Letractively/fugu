@@ -4,6 +4,8 @@
 #include "prerequisites.h"
 #include "requesthrouter.h"
 #include "session.h"
+#include "user.h"
+#include "controllermanager.h"
 #include <boost/asio.hpp>
 
 namespace fugu {
@@ -49,6 +51,10 @@ private:
 	RequestRouter _router;
 	// Manager of the user sessions
 	SessionManager _sessionMgr;
+	//User manager
+	UserManager _userMgr;
+	// Controller manager
+	ControllerManager _controllerMgr;
 };
 
 }

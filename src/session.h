@@ -13,8 +13,11 @@ typedef std::map<std::string, SessionPtr> Sessions;
 // User session
 class Session : private boost::noncopyable
 {
+friend class SessionManager;
+private:
+	Session(UserPtr user);
+
 public:
-	Session();
 	~Session();
 	const std::string& Id() const;
 	UserPtr User()const;
@@ -39,8 +42,10 @@ class SessionManager
 public:
 	SessionManager();
 	~SessionManager();
-	// Session id is cookie value with name "SESSION_HASH"
-	SessionPtr GetSession(const std::string& sessionId, ConnectionPtr connection);
+	// Create new session
+	SessionPtr CreateSession(UserPtr user);
+	// Session id is cookie value with name "FUGU_SESSION_HASH"
+	SessionPtr GetSession(const std::string& sessionId);
 	// Collect expired sessions
 	long CleanupSessions();
 

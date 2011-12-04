@@ -5,6 +5,7 @@
 #include "httpparseradapter.h"
 #include "response.h"
 #include "logger.h"
+#include "pingcontroller.h"
 #include <boost/cstdint.hpp>
 #include <boost/thread/thread.hpp>
 
@@ -16,6 +17,8 @@ WebApplication::WebApplication(const std::string& address, const std::string& po
 		,_router(root)
 		,_performServiceWork(_performService)
 {
+	_controllerMgr.RegisterFactory(new PingControllerFactory);
+
 	// Open the acceptor with the option to reuse the address (i.e. SO_REUSEADDR).
 	boost::asio::ip::tcp::resolver resolver(_acceptorService);
 	boost::asio::ip::tcp::resolver::query query(address, port);
@@ -78,31 +81,26 @@ const char crlf[] = { '\r', '\n' };
 
 ConnectionState WebApplication::HandleRequestData(RequestBuffer data, std::size_t bytesTransferred,  ConnectionPtr conn)
 {
-	HttpRequest request;
+	HttpRequestPtr request(new HttpRequest);
 	HttpParserAdapter parser;
-	if(parser.ParseRequest(&request, data, bytesTransferred))
+	if(parser.ParseRequest(request.get(), data, bytesTransferred))
 	{
-		std::string sessionId = request.GetCookie("FUGU_SESSION_ID");
+		SessionPtr session;
+		std::string sessionId = request->GetCookie("FUGU_SESSION_HASH");
 		if(!sessionId.empty()) {
+				std::string login = request->GetCookie("FUGU_USER_HASH");
+				UserPtr user = _userMgr.GetUser(login);
+				session = _sessionMgr.CreateSession(user);
+		}
+		else {
+			session = _sessionMgr.GetSession(sessionId);
 		}
 
-		//SessionPtr session = _sessionMgr.GetSession(conn
-
-		/*
-		std::string content =  "<html><head><title>Created</title></head><body><h1>201 Created</h1></body></html>";
-		std::ostringstream response;
-		response<<"HTTP/1.0 200 OK\r\n"
-				<<"Location: www.google.com\r\n"
-				<<"Content-Type: text/html; charset=UTF-8\r\n"
-				<<"Content-Length: "<<content.length()<<"\r\n"
-				<<"Set-Cookie: user=test"<<"\r\n"
-				<<"Set-Cookie: session=test"<<"\r\n"
-				<<"\r\n"<<content<<"\r\n";
-
-		Response* resp = new Response(response.str());
+		QueryContextPtr queryCtx(new QueryContext(session, conn, request));
+		ResponsePtr resp = _controllerMgr.ProcessRequest(request->Url(), queryCtx);
 		conn->Send(resp);
+
 		return  ConnectionState::SEND_REPLY_AND_CLOSE;
-		*/
 	}
 
 	return ConnectionState::CONTINUE_READ;

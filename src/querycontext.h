@@ -3,17 +3,21 @@
 
 #include "prerequisites.h"
 #include "httprequest.h"
-#include "HttpResponse.h"
 
 namespace fugu {
 
-class QueryContext
+class QueryContext : private boost::noncopyable
 {
 public:
-	QueryContext() {}
+	QueryContext(SessionPtr session, ConnectionPtr connection, HttpRequestPtr request)
+		:_session(session)
+		,_connection(connection)
+		,_request(request)
+		{}
+
 	virtual ~QueryContext() {}
 	SessionPtr Session() { return _session; } 
-	const HttpRequest& Request() { return _request; }
+	HttpRequestPtr Request() { return _request; }
 	ConnectionPtr Connection() const { return _connection; }
 
 private:
@@ -22,7 +26,7 @@ private:
 	// Current connection
 	ConnectionPtr _connection;
 	// Processed request
-	HttpRequest _request;
+	HttpRequestPtr _request;
 };
 
 }

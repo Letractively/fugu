@@ -28,7 +28,8 @@ enum UserRole
 	ADMIN			= 0x1,
 	SENIOR_USER		= 0x2,
 	USER			= 0x3,
-	JUNIOR_USER		= 0x4
+	JUNIOR_USER		= 0x4,
+	ANONIMUS_USER	= 0x5,
 };
 
 // Class to store user info
@@ -74,15 +75,15 @@ public:
 
 	// Creates new user by json string, and add it to the database
 	UserPtr CreateUser(const std::string& json);
-
+	//Create new user
 	UserPtr CreateUser(const std::string& login, const std::string& passwordHash, UserRole role, 
 						const std::string& email, const std::string& firstName = "", const std::string& lastName = "",  
 						const std::string& about = "");
-
+	// Delete user by login
 	void DeleteUser(const std::string& login);
-
+	// Get user by login
 	UserPtr GetUser(const std::string& login);
-
+	// Get all users
 	UsersIterator GetUsers();
 
 private:
