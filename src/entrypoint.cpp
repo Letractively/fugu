@@ -19,8 +19,8 @@ int main(int argc, char* argv[])
 		}
 
 		// Initialise server.
-		std::size_t num_threads = boost::lexical_cast<std::size_t>(argv[3]);
-		fugu::WebApplication app(argv[1], argv[2], argv[4], num_threads);
+		std::size_t numThreads = boost::lexical_cast<std::size_t>(argv[3]);
+		fugu::WebApplication app(argv[1], argv[2], argv[4], numThreads);
 
 		// Run the server until stopped.
 		app.Run();
