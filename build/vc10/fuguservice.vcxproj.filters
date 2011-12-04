@@ -47,6 +47,12 @@
     <ClCompile Include="..\..\src\logger.cpp">
       <Filter>common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\pingcontroller.cpp">
+      <Filter>controllers\ping</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\exception.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="net">
@@ -78,6 +84,9 @@
     </Filter>
     <Filter Include="net\response">
       <UniqueIdentifier>{9303f12b-c40b-460c-80a8-1bb7e1f7496c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="controllers\ping">
+      <UniqueIdentifier>{c5d21d51-901f-46bf-be6d-eccb8a0e5fa3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +139,12 @@
       <Filter>net</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\logger.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\pingcontroller.h">
+      <Filter>controllers\ping</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\exception.h">
       <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>

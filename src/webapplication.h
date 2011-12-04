@@ -3,7 +3,7 @@
 
 #include "prerequisites.h"
 #include "requesthrouter.h"
-#include "iterators.h"
+#include "session.h"
 #include <boost/asio.hpp>
 
 namespace fugu {
@@ -32,14 +32,14 @@ private:
 	// Handle a request to stop the server.
 	void HandleStop();
 	// Handle request data
-	ConnectionState HandleRequestData(RequestBuffer data, std::size_t bytesTransferred, Connection* conn);
+	ConnectionState HandleRequestData(RequestBuffer data, std::size_t bytesTransferred, ConnectionPtr conn);
 
 private:
 	// The io_service used to handle asynchronous incoming connections(in single thread)
 	boost::asio::io_service _acceptorService;
 	// Acceptor used to listen for incoming connections.
 	boost::asio::ip::tcp::acceptor  _acceptor;
-	// The io_service used to perform asynchronous operations.
+	// The io_service used to perform asynchronous operations(read/write socket, process requests, backend calls, etc)
 	boost::asio::io_service _performService;
 	// The run() call may be kept running by creating an object of type io_service::work
 	boost::asio::io_service::work _performServiceWork;
@@ -47,6 +47,8 @@ private:
 	std::size_t _threadPoolSize;
 	// The handler for all incoming requests.
 	RequestRouter _router;
+	// Manager of the user sessions
+	SessionManager _sessionMgr;
 };
 
 }

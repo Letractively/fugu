@@ -239,7 +239,24 @@ int MessageCompleted(http_parser *parser)
 
 HTTPMethods ConvertHttpMethod(http_method method)
 {
-	return (HTTPMethods)method;
+	switch(method)
+	{
+		case http_method::HTTP_DELETE:
+			return HTTPMethods::HTTP_DELETE;
+			break;
+		case http_method::HTTP_GET:
+			return HTTPMethods::HTTP_GET;
+			break;
+		case http_method::HTTP_POST:
+			return HTTPMethods::HTTP_POST;
+			break;
+		case http_method::HTTP_PUT:
+			return HTTPMethods::HTTP_PUT;
+			break;
+		default:
+			return HTTPMethods::NOT_SUPPORTED;
+			break;
+	}
 }
 
 }

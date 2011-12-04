@@ -1,15 +1,12 @@
-
 #include "prerequisites.h"
 #include "webapplication.h"
 #include "user.h"
+#include "exception.h"
 
 int main(int argc, char* argv[]) 
 {
-
 	try
 	{
-		setlocale(LC_CTYPE,"en.1251");
-
 		// Check command line arguments.
 		if (argc != 5)
 		{

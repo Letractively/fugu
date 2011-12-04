@@ -8,6 +8,7 @@
 #include <boost/bind.hpp>
 #include <boost/lockfree/fifo.hpp>
 #include <boost/enable_shared_from_this.hpp>
+#include <boost/function.hpp>
 
 namespace fugu {
 
@@ -28,10 +29,11 @@ class Connection : public boost::enable_shared_from_this<Connection>,
 public:
 	friend class WebApplication;
 	typedef boost::lockfree::fifo<Response*> SendQueue;
-	typedef boost::function< ConnectionState(RequestBuffer, std::size_t, Connection*)> RequestHandler;
+	typedef boost::function< ConnectionState(RequestBuffer, std::size_t, ConnectionPtr)> RequestHandler;
 
 	// Construct a connection with the given io_service.
 	explicit Connection(boost::asio::io_service& io_service, RequestHandler handler);
+	~Connection();
 	// Client address
 	std::string Address() const;
 	// If true - web sockets connection, othewise http(s)

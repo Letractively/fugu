@@ -14,6 +14,11 @@ Connection::Connection(boost::asio::io_service& io_service, RequestHandler handl
 {
 }
 
+Connection::~Connection()
+{
+	Log("Connection destroyed");
+}
+
 std::string Connection::Address() const
 {
 	// Do all your accepting and other stuff here.
@@ -63,7 +68,7 @@ void Connection::HandleRecive(const boost::system::error_code& error, std::size_
 	{
 		Log("HandleRecive: " + Address());
 
-		_state = _requestHandler(_buffer.data(), bytesTransferred,  this);
+		_state = _requestHandler(_buffer.data(), bytesTransferred,  shared_from_this());
 		switch(_state)
 		{
 			case CONTINUE_READ:

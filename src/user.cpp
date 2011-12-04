@@ -64,17 +64,19 @@ namespace fugu {
 
 	UserPtr UserManager::CreateUser(const mongo::BSONObj& obj)
 	{
-		// get shared access
-		//boost::shared_lock<boost::shared_mutex> lock(_access);
-		UserPtr user = GetUser(obj.getStringField("Login"));
+		UserPtr user; {
+			// Get shared access
+			boost::shared_lock<boost::shared_mutex> lock(_access);
+			user = GetUser(obj.getStringField("Login"));
+		}
 
 		if(!user.get()) {
 
 			user.reset(new User(obj));
 			{
-				// get upgradable access
+				// Get upgradable access
 				boost::upgrade_lock<boost::shared_mutex> lock(_access);
-				// get exclusive access
+				// Get exclusive access
 				boost::upgrade_to_unique_lock<boost::shared_mutex> uniqueLock(lock);
 				_users.insert(std::make_pair<std::string, UserPtr>(user->Login(), user));
 			}

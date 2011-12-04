@@ -1,4 +1,5 @@
 #include "webapplication.h"
+#include "querycontext.h"
 #include "connection.h"
 #include "httprequest.h"
 #include "httpparseradapter.h"
@@ -75,26 +76,33 @@ void WebApplication::HandleStop()
 const char name_value_separator[] = { ':', ' ' };
 const char crlf[] = { '\r', '\n' };
 
-ConnectionState WebApplication::HandleRequestData(RequestBuffer data, std::size_t bytesTransferred,  Connection* conn)
+ConnectionState WebApplication::HandleRequestData(RequestBuffer data, std::size_t bytesTransferred,  ConnectionPtr conn)
 {
 	HttpRequest request;
 	HttpParserAdapter parser;
 	if(parser.ParseRequest(&request, data, bytesTransferred))
 	{
-		std::string content =  "<html><head><title>Created</title></head><body><h1>201 Created</h1></body></html>";
+		std::string sessionId = request.GetCookie("FUGU_SESSION_ID");
+		if(!sessionId.empty()) {
+		}
 
+		//SessionPtr session = _sessionMgr.GetSession(conn
+
+		/*
+		std::string content =  "<html><head><title>Created</title></head><body><h1>201 Created</h1></body></html>";
 		std::ostringstream response;
 		response<<"HTTP/1.0 200 OK\r\n"
 				<<"Location: www.google.com\r\n"
-				//<<"Content-Type: text/html; charset=UTF-8\r\n"
-				//<<"Content-Length: "<<content.length()<<"\r\n"
-				//<<"Set-Cookie: user=test"<<"\r\n"
-				//<<"Set-Cookie: session=test"<<"\r\n"
+				<<"Content-Type: text/html; charset=UTF-8\r\n"
+				<<"Content-Length: "<<content.length()<<"\r\n"
+				<<"Set-Cookie: user=test"<<"\r\n"
+				<<"Set-Cookie: session=test"<<"\r\n"
 				<<"\r\n"<<content<<"\r\n";
 
 		Response* resp = new Response(response.str());
 		conn->Send(resp);
 		return  ConnectionState::SEND_REPLY_AND_CLOSE;
+		*/
 	}
 
 	return ConnectionState::CONTINUE_READ;

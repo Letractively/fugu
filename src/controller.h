@@ -2,37 +2,54 @@
 #define __FUGU_CONTROLER_H__
 
 #include "prerequisites.h"
+#include <vector>
+#include <map>
 
 namespace fugu {
 
-class Controller
+class Controller// : private boost::noncopyable
 {
-	friend class ControllerFactory;
+friend class ControllerFactory;
 
-	public:
-		Controller();
-		virtual ~Controller();
-		virtual ResponsePtr Process(QueryContextPtr ctx)=0;
+public:
+	Controller();
+	virtual ~Controller();
+	virtual ResponsePtr Get(QueryContextPtr ctx);
+	virtual ResponsePtr Put(QueryContextPtr ctx);
+	virtual ResponsePtr Delete(QueryContextPtr ctx);
+	virtual ResponsePtr Post(QueryContextPtr ctx);
+	const std::string ResourceUrl() const { return _resourceUrl; }
 
-	protected:
-		virtual void NotifiCreated();
-		virtual void NotifiDestroyed();
+protected:
+	ResponsePtr View();
+	ResponsePtr PartialView();
+	ResponsePtr Json(const std::string json);
+	ResponsePtr Xml(const std::string json);
 
-		ResponsePtr View();
-		ResponsePtr PartialView();
-		ResponsePtr Json(const std::string json);
-		ResponsePtr Xml(const std::string json);
+private:
+	std::string _resourceUrl;
 };
 
-class ControllerFactory
+class ControllerFactory : private boost::noncopyable
 {
-	protected:			
-		virtual Controller* CreateImpl(SessionPtr session)=0;
-	public:
-		virtual const std::string& Id() const=0;
-		virtual ControllerPtr Create(SessionPtr session);
-		static bool HasRights(SessionPtr Session);
+protected:			
+	virtual Controller* CreateImpl(const std::string url)=0;
+public:
+	virtual const std::string& ResourceUrl() const=0;
+	virtual ControllerPtr Create(const std::string url);
+	bool HasRights(UserPtr user);
 };
+
+typedef ControllerFactory* ControllerFactoryPtr;
+typedef std::map<std::string, ControllerFactoryPtr> ControllerFactories;
+
+class ControllerManager : private boost::noncopyable
+{
+	public:
+		void RegisterFactory(ControllerFactoryPtr factory);
+		ControllerPtr ProcessRequest(const std::string url, QueryContextPtr ctx);
+};
+
 }
 
 #endif

@@ -2,6 +2,7 @@
 #include <boost/uuid/uuid.hpp>            // uuid class
 #include <boost/uuid/uuid_generators.hpp> // generators
 #include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
+#include <boost/thread/locks.hpp>
 
 namespace fugu {
 
@@ -19,11 +20,6 @@ Session::~Session()
 const std::string& Session::Id() const
 {
 	return _id;
-}
-
-ConnectionPtr Session::Connection() const
-{
-	return _connection;
 }
 
 UserPtr Session::User()const
@@ -46,6 +42,16 @@ SessionManager::~SessionManager()
 
 SessionPtr SessionManager::GetSession(const std::string& sessionId, ConnectionPtr connection)
 {
+	SessionPtr session;
+	{
+		// get shared access
+		boost::shared_lock<boost::shared_mutex> lock(_access);
+		Sessions::iterator iter = _sessions.find(sessionId);
+		if(iter != _sessions.end())
+			return iter->second;
+	}
+	
+
 	return SessionPtr();
 }
 

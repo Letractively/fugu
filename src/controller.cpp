@@ -1,7 +1,6 @@
 #include "controller.h"
 #include <exception>
 
-
 namespace fugu {
 
 	Controller::Controller()
@@ -10,49 +9,63 @@ namespace fugu {
 
 	Controller::~Controller()
 	{
-		//NotifiDestroyed();
 	}
 
-	void Controller::NotifiCreated()
+	ResponsePtr Controller::Get(QueryContextPtr ctx)
 	{
-		//_view = ViewsCreator::Inst().Create(_factory->Id(), _session);
+		//throw std::exception("GET does't inplemented for handle resource: " + _resourceUrl);
+		return NULL;
 	}
 
-	void Controller::NotifiDestroyed()
+	ResponsePtr Controller::Put(QueryContextPtr ctx)
 	{
-		//TODO: delete all subcontrollers
+		//throw std::exception("GET does't inplemented for handle resource: " + _resourceUrl);
+		return NULL;
 	}
 
-	ControllerPtr ControllerFactory::Create(SessionPtr session)
+	ResponsePtr Controller::Delete(QueryContextPtr ctx)
 	{
-		/*
-		try
-		{
-			if(session->Login())
-			{
-				Controller* controller = CreateImpl(session);
-				if(controller)
-				{
-					controller->_factory = this;
-					controller->_session = session;
-					controller->NotifiCreated();
-				}
-				return controller;
-			}
+		//throw std::exception("GET does't inplemented for handle resource: " + _resourceUrl);
+		return NULL;
+	}
 
-			return NULL;
-		}
-		catch(std::exception ex)
-		{
-			ErrorLog() << "An exception occured while trying to create controller with name: '" << Id() << "' \t\r ";// ex.what();
-		}
-		*/
+	ResponsePtr Controller::Post(QueryContextPtr ctx)
+	{
+		//throw std::exception("GET does't inplemented for handle resource: " + _resourceUrl);
+		return NULL;
+	}
+
+	ResponsePtr Controller::View()
+	{
+		return NULL;
+	}
+
+	ResponsePtr Controller::PartialView()
+	{
+		return NULL;
+	}
+
+	ResponsePtr Controller::Json(const std::string json)
+	{
+		return NULL;
+	}
+
+	ResponsePtr Controller::Xml(const std::string xml)
+	{
+		return NULL;
+	}
+
+	ControllerPtr ControllerFactory::Create(const std::string url)
+	{
+		ControllerPtr controller(CreateImpl(url));
+		controller->_resourceUrl = url;
 		return ControllerPtr();
 	}
 
-	bool ControllerFactory::HasRights(SessionPtr session)
+	bool ControllerFactory::HasRights(UserPtr user)
 	{
 		return true;
 	}
+
 }
 

@@ -9,18 +9,20 @@ namespace fugu {
 
 class QueryContext
 {
-	public:
-		QueryContext() {}
-		virtual ~QueryContext() {}
+public:
+	QueryContext() {}
+	virtual ~QueryContext() {}
+	SessionPtr Session() { return _session; } 
+	const HttpRequest& Request() { return _request; }
+	ConnectionPtr Connection() const { return _connection; }
 
-		SessionPtr Session() { return _session; } 
-		const HttpRequest& Request() { return _request; }
-		HttpResponse& Response() { return _response; }
-
-	private:
-		SessionPtr _session;
-		HttpRequest _request;
-		HttpResponse _response;
+private:
+	// User session
+	SessionPtr _session;
+	// Current connection
+	ConnectionPtr _connection;
+	// Processed request
+	HttpRequest _request;
 };
 
 }

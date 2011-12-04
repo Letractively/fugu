@@ -31,10 +31,12 @@
     <ClCompile Include="..\..\src\controller.cpp" />
     <ClCompile Include="..\..\src\dbmanager.cpp" />
     <ClCompile Include="..\..\src\entrypoint.cpp" />
+    <ClCompile Include="..\..\src\exception.cpp" />
     <ClCompile Include="..\..\src\httpmessage.cpp" />
     <ClCompile Include="..\..\src\httpparseradapter.cpp" />
     <ClCompile Include="..\..\src\http_parser.c" />
     <ClCompile Include="..\..\src\logger.cpp" />
+    <ClCompile Include="..\..\src\pingcontroller.cpp" />
     <ClCompile Include="..\..\src\querycontext.h" />
     <ClCompile Include="..\..\src\httpresponse.cpp" />
     <ClCompile Include="..\..\src\httprequest.cpp" />
@@ -48,11 +50,13 @@
     <ClInclude Include="..\..\src\connection.h" />
     <ClInclude Include="..\..\src\controller.h" />
     <ClInclude Include="..\..\src\dbmanager.h" />
+    <ClInclude Include="..\..\src\exception.h" />
     <ClInclude Include="..\..\src\httpmessage.h" />
     <ClInclude Include="..\..\src\httpparseradapter.h" />
     <ClInclude Include="..\..\src\http_parser.h" />
     <ClInclude Include="..\..\src\iterators.h" />
     <ClInclude Include="..\..\src\logger.h" />
+    <ClInclude Include="..\..\src\pingcontroller.h" />
     <ClInclude Include="..\..\src\prerequisites.h" />
     <ClInclude Include="..\..\src\httpresponse.h" />
     <ClInclude Include="..\..\src\httprequest.h" />
