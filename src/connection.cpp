@@ -11,6 +11,8 @@ Connection::Connection(boost::asio::io_service& io_service, RequestHandler handl
 	,_requestHandler(handler)
 	,_readers(0)
 	,_senders(0)
+	,_request(new HttpRequest)
+	,_webSocketsConnection(false)
 {
 }
 
@@ -31,6 +33,12 @@ void Connection::Send(Response* resp)
 {
 	_toSendQueue.enqueue(resp);
 	DoSend();
+}
+
+void Connection::Close()
+{
+	boost::system::error_code ignored_ec;
+	_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ignored_ec);
 }
 
 void Connection::DoRun()
@@ -66,20 +74,15 @@ void Connection::HandleRecive(const boost::system::error_code& error, std::size_
 
 	if(!error)
 	{
-		Log("HandleRecive: " + Address());
-
-		_state = _requestHandler(_buffer.data(), bytesTransferred,  shared_from_this());
-		switch(_state)
-		{
-			case CONTINUE_READ:
-				DoRecive();
-				break;
-
-			case SEND_REPLY_AND_CLOSE:
-			case SEND_REPLY_AND_CONTINUE_READ:
-				DoSend();
-				break;
-		};
+		if(_webSocketsConnection) {
+		}
+		else {
+			if(_parser.ParseRequest(_request, _buffer.data(), bytesTransferred))
+			{
+				_webSocketsConnection = _request->IsWebSocket();
+				_requestHandler(_request, shared_from_this());
+			}
+		}
 	}
 }
 
@@ -115,17 +118,8 @@ void Connection::HandleSend(const boost::system::error_code& error, Response* re
 
 	if (!error)
 	{
-		Log("HandleWrite: " + Address());
-
-		if(_state == SEND_REPLY_AND_CLOSE) {
-			// Initiate graceful Connection closure.
-			boost::system::error_code ignored_ec;
-			_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ignored_ec);
-		}
-		else {
-			DoRecive();
-			DoSend();
-		}
+		boost::system::error_code ignored_ec;
+		_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ignored_ec);
 	}
 }
 

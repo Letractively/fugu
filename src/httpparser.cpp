@@ -28,7 +28,7 @@ HttpParser::~HttpParser()
 {
 }
 
-bool HttpParser::ParseRequest(HttpRequest* request, const char *data, size_t len)
+bool HttpParser::ParseRequest(HttpRequestPtr request, const char *data, size_t len)
 {
 	Request = request;
 

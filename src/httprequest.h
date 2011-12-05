@@ -32,6 +32,8 @@ public:
 	const std::string& Url() const;
 	// Sets request URL
 	void SetUrl(const std::string& url);
+	// Returts true, if web socket request
+	bool IsWebSocket() const;
 
 private:
 	friend std::ostream &operator << (std::ostream &, HttpRequest const &);

@@ -34,7 +34,7 @@ private:
 	// Handle a request to stop the server.
 	void HandleStop();
 	// Handle request data
-	ConnectionState HandleRequestData(RequestBuffer data, std::size_t bytesTransferred, ConnectionPtr conn);
+	void ProcessRequest(HttpRequestPtr request, ConnectionPtr conn);
 
 private:
 	// The io_service used to handle asynchronous incoming connections(in single thread)

@@ -57,15 +57,17 @@ SessionPtr SessionManager::CreateSession(UserPtr user)
 
 SessionPtr SessionManager::GetSession(const std::string& sessionId)
 {
-	SessionPtr session;
+	if(!sessionId.empty())
 	{
-		// get shared access
-		boost::shared_lock<boost::shared_mutex> lock(_access);
-		Sessions::iterator iter = _sessions.find(sessionId);
-		if(iter != _sessions.end())
-			return iter->second;
+		SessionPtr session;
+		{
+			// get shared access
+			boost::shared_lock<boost::shared_mutex> lock(_access);
+			Sessions::iterator iter = _sessions.find(sessionId);
+			if(iter != _sessions.end())
+				return iter->second;
+		}
 	}
-
 	return SessionPtr();
 }
 

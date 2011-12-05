@@ -76,9 +76,13 @@ void HttpMessage::AddHeader(const std::string& name, const std::string& value)
 	_headers.insert(std::make_pair<std::string, std::string>(name, value));
 }
 
+const std::string EMPTY_STRING = "";
 const std::string& HttpMessage::GetHeader(const std::string& name) const
 {
 	HttpHeaders::const_iterator iter = _headers.find(name);
+	if(iter == _headers.end())
+		return EMPTY_STRING;
+
 	return iter->second;
 }
 

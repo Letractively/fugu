@@ -6,7 +6,7 @@ namespace fugu {
 
 ResponsePtr PingController::OKResponse()
 {
-	std::string content =  "<html><head><title>Created</title></head><body><h1>201 Created</h1></body></html>";
+	std::string content =  "<html><head><title>ping</title></head><body><h1>fugu service rinning</h1></body></html>";
 	std::ostringstream response;
 	response<<"HTTP/1.0 200 OK\r\n"
 			<<"Location: www.google.com\r\n"

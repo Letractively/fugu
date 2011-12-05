@@ -2,6 +2,8 @@
 #define __FUGU_CONNECTION__
 
 #include "prerequisites.h"
+#include "httpparser.h"
+#include "httprequest.h"
 #include <boost/asio.hpp>
 #include <boost/array.hpp>
 #include <boost/atomic.hpp>
@@ -29,7 +31,7 @@ class Connection : public boost::enable_shared_from_this<Connection>,
 public:
 	friend class WebApplication;
 	typedef boost::lockfree::fifo<Response*> SendQueue;
-	typedef boost::function< ConnectionState(RequestBuffer, std::size_t, ConnectionPtr)> RequestHandler;
+	typedef boost::function< void(HttpRequestPtr, ConnectionPtr)> RequestHandler;
 
 	// Construct a connection with the given io_service.
 	explicit Connection(boost::asio::io_service& io_service, RequestHandler handler);
@@ -40,6 +42,8 @@ public:
 	bool IsWebSockets() const { return _webSocketsConnection; }
 	// Put the data in the queue for sending
 	void Send(Response* data);
+	// Close connection
+	void Close();
 
 private:
 	// Get the socket associated with the connection.
@@ -74,6 +78,10 @@ private:
 	RequestHandler _requestHandler;
 	// State of the conection
 	ConnectionState _state;
+	// Request parser
+	HttpParser _parser;
+	// Http request
+	HttpRequestPtr _request;
 };
 
 }

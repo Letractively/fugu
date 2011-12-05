@@ -2,7 +2,6 @@
 #include "querycontext.h"
 #include "connection.h"
 #include "httprequest.h"
-#include "httpparser.h"
 #include "response.h"
 #include "logger.h"
 #include "pingcontroller.h"
@@ -55,7 +54,7 @@ void WebApplication::Run()
 void WebApplication::DoAccept()
 {
 	// The next connection to be accepted.
-	ConnectionPtr conn(new Connection(_performService, boost::bind(&WebApplication::HandleRequestData, this,_1,_2,_3)));
+	ConnectionPtr conn(new Connection(_performService, boost::bind(&WebApplication::ProcessRequest, this,_1,_2)));
 	_acceptor.async_accept(conn->Socket(), boost::bind(&WebApplication::HandleAccept, this,
 		boost::asio::placeholders::error, conn));
 }
@@ -79,31 +78,25 @@ void WebApplication::HandleStop()
 const char name_value_separator[] = { ':', ' ' };
 const char crlf[] = { '\r', '\n' };
 
-ConnectionState WebApplication::HandleRequestData(RequestBuffer data, std::size_t bytesTransferred,  ConnectionPtr conn)
+void WebApplication::ProcessRequest(HttpRequestPtr request, ConnectionPtr conn)
 {
-	HttpRequestPtr request(new HttpRequest);
-	HttpParser parser;
-	if(parser.ParseRequest(request.get(), data, bytesTransferred))
-	{
-		SessionPtr session;
-		std::string sessionId = request->GetCookie("FUGU_SESSION_HASH");
-		if(!sessionId.empty()) {
-				std::string login = request->GetCookie("FUGU_USER_HASH");
-				UserPtr user = _userMgr.GetUser(login);
-				session = _sessionMgr.CreateSession(user);
-		}
-		else {
-			session = _sessionMgr.GetSession(sessionId);
-		}
-
-		QueryContextPtr ctx(new QueryContext(session, conn, request));
-		ResponsePtr resp = _controllerMgr.ProcessRequest(ctx);
-		conn->Send(resp);
-
-		return  ConnectionState::SEND_REPLY_AND_CLOSE;
+	SessionPtr session;
+	std::string sessionId = request->GetCookie("FUGU_SESSION_HASH");
+	if(!sessionId.empty()) {
+			std::string login = request->GetCookie("FUGU_USER_HASH");
+			UserPtr user = _userMgr.GetUser(login);
+			session = _sessionMgr.CreateSession(user);
+	}
+	else {
+		session = _sessionMgr.GetSession(sessionId);
 	}
 
-	return ConnectionState::CONTINUE_READ;
+	QueryContextPtr ctx(new QueryContext(session, conn, request));
+	ResponsePtr resp = _controllerMgr.ProcessRequest(ctx);
+	if(resp == NULL)
+		conn->Close();
+	else
+		conn->Send(resp);
 }
 
 }
