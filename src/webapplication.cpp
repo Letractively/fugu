@@ -78,21 +78,18 @@ void WebApplication::HandleStop()
 const char name_value_separator[] = { ':', ' ' };
 const char crlf[] = { '\r', '\n' };
 
-void WebApplication::ProcessRequest(HttpRequestPtr request, ConnectionPtr conn)
+void WebApplication::ProcessRequest(HttpRequestPtr req, ConnectionPtr conn)
 {
-	SessionPtr session;
-	std::string sessionId = request->GetCookie("FUGU_SESSION_HASH");
-	if(!sessionId.empty()) {
-			std::string login = request->GetCookie("FUGU_USER_HASH");
-			UserPtr user = _userMgr.GetUser(login);
-			session = _sessionMgr.CreateSession(user);
-	}
-	else {
-		session = _sessionMgr.GetSession(sessionId);
+	SessionPtr session = _sessionMgr.GetSession(req->GetCookie("FUGU_SESSION_HASH"));
+
+	if(!session) {
+		UserPtr user = _userMgr.GetUser(req->GetCookie("FUGU_USER_HASH"));
+		session = _sessionMgr.CreateSession(user);
 	}
 
-	QueryContextPtr ctx(new QueryContext(session, conn, request));
+	QueryContextPtr ctx(new QueryContext(session, conn, req));
 	ResponsePtr resp = _controllerMgr.ProcessRequest(ctx);
+
 	if(resp == NULL)
 		conn->Close();
 	else

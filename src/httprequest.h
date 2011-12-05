@@ -3,7 +3,6 @@
 
 #include "httpmessage.h"
 #include <boost/noncopyable.hpp>
-
 namespace fugu {
 
 enum HTTPMethods { 
@@ -32,6 +31,10 @@ public:
 	const std::string& Url() const;
 	// Sets request URL
 	void SetUrl(const std::string& url);
+	// Returns request content
+	const std::string& Content() const;
+	// Sets request cotent
+	void SetContent(const std::string& content);
 	// Returts true, if web socket request
 	bool IsWebSocket() const;
 
@@ -41,6 +44,7 @@ private:
 
 private:
 	std::string _url;
+	std::string _content;
 	HTTPMethods _method;
 };
 

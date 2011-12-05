@@ -8,19 +8,9 @@ const char			REQ_HEADER_COOKIE_NAME[]	= "Cookie";
 const unsigned int	COOKIE_VALUE_MAX		= 1024 * 1024;	// 1 MB
 const unsigned int	COOKIE_NAME_MAX			= 1024;	// 1 KB
 
-int OnRequestUrl (http_parser *parser, const char *buf, size_t len);
-int OnHeaderField (http_parser *parser, const char *buf, size_t len);
-int OnHeaderValue (http_parser *parser, const char *buf, size_t len);
-int OnBody (http_parser *parser, const char *buf, size_t len);
-int OnCountBody (http_parser *parser, const char *buf, size_t len);
-int OnMessageBegin (http_parser *parser);
-int HeadersCompleted (http_parser *parser);
-int MessageCompleted (http_parser *parser);
-HTTPMethods ConvertHttpMethod(http_method method);
-
 HttpParser::HttpParser()
-	:HeaderNameLen(0)
-	,CookieField(false)
+	:_headerNameLen(0)
+	,_cookieField(false)
 {
 }
 
@@ -30,16 +20,16 @@ HttpParser::~HttpParser()
 
 bool HttpParser::ParseRequest(HttpRequestPtr request, const char *data, size_t len)
 {
-	Request = request;
+	_request = request;
 
 	http_parser_settings parserSettings;
-	parserSettings.on_message_begin = OnMessageBegin;
-	parserSettings.on_header_field = OnHeaderField;
-	parserSettings.on_header_value = OnHeaderValue;
-	parserSettings.on_url = OnRequestUrl;
-	parserSettings.on_body = OnCountBody;
-	parserSettings.on_headers_complete = HeadersCompleted;
-	parserSettings.on_message_complete = MessageCompleted;
+	parserSettings.on_message_begin = HttpParser::OnMessageBegin;
+	parserSettings.on_header_field = HttpParser::OnHeaderField;
+	parserSettings.on_header_value = HttpParser::OnHeaderValue;
+	parserSettings.on_url = HttpParser::OnRequestUrl;
+	parserSettings.on_body = HttpParser::OnCountBody;
+	parserSettings.on_headers_complete = HttpParser::HeadersCompleted;
+	parserSettings.on_message_complete = HttpParser::MessageCompleted;
 
 	http_parser parser;
 	http_parser_init(&parser, HTTP_REQUEST);
@@ -95,7 +85,7 @@ void HttpParser::ParseCookieHeader(const char *ptr, const size_t len)
 				if (! cookie_name.empty()) {
 					// value is empty (OK)
 					if (! IsCookieAttribute(cookie_name))
-						Request->AddCookie(cookie_name, cookie_value);
+						_request->AddCookie(cookie_name, cookie_value);
 					cookie_name.erase();
 				}
 			} else if (*ptr != ' ') {	// ignore whitespace
@@ -114,7 +104,7 @@ void HttpParser::ParseCookieHeader(const char *ptr, const size_t len)
 				if (*ptr == ';' || *ptr == ',') {
 					// end of value found (OK if empty)
 					if (! IsCookieAttribute(cookie_name))
-						Request->AddCookie(cookie_name, cookie_value);
+						_request->AddCookie(cookie_name, cookie_value);
 					cookie_name.erase();
 					cookie_value.erase();
 					parse_state = COOKIE_PARSE_NAME;
@@ -141,7 +131,7 @@ void HttpParser::ParseCookieHeader(const char *ptr, const size_t len)
 				if (*ptr == value_quote_character) {
 					// end of value found (OK if empty)
 					if (! IsCookieAttribute(cookie_name))
-						Request->AddCookie(cookie_name, cookie_value);
+						_request->AddCookie(cookie_name, cookie_value);
 					cookie_name.erase();
 					cookie_value.erase();
 					parse_state = COOKIE_PARSE_IGNORE;
@@ -167,77 +157,77 @@ void HttpParser::ParseCookieHeader(const char *ptr, const size_t len)
 
 	// handle last cookie in string
 	if (! IsCookieAttribute(cookie_name))
-		Request->AddCookie(cookie_name, cookie_value);
+		_request->AddCookie(cookie_name, cookie_value);
 }
 
-int OnRequestUrl(http_parser *parser, const char *buf, size_t len)
+int HttpParser::OnRequestUrl(http_parser *parser, const char *buf, size_t len)
 {
 	HttpParser* p = reinterpret_cast<HttpParser*>(parser->data);
-	p->Request->SetUrl(std::string(buf, len));
+	p->_request->SetUrl(std::string(buf, len));
 	return 0;
 }
 
-int OnHeaderField (http_parser *parser, const char *buf, size_t len)
+int HttpParser::OnHeaderField (http_parser *parser, const char *buf, size_t len)
 {
 	HttpParser* p = reinterpret_cast<HttpParser*>(parser->data);
 	if(memcmp(REQ_HEADER_COOKIE_NAME, buf, len)==0) {
-		p->CookieField = true;
+		p->_cookieField = true;
 	}
 	else {
-		memcpy(p->HeaderName, buf, len);
-		p->HeaderNameLen = len;
+		memcpy(p->_headerName, buf, len);
+		p->_headerNameLen = len;
 	}
 
 	return 0;
 }
 
-int OnHeaderValue(http_parser *parser, const char *buf, size_t len)
+int HttpParser::OnHeaderValue(http_parser *parser, const char *buf, size_t len)
 {
 	HttpParser* p = reinterpret_cast<HttpParser*>(parser->data);
-	if(p->CookieField) {
+	if(p->_cookieField) {
 		p->ParseCookieHeader(buf, len);
 	}
 	else {
-		p->Request->AddHeader(std::string(p->HeaderName,p->HeaderNameLen), std::string(buf,len));
+		p->_request->AddHeader(std::string(p->_headerName,p->_headerNameLen), std::string(buf,len));
 	}
 	return 0;
 }
 
-int OnBody (http_parser *parser, const char *buf, size_t len)
+int HttpParser::OnBody(http_parser *parser, const char *buf, size_t len)
 {
-	HttpRequest* request = reinterpret_cast<HttpRequest*>(parser->data);
+	HttpParser* p = reinterpret_cast<HttpParser*>(parser->data);
+	p->_request->SetContent(std::string(buf, len));
 	return 0;
 }
 
-int OnCountBody(http_parser *parser, const char *buf, size_t len)
+int HttpParser::OnCountBody(http_parser *parser, const char *buf, size_t len)
 {
 	HttpRequest* adapter = reinterpret_cast<HttpRequest*>(parser->data);
 	return 0;
 }
 
-int OnMessageBegin(http_parser *parser)
+int HttpParser::OnMessageBegin(http_parser *parser)
 {
-	HttpRequest* request = reinterpret_cast<HttpRequest*>(parser->data);
 	return 0;
 }
 
-int HeadersCompleted(http_parser *parser)
+int HttpParser::HeadersCompleted(http_parser *parser)
 {
 	HttpParser* p = reinterpret_cast<HttpParser*>(parser->data);
-	p->Request->SetContentLength(parser->content_length);
-	p->Request->SetMethod(ConvertHttpMethod((http_method)parser->method));
-	p->Request->SetMajorVersion(parser->http_major);
-	p->Request->SetMinorVersion(parser->http_minor);
-	p->Request->SetKeepAlive((bool)http_should_keep_alive(parser));
+	p->_request->SetContentLength(parser->content_length);
+	p->_request->SetMethod(ConvertHttpMethod((http_method)parser->method));
+	p->_request->SetMajorVersion(parser->http_major);
+	p->_request->SetMinorVersion(parser->http_minor);
+	p->_request->SetKeepAlive((bool)http_should_keep_alive(parser));
 	return 0;
 }
 
-int MessageCompleted(http_parser *parser)
+int HttpParser::MessageCompleted(http_parser *parser)
 {
 	return 0;
 }
 
-HTTPMethods ConvertHttpMethod(http_method method)
+HTTPMethods HttpParser::ConvertHttpMethod(http_method method)
 {
 	switch(method)
 	{

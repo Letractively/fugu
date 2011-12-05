@@ -31,6 +31,16 @@ void HttpRequest::SetUrl(const std::string& url)
 	_url = url;
 }
 
+const std::string& HttpRequest::Content() const
+{
+	return _content;
+}
+
+void HttpRequest::SetContent(const std::string& content)
+{
+	_content = content;
+}
+
 const std::string WS_HEADER = "websocket";
 bool HttpRequest::IsWebSocket() const
 {
