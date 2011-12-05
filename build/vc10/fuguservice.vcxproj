@@ -64,7 +64,7 @@
     <ClInclude Include="..\..\src\prerequisites.h" />
     <ClInclude Include="..\..\src\httpresponse.h" />
     <ClInclude Include="..\..\src\httprequest.h" />
-    <ClInclude Include="..\..\src\registration.h" />
+    <ClInclude Include="..\..\src\registrator.h" />
     <ClInclude Include="..\..\src\response.h" />
     <ClInclude Include="..\..\src\session.h" />
     <ClInclude Include="..\..\src\user.h" />

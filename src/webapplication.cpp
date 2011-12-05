@@ -13,7 +13,7 @@ WebApplication::WebApplication(const std::string& address, const std::string& po
 	: _threadPoolSize(threadPoolSize)
 		,_acceptor(_acceptorService)
 		,_performServiceWork(_performService)
-		,_registration(_controllerMgr)
+		,_registrator(_controllerMgr)
 {
 	// Open the acceptor with the option to reuse the address (i.e. SO_REUSEADDR).
 	boost::asio::ip::tcp::resolver resolver(_acceptorService);
@@ -87,7 +87,7 @@ void WebApplication::ProcessRequest(HttpRequestPtr req, ConnectionPtr conn)
 	QueryContextPtr ctx(new QueryContext(session, conn, req));
 	ResponsePtr resp = _controllerMgr.ProcessRequest(ctx);
 
-	if(resp == NULL)
+	if(resp == NULL) 
 		conn->Close();
 	else
 		conn->Send(resp);

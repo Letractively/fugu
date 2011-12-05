@@ -153,7 +153,7 @@
     <ClInclude Include="..\..\src\httpparser.h">
       <Filter>net\request</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\registration.h">
+    <ClInclude Include="..\..\src\registrator.h">
       <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,7 +5,7 @@
 #include "session.h"
 #include "user.h"
 #include "controllermanager.h"
-#include "registration.h"
+#include "registrator.h"
 #include <boost/asio.hpp>
 
 namespace fugu {
@@ -54,7 +54,7 @@ private:
 	// The handler for all incoming requests.
 	ControllerManager _controllerMgr;
 	// Componets registratio
-	Registration _registration;
+	Registrator _registrator;
 };
 
 }
