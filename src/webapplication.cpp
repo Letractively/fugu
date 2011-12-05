@@ -2,7 +2,7 @@
 #include "querycontext.h"
 #include "connection.h"
 #include "httprequest.h"
-#include "httpparseradapter.h"
+#include "httpparser.h"
 #include "response.h"
 #include "logger.h"
 #include "pingcontroller.h"
@@ -82,7 +82,7 @@ const char crlf[] = { '\r', '\n' };
 ConnectionState WebApplication::HandleRequestData(RequestBuffer data, std::size_t bytesTransferred,  ConnectionPtr conn)
 {
 	HttpRequestPtr request(new HttpRequest);
-	HttpParserAdapter parser;
+	HttpParser parser;
 	if(parser.ParseRequest(request.get(), data, bytesTransferred))
 	{
 		SessionPtr session;
@@ -96,8 +96,8 @@ ConnectionState WebApplication::HandleRequestData(RequestBuffer data, std::size_
 			session = _sessionMgr.GetSession(sessionId);
 		}
 
-		QueryContextPtr queryCtx(new QueryContext(session, conn, request));
-		ResponsePtr resp = _controllerMgr.ProcessRequest(request->Url(), queryCtx);
+		QueryContextPtr ctx(new QueryContext(session, conn, request));
+		ResponsePtr resp = _controllerMgr.ProcessRequest(ctx);
 		conn->Send(resp);
 
 		return  ConnectionState::SEND_REPLY_AND_CLOSE;

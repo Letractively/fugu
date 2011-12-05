@@ -23,12 +23,6 @@
     <ClCompile Include="..\..\src\querycontext.h">
       <Filter>engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\http_parser.c">
-      <Filter>net\request</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\httpparseradapter.cpp">
-      <Filter>net\request</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\httprequest.cpp">
       <Filter>net\request</Filter>
     </ClCompile>
@@ -58,6 +52,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\controllermanager.cpp">
       <Filter>controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\http_parser\http_parser.c">
+      <Filter>net\request</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\httpparser.cpp">
+      <Filter>net\request</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -120,12 +120,6 @@
     <ClInclude Include="..\..\src\requesthrouter.h">
       <Filter>net</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\http_parser.h">
-      <Filter>net\request</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\httpparseradapter.h">
-      <Filter>net\request</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\httprequest.h">
       <Filter>net\request</Filter>
     </ClInclude>
@@ -155,6 +149,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\controllermanager.h">
       <Filter>controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\http_parser\http_parser.h">
+      <Filter>net\request</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\httpparser.h">
+      <Filter>net\request</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

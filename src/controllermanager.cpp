@@ -28,13 +28,13 @@ void ControllerManager::RegisterFactory(ControllerFactory* factory)
 							ControllerFactoryPtr(factory)));
 }
 
-ResponsePtr ControllerManager::ProcessRequest(const std::string url, QueryContextPtr ctx)
+ResponsePtr ControllerManager::ProcessRequest(QueryContextPtr ctx)
 {
-	ControllerFactories::iterator iter = _factories.find(url);
+	ControllerFactories::iterator iter = _factories.find(ctx->Request()->Url());
 	if(iter != _factories.end())
 	{
 		ControllerFactoryPtr factory = iter->second;
-		ControllerPtr controller = factory->Create(url);
+		ControllerPtr controller = factory->Create(ctx->Request()->Url());
 
 		switch(ctx->Request()->Method())
 		{

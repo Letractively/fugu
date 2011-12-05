@@ -7,11 +7,11 @@
 namespace fugu {
 
 class HttpRequest;
-class HttpParserAdapter : private boost::noncopyable
+class HttpParser : private boost::noncopyable
 {
 public:
-	HttpParserAdapter();
-	~HttpParserAdapter();
+	HttpParser();
+	~HttpParser();
 	bool ParseRequest(HttpRequest* request, const char *data, std::size_t len);
 	void ParseCookieHeader(const char *ptr, const size_t len);
 

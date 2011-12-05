@@ -1,5 +1,5 @@
-#include "httpparseradapter.h"
-#include "http_parser.h"
+#include "http_parser/http_parser.h"
+#include "httpparser.h"
 #include "httprequest.h"
 
 namespace fugu {
@@ -18,17 +18,17 @@ int HeadersCompleted (http_parser *parser);
 int MessageCompleted (http_parser *parser);
 HTTPMethods ConvertHttpMethod(http_method method);
 
-HttpParserAdapter::HttpParserAdapter()
+HttpParser::HttpParser()
 	:HeaderNameLen(0)
 	,CookieField(false)
 {
 }
 
-HttpParserAdapter::~HttpParserAdapter()
+HttpParser::~HttpParser()
 {
 }
 
-bool HttpParserAdapter::ParseRequest(HttpRequest* request, const char *data, size_t len)
+bool HttpParser::ParseRequest(HttpRequest* request, const char *data, size_t len)
 {
 	Request = request;
 
@@ -62,7 +62,7 @@ inline bool IsCookieAttribute(const std::string& name)
 			|| name=="Secure" || name=="Version" || name=="Expires"));
 }
 
-void HttpParserAdapter::ParseCookieHeader(const char *ptr, const size_t len)
+void HttpParser::ParseCookieHeader(const char *ptr, const size_t len)
 {
 
 	// The current implementation ignores cookie attributes which begin with '$'
@@ -172,14 +172,14 @@ void HttpParserAdapter::ParseCookieHeader(const char *ptr, const size_t len)
 
 int OnRequestUrl(http_parser *parser, const char *buf, size_t len)
 {
-	HttpParserAdapter* p = reinterpret_cast<HttpParserAdapter*>(parser->data);
+	HttpParser* p = reinterpret_cast<HttpParser*>(parser->data);
 	p->Request->SetUrl(std::string(buf, len));
 	return 0;
 }
 
 int OnHeaderField (http_parser *parser, const char *buf, size_t len)
 {
-	HttpParserAdapter* p = reinterpret_cast<HttpParserAdapter*>(parser->data);
+	HttpParser* p = reinterpret_cast<HttpParser*>(parser->data);
 	if(memcmp(REQ_HEADER_COOKIE_NAME, buf, len)==0) {
 		p->CookieField = true;
 	}
@@ -193,7 +193,7 @@ int OnHeaderField (http_parser *parser, const char *buf, size_t len)
 
 int OnHeaderValue(http_parser *parser, const char *buf, size_t len)
 {
-	HttpParserAdapter* p = reinterpret_cast<HttpParserAdapter*>(parser->data);
+	HttpParser* p = reinterpret_cast<HttpParser*>(parser->data);
 	if(p->CookieField) {
 		p->ParseCookieHeader(buf, len);
 	}
@@ -223,7 +223,7 @@ int OnMessageBegin(http_parser *parser)
 
 int HeadersCompleted(http_parser *parser)
 {
-	HttpParserAdapter* p = reinterpret_cast<HttpParserAdapter*>(parser->data);
+	HttpParser* p = reinterpret_cast<HttpParser*>(parser->data);
 	p->Request->SetContentLength(parser->content_length);
 	p->Request->SetMethod(ConvertHttpMethod((http_method)parser->method));
 	p->Request->SetMajorVersion(parser->http_major);

@@ -17,7 +17,7 @@ public:
 	ControllerManager();
 	~ControllerManager();
 	void RegisterFactory(ControllerFactory* factory);
-	ResponsePtr ProcessRequest(const std::string url, QueryContextPtr ctx);
+	ResponsePtr ProcessRequest(QueryContextPtr ctx);
 private:
 	ControllerFactories _factories;
 };

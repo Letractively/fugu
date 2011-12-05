@@ -2,11 +2,13 @@
 #include "webapplication.h"
 #include "user.h"
 #include "exception.h"
+//#include "nedmalloc/nedmalloc.h"
 
 int main(int argc, char* argv[]) 
 {
 	try
 	{
+		//UserManager* i = nedalloc::New<UserManager>();
 		// Check command line arguments.
 		if (argc != 5)
 		{
