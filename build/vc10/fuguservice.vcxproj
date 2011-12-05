@@ -42,7 +42,7 @@
     <ClCompile Include="..\..\src\querycontext.h" />
     <ClCompile Include="..\..\src\httpresponse.cpp" />
     <ClCompile Include="..\..\src\httprequest.cpp" />
-    <ClCompile Include="..\..\src\requesthrouter.cpp" />
+    <ClCompile Include="..\..\src\registration.cpp" />
     <ClCompile Include="..\..\src\response.cpp" />
     <ClCompile Include="..\..\src\session.cpp" />
     <ClCompile Include="..\..\src\user.cpp" />
@@ -64,7 +64,7 @@
     <ClInclude Include="..\..\src\prerequisites.h" />
     <ClInclude Include="..\..\src\httpresponse.h" />
     <ClInclude Include="..\..\src\httprequest.h" />
-    <ClInclude Include="..\..\src\requesthrouter.h" />
+    <ClInclude Include="..\..\src\registration.h" />
     <ClInclude Include="..\..\src\response.h" />
     <ClInclude Include="..\..\src\session.h" />
     <ClInclude Include="..\..\src\user.h" />

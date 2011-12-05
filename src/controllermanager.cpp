@@ -3,6 +3,7 @@
 #include "exception.h"
 #include "httprequest.h"
 #include "querycontext.h"
+#include <boost/thread/locks.hpp>
 
 namespace fugu {
 

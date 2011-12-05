@@ -4,7 +4,6 @@
 #include "httprequest.h"
 #include "response.h"
 #include "logger.h"
-#include "pingcontroller.h"
 #include <boost/cstdint.hpp>
 #include <boost/thread/thread.hpp>
 
@@ -13,11 +12,9 @@ namespace fugu {
 WebApplication::WebApplication(const std::string& address, const std::string& port, const std::string& root, std::size_t threadPoolSize)
 	: _threadPoolSize(threadPoolSize)
 		,_acceptor(_acceptorService)
-		,_router(root)
 		,_performServiceWork(_performService)
+		,_registration(_controllerMgr)
 {
-	_controllerMgr.RegisterFactory(new PingControllerFactory);
-
 	// Open the acceptor with the option to reuse the address (i.e. SO_REUSEADDR).
 	boost::asio::ip::tcp::resolver resolver(_acceptorService);
 	boost::asio::ip::tcp::resolver::query query(address, port);

@@ -26,7 +26,9 @@ public:
 	static int OnMessageBegin(http_parser *parser);
 	static int HeadersCompleted(http_parser *parser);
 	static int MessageCompleted(http_parser *parser);
+
 	static HTTPMethods ConvertHttpMethod(http_method method);
+	static bool UrlDecode(const std::string& in, std::string& out);
 
 private:
 	HttpRequestPtr _request;

@@ -2,10 +2,10 @@
 #define __FUGU_WEB_SERVER__
 
 #include "prerequisites.h"
-#include "requesthrouter.h"
 #include "session.h"
 #include "user.h"
 #include "controllermanager.h"
+#include "registration.h"
 #include <boost/asio.hpp>
 
 namespace fugu {
@@ -47,14 +47,14 @@ private:
 	boost::asio::io_service::work _performServiceWork;
 	// The number of threads that will call io_service::run().
 	std::size_t _threadPoolSize;
-	// The handler for all incoming requests.
-	RequestRouter _router;
 	// Manager of the user sessions
 	SessionManager _sessionMgr;
 	//User manager
 	UserManager _userMgr;
-	// Controller manager
+	// The handler for all incoming requests.
 	ControllerManager _controllerMgr;
+	// Componets registratio
+	Registration _registration;
 };
 
 }

@@ -17,9 +17,6 @@
     <ClCompile Include="..\..\src\session.cpp">
       <Filter>engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\requesthrouter.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\querycontext.h">
       <Filter>engine</Filter>
     </ClCompile>
@@ -58,6 +55,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\httpparser.cpp">
       <Filter>net\request</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\registration.cpp">
+      <Filter>common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -117,9 +117,6 @@
     <ClInclude Include="..\..\src\session.h">
       <Filter>engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\requesthrouter.h">
-      <Filter>net</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\httprequest.h">
       <Filter>net\request</Filter>
     </ClInclude>
@@ -155,6 +152,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\httpparser.h">
       <Filter>net\request</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\registration.h">
+      <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -24,6 +24,7 @@ class Session;
 class SessionManager;
 class Connection;
 class Controller;
+class ControllerManager;
 typedef Response* ResponsePtr;
 typedef boost::shared_ptr<Request> RequestPtr;
 typedef boost::shared_ptr<HttpRequest> HttpRequestPtr;
