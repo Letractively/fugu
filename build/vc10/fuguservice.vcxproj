@@ -36,6 +36,7 @@
     <ClCompile Include="..\..\src\httpmessage.cpp" />
     <ClCompile Include="..\..\src\httpparser.cpp" />
     <ClCompile Include="..\..\src\http_parser\http_parser.c" />
+    <ClCompile Include="..\..\src\homecontroller.cpp" />
     <ClCompile Include="..\..\src\logger.cpp" />
     <ClCompile Include="..\..\src\nedmalloc\nedmalloc.c" />
     <ClCompile Include="..\..\src\pingcontroller.cpp" />
@@ -58,6 +59,7 @@
     <ClInclude Include="..\..\src\httpparser.h" />
     <ClInclude Include="..\..\src\http_parser\http_parser.h" />
     <ClInclude Include="..\..\src\iterators.h" />
+    <ClInclude Include="..\..\src\homecontroller.h" />
     <ClInclude Include="..\..\src\logger.h" />
     <ClInclude Include="..\..\src\nedmalloc\nedmalloc.h" />
     <ClInclude Include="..\..\src\pingcontroller.h" />

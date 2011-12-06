@@ -5,6 +5,7 @@
 
 namespace fugu {
 
+// Factories registrator
 class Registrator : private boost::noncopyable
 {
 public:

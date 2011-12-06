@@ -59,6 +59,9 @@
     <ClCompile Include="..\..\src\registration.cpp">
       <Filter>common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\homecontroller.cpp">
+      <Filter>controllers\ping</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="net">
@@ -155,6 +158,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\registrator.h">
       <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\homecontroller.h">
+      <Filter>controllers\ping</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
