@@ -45,6 +45,9 @@ ResponsePtr ControllerManager::ProcessRequest(QueryContextPtr ctx)
 				return controller->Get(ctx);
 			case HTTPMethods::HTTP_POST:
 				return controller->Post(ctx);
+			default:
+				FUGU_THROW("HTTP method does't support(support only the following methods: GET,POST,DELETE,PUT)"
+							,"ControllerManager::ProcessRequest");
 		};
 	}
 
