@@ -31,7 +31,7 @@ canvas {
 }
 
 .omHomeIcon {
-	background-image: url('images/home.png');
+	background-image: url('../images/home.png');
 	background-repeat: no-repeat;
 	width: 18px;
 	height: 18px;
@@ -39,7 +39,7 @@ canvas {
 }
 
 .omPlayIcon {
-	background-image: url('images/brainstorming.png');
+	background-image: url('../images/brainstorming.png');
 	background-repeat: no-repeat;
 	width: 18px;
 	height: 18px;
@@ -47,7 +47,7 @@ canvas {
 }
 
 .omEditorIcon {
-	background-image: url('images/config.png');
+	background-image: url('../images/config.png');
 	background-repeat: no-repeat;
 	width: 18px;
 	height: 18px;
@@ -55,7 +55,7 @@ canvas {
 }
 
 .omAboutIcon {
-	background-image: url('images/product.png');
+	background-image: url('../images/product.png');
 	background-repeat: no-repeat;
 	width: 18px;
 	height: 18px;
@@ -63,7 +63,7 @@ canvas {
 }
 
 .omLightbulbIcon {
-	background-image: url('images/lightbulb.png');
+	background-image: url('../images/lightbulb.png');
 	background-repeat: no-repeat;
 	width: 18px;
 	height: 18px;
@@ -71,7 +71,7 @@ canvas {
 }
 
 .omFolderIcon {
-	background-image: url('images/folder.png');
+	background-image: url('../images/folder.png');
 	background-repeat: no-repeat;
 	width: 18px;
 	height: 18px;
@@ -79,7 +79,7 @@ canvas {
 }
 
 .omUserIcon {
-	background-image: url('images/user.png');
+	background-image: url('../images/user.png');
 	background-repeat: no-repeat;
 	width: 18px;
 	height: 18px;
@@ -87,7 +87,7 @@ canvas {
 }
 
 .omSettingsIcon {
-	background-image: url('images/settings.png');
+	background-image: url('../images/settings.png');
 	background-repeat: no-repeat;
 	width: 18px;
 	height: 18px;
