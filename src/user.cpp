@@ -1,5 +1,5 @@
 #include "user.h"
-#include <openssl/sha.h>
+//#include <openssl/sha.h>
 #include <iostream>
 #include <boost/thread/locks.hpp>
 //TOFO: add sha1 password encryption #include <boost/uuid/sha1.hpp>
