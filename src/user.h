@@ -3,7 +3,6 @@
 
 #include "prerequisites.h"
 #include "iterators.h"
-#include <dbclient.h>
 #include <iostream>
 #include <string>
 #include <map>
@@ -18,6 +17,25 @@
 //	fugu::UserPtr user = iter.PeekNextValue();
 //	Processing...
 //	iter.MoveNext();
+//}
+//
+//boost::shared_mutex _access;
+//void reader()
+//{
+//  // get shared access
+//  boost::shared_lock lock(_access);
+//
+//  // now we have shared access
+//}
+//
+//void writer()
+//{
+//  // get upgradable access
+//  boost::upgrade_lock lock(_access);
+//
+//  // get exclusive access
+//  boost::upgrade_to_unique_lock uniqueLock(lock);
+//  // now we have exclusive access
 //}
 
 namespace fugu {
@@ -71,7 +89,7 @@ typedef MapIterator<Users> UsersIterator;
 class UserManager
 {
 public:
-	UserManager();
+	UserManager(){}
 
 	// Creates new user by json string, and add it to the database
 	UserPtr CreateUser(const std::string& json);
@@ -87,8 +105,6 @@ public:
 	UsersIterator GetUsers();
 
 private:
-	// reconect to database
-	void ReConnect();
 	// count == 0 - loads all users
 	long LoadUsers(long count=0);
 	UserPtr CreateUser(const mongo::BSONObj& obj);
@@ -96,28 +112,7 @@ private:
 private:
 	boost::shared_mutex _access;
 	Users _users;
-	mongo::DBClientConnection _db;
 };
-/*
-boost::shared_mutex _access;
-void reader()
-{
-  // get shared access
-  boost::shared_lock lock(_access);
-
-  // now we have shared access
-}
-
-void writer()
-{
-  // get upgradable access
-  boost::upgrade_lock lock(_access);
-
-  // get exclusive access
-  boost::upgrade_to_unique_lock uniqueLock(lock);
-  // now we have exclusive access
-}
-*/
 }
 
 #endif

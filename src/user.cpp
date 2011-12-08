@@ -1,8 +1,11 @@
 #include "user.h"
-//#include <openssl/sha.h>
+#include "dbpool.h"
 #include <iostream>
 #include <boost/thread/locks.hpp>
-//TOFO: add sha1 password encryption #include <boost/uuid/sha1.hpp>
+#include <dbclient.h>
+//#include <openssl/sha.h>
+//#include <boost/uuid/sha1.hpp>
+//TODO: add sha1 password encryption
 
 namespace fugu {
 
@@ -35,11 +38,6 @@ bool User::MatchPassword(const std::string& password) const
 }
 
 void User::SetPassword(const std::string& password) {}
-
-UserManager::UserManager()
-{
-	ReConnect();
-}
 
 UserPtr UserManager::CreateUser(const std::string& json)
 {
@@ -81,7 +79,7 @@ UserPtr UserManager::CreateUser(const mongo::BSONObj& obj)
 			_users.insert(std::make_pair<std::string, UserPtr>(user->Login(), user));
 		}
 
-		_db.insert("test.fugu.users", obj);
+		DBPool::Get().Queue()->insert("test.fugu.users", obj);
 
 	}
 	return user;
@@ -89,7 +87,7 @@ UserPtr UserManager::CreateUser(const mongo::BSONObj& obj)
 
 void UserManager::DeleteUser(const std::string& login)
 {
-	_db.remove("test.fugu.users", QUERY("Login"<<login));
+	DBPool::Get().Queue()->remove("test.fugu.users", QUERY("Login"<<login));
 	_users.erase(login);
 }
 
@@ -112,7 +110,8 @@ UserPtr UserManager::GetUser(const std::string& login)
 	else {
 
 		if(!dbreloaded) {
-			std::auto_ptr<mongo::DBClientCursor> cursor =  _db.query("test.fugu.users", QUERY("Login"<<login));
+			std::auto_ptr<mongo::DBClientCursor> cursor =  
+				DBPool::Get().Queue()->query("test.fugu.users", QUERY("Login"<<login));
 			if(cursor->more())
 				return UserPtr(new User(cursor->next()));
 		}
@@ -131,18 +130,15 @@ UsersIterator UserManager::GetUsers()
 
 long UserManager::LoadUsers(long count)
 {
-	std::auto_ptr<mongo::DBClientCursor> cursor =  _db.query("test.fugu.users", mongo::Query());
+	std::auto_ptr<mongo::DBClientCursor> cursor =  
+		DBPool::Get().Queue()->query("test.fugu.users", mongo::Query());
+
 	while(cursor->more()) {
 		UserPtr user(new User(cursor->next()));
 		_users.insert(std::make_pair<std::string, UserPtr>(user->Login(), user));
 	}
 		
 	return _users.size();
-}
-
-void UserManager::ReConnect()
-{
-	_db.connect("localhost");
 }
 
 }

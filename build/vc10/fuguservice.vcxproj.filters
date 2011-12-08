@@ -5,9 +5,6 @@
     <ClCompile Include="..\..\src\user.cpp">
       <Filter>models\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\dbmanager.cpp">
-      <Filter>models\db</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\connection.cpp">
       <Filter>net</Filter>
     </ClCompile>
@@ -62,6 +59,12 @@
     <ClCompile Include="..\..\src\homecontroller.cpp">
       <Filter>controllers\ping</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\viewdata.cpp">
+      <Filter>models\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dbpool.cpp">
+      <Filter>models\db</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="net">
@@ -107,9 +110,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\connection.h">
       <Filter>net</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\dbmanager.h">
-      <Filter>models\db</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\controller.h">
       <Filter>controllers</Filter>
@@ -161,6 +161,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\homecontroller.h">
       <Filter>controllers\ping</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\viewdata.h">
+      <Filter>models\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dbpool.h">
+      <Filter>models\db</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -30,7 +30,7 @@
     <ClCompile Include="..\..\src\connection.cpp" />
     <ClCompile Include="..\..\src\controller.cpp" />
     <ClCompile Include="..\..\src\controllermanager.cpp" />
-    <ClCompile Include="..\..\src\dbmanager.cpp" />
+    <ClCompile Include="..\..\src\dbpool.cpp" />
     <ClCompile Include="..\..\src\entrypoint.cpp" />
     <ClCompile Include="..\..\src\exception.cpp" />
     <ClCompile Include="..\..\src\httpmessage.cpp" />
@@ -47,13 +47,14 @@
     <ClCompile Include="..\..\src\response.cpp" />
     <ClCompile Include="..\..\src\session.cpp" />
     <ClCompile Include="..\..\src\user.cpp" />
+    <ClCompile Include="..\..\src\viewdata.cpp" />
     <ClCompile Include="..\..\src\webapplication.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\connection.h" />
     <ClInclude Include="..\..\src\controller.h" />
     <ClInclude Include="..\..\src\controllermanager.h" />
-    <ClInclude Include="..\..\src\dbmanager.h" />
+    <ClInclude Include="..\..\src\dbpool.h" />
     <ClInclude Include="..\..\src\exception.h" />
     <ClInclude Include="..\..\src\httpmessage.h" />
     <ClInclude Include="..\..\src\httpparser.h" />
@@ -70,6 +71,7 @@
     <ClInclude Include="..\..\src\response.h" />
     <ClInclude Include="..\..\src\session.h" />
     <ClInclude Include="..\..\src\user.h" />
+    <ClInclude Include="..\..\src\viewdata.h" />
     <ClInclude Include="..\..\src\webapplication.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

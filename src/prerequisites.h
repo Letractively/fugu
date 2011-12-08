@@ -25,8 +25,10 @@ class SessionManager;
 class Connection;
 class Controller;
 class ControllerManager;
+class View;
 typedef Response* ResponsePtr;
 typedef boost::shared_ptr<Request> RequestPtr;
+typedef boost::shared_ptr<View> ViewPtr;
 typedef boost::shared_ptr<HttpRequest> HttpRequestPtr;
 typedef boost::shared_ptr<QueryContext> QueryContextPtr;
 typedef boost::shared_ptr<Session> SessionPtr;
@@ -35,6 +37,12 @@ typedef boost::shared_ptr<Controller> ControllerPtr;
 typedef boost::shared_ptr<User> UserPtr;
 typedef const char* RequestBuffer;
 typedef std::string ResponseBuffer;
+}
+
+namespace mongo {
+class DBClientConnection;
+class BSONObj;
+class Query;
 }
 
 #endif
