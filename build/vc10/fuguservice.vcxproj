@@ -70,6 +70,7 @@
     <ClInclude Include="..\..\src\registrator.h" />
     <ClInclude Include="..\..\src\response.h" />
     <ClInclude Include="..\..\src\session.h" />
+    <ClInclude Include="..\..\src\stdheaders.h" />
     <ClInclude Include="..\..\src\user.h" />
     <ClInclude Include="..\..\src\viewdata.h" />
     <ClInclude Include="..\..\src\webapplication.h" />

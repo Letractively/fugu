@@ -168,5 +168,8 @@
     <ClInclude Include="..\..\src\dbpool.h">
       <Filter>models\db</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\stdheaders.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
