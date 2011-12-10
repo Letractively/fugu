@@ -77,6 +77,9 @@
     <ClInclude Include="..\..\src\viewdata.h" />
     <ClInclude Include="..\..\src\webapplication.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\fugu.conf" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>fuguservice</ProjectName>
     <ProjectGuid>{5074CE3E-05F5-31BA-BA79-1AD54C3416F7}</ProjectGuid>

@@ -178,4 +178,7 @@
       <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\fugu.conf" />
+  </ItemGroup>
 </Project>
