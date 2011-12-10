@@ -65,6 +65,9 @@
     <ClCompile Include="..\..\src\dbpool.cpp">
       <Filter>models\db</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\config.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="net">
@@ -169,6 +172,9 @@
       <Filter>models\db</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\stdheaders.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\config.h">
       <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>

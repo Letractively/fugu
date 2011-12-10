@@ -6,6 +6,7 @@
 #define BOOST_WINDOWS
 #define _UNICODE
 
+#define FUGU_MULTI_THREADING
 
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>

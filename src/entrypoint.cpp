@@ -2,12 +2,15 @@
 #include "webapplication.h"
 #include "user.h"
 #include "exception.h"
+#include "config.h"
 //#include "nedmalloc/nedmalloc.h"
 
 int main(int argc, char* argv[]) 
 {
 	try
 	{
+		fugu::Config config("fugu.conf");
+
 		//UserManager* i = nedalloc::New<UserManager>();
 		// Check command line arguments.
 		if (argc != 5)
@@ -32,43 +35,5 @@ int main(int argc, char* argv[])
 		std::cerr << "exception: " << e.what() << "\n";
 	}
 
- //   std::string message;
- //   int port;
-
- //   po::options_description desc("Test options");
- //   desc.add_options()
- //       ("port", po::value<int>(&port)->default_value(8888), "The port number to open up")
- //       ("message", po::value<std::string>(&message)->default_value("<html><h1>Hello world!</h1></html>"), "Message to display");
-
- //   po::variables_map vm;
- //   po::store(po::parse_command_line(argc, argv, desc), vm);
- //   po::notify(vm);
-
-	//std::ostringstream users;
-	//fugu::UsersIterator iter = maneger.GetUsers();
-	//while(iter.HasMore()) {
-	//	fugu::UserPtr user = iter.PeekNextValue();
-	//	users << "User name: " << user->Login()
-	//			<< "Email: " << user->Email() << "<br/>";
-
-	//	iter.MoveNext();
-	//}
-	//message = users.str();
-
- //   std::ostringstream response;
- //   response<<"HTTP/1.0 200 OK\r\n"
- //           <<"Content-Type: text/html; charset=UTF-8\r\n"
- //           <<"Content-Length: "<<message.length()<<"\r\n"
- //           <<"\r\n"<<message<<"\r\n";
- //   message = response.str();
-
- //   try {
- //       fugu::WebServer service(message, port);
- //       service.Run();
- //   }
- //   catch (const std::exception& e)
- //   {
- //       std::cerr<<e.what()<<std::endl; // spew
- //   }
 	return 0;
 }

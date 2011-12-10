@@ -17,8 +17,12 @@ public:
 	static DBPoolImpl* Instance();
 	DBConnectionPtr Queue();
 private:
+
+#ifdef FUGU_MULTI_THREADING
 	static boost::atomic<DBPoolImpl*> instance_;
 	static boost::mutex instantiation_mutex;
+#endif
+
 	DBConnectionPtr _connection;
 };
 
@@ -39,6 +43,7 @@ DBConnectionPtr DBPoolImpl::Queue()
 
 DBPoolImpl* DBPoolImpl::Instance()
 {
+#ifdef FUGU_MULTI_THREADING
 	DBPoolImpl * tmp = instance_.load(boost::memory_order_consume);
 	if (!tmp) 
 	{
@@ -51,6 +56,10 @@ DBPoolImpl* DBPoolImpl::Instance()
 		}
 	}
 	return tmp;
+#else
+	static DBPoolImpl instance;
+	return &instance;
+#endif
 }
 
 

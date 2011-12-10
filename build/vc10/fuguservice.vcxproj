@@ -27,6 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\config.cpp" />
     <ClCompile Include="..\..\src\connection.cpp" />
     <ClCompile Include="..\..\src\controller.cpp" />
     <ClCompile Include="..\..\src\controllermanager.cpp" />
@@ -51,6 +52,7 @@
     <ClCompile Include="..\..\src\webapplication.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\config.h" />
     <ClInclude Include="..\..\src\connection.h" />
     <ClInclude Include="..\..\src\controller.h" />
     <ClInclude Include="..\..\src\controllermanager.h" />
