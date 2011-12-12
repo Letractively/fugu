@@ -9,7 +9,7 @@
 
 namespace fugu {
 
-WebApplication::WebApplication(const std::string& address, const std::string& port, const std::string& root, std::size_t threadPoolSize)
+WebApplication::WebApplication(const std::string& address, const std::string& port, std::size_t threadPoolSize)
 	: _threadPoolSize(threadPoolSize)
 		,_acceptor(_acceptorService)
 		,_performServiceWork(_performService)

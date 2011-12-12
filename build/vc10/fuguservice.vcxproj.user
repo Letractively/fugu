@@ -5,7 +5,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug_shared|Win32'">
-    <LocalDebuggerCommandArguments>127.0.0.1 9999 10 home</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>fugu.conf</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerWorkingDirectory>$(ProjectDir)\bin</LocalDebuggerWorkingDirectory>
   </PropertyGroup>

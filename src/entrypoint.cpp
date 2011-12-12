@@ -9,23 +9,17 @@ int main(int argc, char* argv[])
 {
 	try
 	{
-		fugu::Config config("fugu.conf");
-
 		//UserManager* i = nedalloc::New<UserManager>();
 		// Check command line arguments.
-		if (argc != 5)
+		if (argc < 2)
 		{
-			std::cerr << "Usage: http_server <address> <port> <threads> <doc_root>\n";
-			std::cerr << "  For IPv4, try:\n";
-			std::cerr << "    http_server 0.0.0.0 80 1 .\n";
-			std::cerr << "  For IPv6, try:\n";
-			std::cerr << "    http_server 0::0 80 1 .\n";
+			std::cerr << "Usage: fuguservice.exe <confing file path>\n";
 			return 1;
 		}
 
+		fugu::Config config(argv[1]);
 		// Initialise server.
-		std::size_t numThreads = boost::lexical_cast<std::size_t>(argv[3]);
-		fugu::WebApplication app(argv[1], argv[2], argv[4], numThreads);
+		fugu::WebApplication app(config.Bind(), config.Port(), config.ThreadPoolSize());
 
 		// Run the server until stopped.
 		app.Run();

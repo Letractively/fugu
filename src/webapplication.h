@@ -18,7 +18,7 @@ class WebApplication : private boost::noncopyable
 public:
 	// Construct the server to listen on the specified TCP address and port, and
 	// serve up files from the given directory.
-	explicit WebApplication(const std::string& address, const std::string& port, const std::string& root, std::size_t threadPoolSize);
+	explicit WebApplication(const std::string& address, const std::string& port, std::size_t threadPoolSize);
 	~WebApplication();
 
 	// Run the server's io_service loop.
