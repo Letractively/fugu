@@ -1,15 +1,15 @@
 #include "registrator.h"
-#include "controllermanager.h"
-#include "pingcontroller.h"
-#include "homecontroller.h"
+#include "handlerrouter.h"
+#include "pingHandler.h"
+#include "homeHandler.h"
 
 namespace fugu {
 
-Registrator::Registrator(ControllerManager& controllerMgr)
-	:_controllerMgr(controllerMgr)
+Registrator::Registrator(HandlerRouter& HandlerMgr)
+	:_HandlerMgr(HandlerMgr)
 {
-	_controllerMgr.RegisterFactory(new PingControllerFactory);
-	_controllerMgr.RegisterFactory(new HomeControllerFactory);
+	_HandlerMgr.RegisterFactory(new PingHandlerFactory);
+	_HandlerMgr.RegisterFactory(new HomeHandlerFactory);
 }
 
 Registrator::~Registrator()

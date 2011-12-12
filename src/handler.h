@@ -7,17 +7,17 @@
 
 namespace fugu {
 
-class Controller : private boost::noncopyable
+class Handler : private boost::noncopyable
 {
-friend class ControllerFactory;
+friend class HandlerFactory;
 
 public:
-	Controller();
-	virtual ~Controller();
-	virtual ResponsePtr Get(QueryContextPtr ctx);
-	virtual ResponsePtr Put(QueryContextPtr ctx);
-	virtual ResponsePtr Delete(QueryContextPtr ctx);
-	virtual ResponsePtr Post(QueryContextPtr ctx);
+	Handler();
+	virtual ~Handler();
+	virtual ResponsePtr Get(ContextPtr ctx);
+	virtual ResponsePtr Put(ContextPtr ctx);
+	virtual ResponsePtr Delete(ContextPtr ctx);
+	virtual ResponsePtr Post(ContextPtr ctx);
 	const std::string ResourceUrl() const { return _resourceUrl; }
 
 protected:
@@ -30,13 +30,13 @@ private:
 	std::string _resourceUrl;
 };
 
-class ControllerFactory : private boost::noncopyable
+class HandlerFactory : private boost::noncopyable
 {
 protected:			
-	virtual Controller* CreateImpl(const std::string url)=0;
+	virtual Handler* CreateImpl(const std::string url)=0;
 public:
 	virtual const std::string& ResourceUrl() const=0;
-	virtual ControllerPtr Create(const std::string url);
+	virtual HandlerPtr Create(const std::string url);
 	bool HasRights(UserPtr user);
 };
 

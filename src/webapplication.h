@@ -4,8 +4,9 @@
 #include "prerequisites.h"
 #include "session.h"
 #include "user.h"
-#include "controllermanager.h"
+#include "handlerrouter.h"
 #include "registrator.h"
+#include "config.h"
 #include <boost/asio.hpp>
 
 namespace fugu {
@@ -18,7 +19,7 @@ class WebApplication : private boost::noncopyable
 public:
 	// Construct the server to listen on the specified TCP address and port, and
 	// serve up files from the given directory.
-	explicit WebApplication(const std::string& address, const std::string& port, std::size_t threadPoolSize);
+	explicit WebApplication(const std::string& configPath);
 	~WebApplication();
 
 	// Run the server's io_service loop.
@@ -37,22 +38,18 @@ private:
 	void ProcessRequest(HttpRequestPtr request, ConnectionPtr conn);
 
 private:
-	// The io_service used to handle asynchronous incoming connections(in single thread)
-	boost::asio::io_service _acceptorService;
+	Config _config;
+	// The io_service used to handle asynchronous incoming connections, 
+	// and perform asynchronous operations(read/write socket, process requests, backend calls, etc)
+	boost::asio::io_service _service;
 	// Acceptor used to listen for incoming connections.
 	boost::asio::ip::tcp::acceptor  _acceptor;
-	// The io_service used to perform asynchronous operations(read/write socket, process requests, backend calls, etc)
-	boost::asio::io_service _performService;
-	// The run() call may be kept running by creating an object of type io_service::work
-	boost::asio::io_service::work _performServiceWork;
-	// The number of threads that will call io_service::run().
-	std::size_t _threadPoolSize;
 	// Manager of the user sessions
 	SessionManager _sessionMgr;
 	//User manager
 	UserManager _userMgr;
 	// The handler for all incoming requests.
-	ControllerManager _controllerMgr;
+	HandlerRouter _HandlerMgr;
 	// Componets registratio
 	Registrator _registrator;
 };

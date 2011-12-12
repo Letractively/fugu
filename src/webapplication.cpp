@@ -1,5 +1,5 @@
 #include "webapplication.h"
-#include "querycontext.h"
+#include "context.h"
 #include "connection.h"
 #include "httprequest.h"
 #include "response.h"
@@ -9,15 +9,14 @@
 
 namespace fugu {
 
-WebApplication::WebApplication(const std::string& address, const std::string& port, std::size_t threadPoolSize)
-	: _threadPoolSize(threadPoolSize)
-		,_acceptor(_acceptorService)
-		,_performServiceWork(_performService)
-		,_registrator(_controllerMgr)
+WebApplication::WebApplication(const std::string& configPath)
+	: _config(configPath)
+		,_acceptor(_service)
+		,_registrator(_HandlerMgr)
 {
 	// Open the acceptor with the option to reuse the address (i.e. SO_REUSEADDR).
-	boost::asio::ip::tcp::resolver resolver(_acceptorService);
-	boost::asio::ip::tcp::resolver::query query(address, port);
+	boost::asio::ip::tcp::resolver resolver(_service);
+	boost::asio::ip::tcp::resolver::query query(_config.Bind(), _config.Port());
 	boost::asio::ip::tcp::endpoint endpoint = *resolver.resolve(query);
 	_acceptor.open(endpoint.protocol());
 	_acceptor.set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
@@ -37,12 +36,9 @@ void WebApplication::Run()
 	// Create a pool of threads to run all of the io_services.
 	boost::thread_group threads;
 
-	// Create acceptor thread, one thread to handle incoming connections
-	threads.create_thread( boost::bind(&boost::asio::io_service::run, &_acceptorService));
-
 	// Create threads for read/write async operations
-	for (std::size_t i = 0; i < _threadPoolSize; ++i)
-		threads.create_thread( boost::bind(&boost::asio::io_service::run, &_performService));
+	for (std::size_t i = 0; i < _config.ThreadPoolSize(); ++i)
+		threads.create_thread( boost::bind(&boost::asio::io_service::run, &_service));
 
     // wait for them
     threads.join_all();
@@ -51,7 +47,7 @@ void WebApplication::Run()
 void WebApplication::DoAccept()
 {
 	// The next connection to be accepted.
-	ConnectionPtr conn(new Connection(_performService, boost::bind(&WebApplication::ProcessRequest, this,_1,_2)));
+	ConnectionPtr conn(new Connection(_service, boost::bind(&WebApplication::ProcessRequest, this,_1,_2)));
 	_acceptor.async_accept(conn->Socket(), boost::bind(&WebApplication::HandleAccept, this,
 		boost::asio::placeholders::error, conn));
 }
@@ -68,12 +64,8 @@ void WebApplication::HandleAccept(const boost::system::error_code& e, Connection
 
 void WebApplication::HandleStop()
 {
-	_acceptorService.stop();
-	_performService.stop();
+	_service.stop();
 }
-
-const char name_value_separator[] = { ':', ' ' };
-const char crlf[] = { '\r', '\n' };
 
 void WebApplication::ProcessRequest(HttpRequestPtr req, ConnectionPtr conn)
 {
@@ -84,8 +76,8 @@ void WebApplication::ProcessRequest(HttpRequestPtr req, ConnectionPtr conn)
 		session = _sessionMgr.CreateSession(user);
 	}
 
-	QueryContextPtr ctx(new QueryContext(session, conn, req));
-	ResponsePtr resp = _controllerMgr.ProcessRequest(ctx);
+	ContextPtr ctx(new Context(session, conn, req, _config));
+	ResponsePtr resp = _HandlerMgr.ProcessRequest(ctx);
 
 	if(resp == NULL) 
 		conn->Close();

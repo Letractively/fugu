@@ -2,7 +2,6 @@
 #include "webapplication.h"
 #include "user.h"
 #include "exception.h"
-#include "config.h"
 //#include "nedmalloc/nedmalloc.h"
 
 int main(int argc, char* argv[]) 
@@ -16,10 +15,8 @@ int main(int argc, char* argv[])
 			std::cerr << "Usage: fuguservice.exe <confing file path>\n";
 			return 1;
 		}
-
-		fugu::Config config(argv[1]);
 		// Initialise server.
-		fugu::WebApplication app(config.Bind(), config.Port(), config.ThreadPoolSize());
+		fugu::WebApplication app(argv[1]);
 
 		// Run the server until stopped.
 		app.Run();

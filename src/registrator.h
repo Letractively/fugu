@@ -9,11 +9,11 @@ namespace fugu {
 class Registrator : private boost::noncopyable
 {
 public:
-	Registrator(ControllerManager& controllerMgr);
+	Registrator(HandlerRouter& HandlerMgr);
 	~Registrator();
 
 private:
-	ControllerManager& _controllerMgr;
+	HandlerRouter& _HandlerMgr;
 };
 
 }

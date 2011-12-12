@@ -1,10 +1,10 @@
-#include "pingcontroller.h"
+#include "pingHandler.h"
 #include "response.h"
 #include <sstream>
 
 namespace fugu {
 
-ResponsePtr PingController::OKResponse()
+ResponsePtr PingHandler::OKResponse()
 {
 	std::string content =  "<html><head><title>ping</title></head><body><h1>fugu service rinning</h1></body></html>";
 	std::ostringstream response;
@@ -19,34 +19,34 @@ ResponsePtr PingController::OKResponse()
 	return new Response(response.str());
 }
 
-ResponsePtr PingController::Get(QueryContextPtr ctx)
+ResponsePtr PingHandler::Get(ContextPtr ctx)
 {
 	return OKResponse();
 }
 
-ResponsePtr PingController::Put(QueryContextPtr ctx)
+ResponsePtr PingHandler::Put(ContextPtr ctx)
 {
 	return OKResponse();
 }
 
-ResponsePtr PingController::Delete(QueryContextPtr ctx)
+ResponsePtr PingHandler::Delete(ContextPtr ctx)
 {
 	return OKResponse();
 }
 
-ResponsePtr PingController::Post(QueryContextPtr ctx)
+ResponsePtr PingHandler::Post(ContextPtr ctx)
 {
 	return OKResponse();
 }
 
 	
-Controller* PingControllerFactory::CreateImpl(const std::string url)
+Handler* PingHandlerFactory::CreateImpl(const std::string url)
 {
-	return new PingController();
+	return new PingHandler();
 }
 
 const static std::string PING_RESOURCE = "/ping.fsp";
-const std::string& PingControllerFactory::ResourceUrl() const
+const std::string& PingHandlerFactory::ResourceUrl() const
 {
 	return PING_RESOURCE;
 }

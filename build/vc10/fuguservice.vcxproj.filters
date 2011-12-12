@@ -8,13 +8,7 @@
     <ClCompile Include="..\..\src\connection.cpp">
       <Filter>net</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\controller.cpp">
-      <Filter>controllers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\session.cpp">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\querycontext.h">
       <Filter>engine</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\httprequest.cpp">
@@ -35,17 +29,11 @@
     <ClCompile Include="..\..\src\logger.cpp">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\pingcontroller.cpp">
-      <Filter>controllers\ping</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\exception.cpp">
       <Filter>common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\nedmalloc\nedmalloc.c">
       <Filter>common\allocator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\controllermanager.cpp">
-      <Filter>controllers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\http_parser\http_parser.c">
       <Filter>net\request</Filter>
@@ -56,9 +44,6 @@
     <ClCompile Include="..\..\src\registration.cpp">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\homecontroller.cpp">
-      <Filter>controllers\ping</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\viewdata.cpp">
       <Filter>models\core</Filter>
     </ClCompile>
@@ -67,6 +52,24 @@
     </ClCompile>
     <ClCompile Include="..\..\src\config.cpp">
       <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\context.h">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\context.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\handler.cpp">
+      <Filter>controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\homehandler.cpp">
+      <Filter>controllers\ping</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\pinghandler.cpp">
+      <Filter>controllers\ping</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\handlerrouter.cpp">
+      <Filter>controllers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -114,9 +117,6 @@
     <ClInclude Include="..\..\src\connection.h">
       <Filter>net</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\controller.h">
-      <Filter>controllers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\prerequisites.h">
       <Filter>common</Filter>
     </ClInclude>
@@ -141,17 +141,11 @@
     <ClInclude Include="..\..\src\logger.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\pingcontroller.h">
-      <Filter>controllers\ping</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\exception.h">
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\nedmalloc\nedmalloc.h">
       <Filter>common\allocator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\controllermanager.h">
-      <Filter>controllers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\http_parser\http_parser.h">
       <Filter>net\request</Filter>
@@ -161,9 +155,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\registrator.h">
       <Filter>common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\homecontroller.h">
-      <Filter>controllers\ping</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\viewdata.h">
       <Filter>models\core</Filter>
@@ -176,6 +167,18 @@
     </ClInclude>
     <ClInclude Include="..\..\src\config.h">
       <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\handler.h">
+      <Filter>controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\homehandler.h">
+      <Filter>controllers\ping</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\pinghandler.h">
+      <Filter>controllers\ping</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\handlerrouter.h">
+      <Filter>controllers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,6 @@
 
 namespace fugu {
 
-typedef 
 class Config : private boost::noncopyable
 {
 public:

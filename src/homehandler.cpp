@@ -1,10 +1,10 @@
-#include "homecontroller.h"
+#include "homeHandler.h"
 #include "response.h"
 #include <sstream>
 
 namespace fugu {
 
-ResponsePtr HomeController::OKResponse()
+ResponsePtr HomeHandler::OKResponse()
 {
 	std::ostringstream contentstream;
 	contentstream
@@ -19,7 +19,7 @@ ResponsePtr HomeController::OKResponse()
 	<< "<script type='text/javascript' src='fugu/headerview.js'></script>"
 	<< "<script type='text/javascript' src='fugu/menuview.js'></script>"
 	<< "<script type='text/javascript' src='fugu/contentview.js'></script>"
-	<< "<script type='text/javascript' src='fugu/appcontroller.js'></script>"
+	<< "<script type='text/javascript' src='fugu/appHandler.js'></script>"
 	<< "</head>"
 	<< "<body class='tundra'>"
 	<< "</body>"
@@ -37,17 +37,17 @@ ResponsePtr HomeController::OKResponse()
 	return new Response(response.str());
 }
 
-ResponsePtr HomeController::Get(QueryContextPtr ctx)
+ResponsePtr HomeHandler::Get(ContextPtr ctx)
 {
 	return OKResponse();
 }
 
-Controller* HomeControllerFactory::CreateImpl(const std::string url)
+Handler* HomeHandlerFactory::CreateImpl(const std::string url)
 {
-	return new HomeController();
+	return new HomeHandler();
 }
 
-const std::string& HomeControllerFactory::ResourceUrl() const
+const std::string& HomeHandlerFactory::ResourceUrl() const
 {
 	static std::string HOME_RESOURCE = "/home.fsp";
 	return HOME_RESOURCE;

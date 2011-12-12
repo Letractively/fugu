@@ -1,23 +1,23 @@
 #ifndef __FUGU_HOME_CONTROLER_H__
 #define __FUGU_HOME_CONTROLER_H__
 
-#include "controller.h"
+#include "Handler.h"
 
 namespace fugu {
 
-class HomeController : public Controller
+class HomeHandler : public Handler
 {
 public:
-	virtual ResponsePtr Get(QueryContextPtr ctx);
+	virtual ResponsePtr Get(ContextPtr ctx);
 
 private:
 	ResponsePtr OKResponse();
 };
 
-class HomeControllerFactory : public ControllerFactory
+class HomeHandlerFactory : public HandlerFactory
 {
 protected:			
-	Controller* CreateImpl(const std::string url);
+	Handler* CreateImpl(const std::string url);
 public:
 	const std::string& ResourceUrl() const;
 

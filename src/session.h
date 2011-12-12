@@ -7,7 +7,7 @@
 
 namespace fugu {
 
-typedef std::map<std::string, ControllerPtr> Controllers;
+typedef std::map<std::string, HandlerPtr> Handlers;
 typedef std::map<std::string, SessionPtr> Sessions;
 
 // User session
@@ -32,8 +32,8 @@ private:
 	boost::posix_time::ptime _signUpAt;
 	// The last user activity
 	boost::posix_time::ptime _lastActivityAt;
-	// Session controllers, the controllers can cache the states and data
-	Controllers _controllers;
+	// Session Handlers, the Handlers can cache the states and data
+	Handlers _Handlers;
 };
 
 // Manager of the user sessions
