@@ -8,18 +8,15 @@ namespace fugu {
 class HomeHandler : public Handler
 {
 public:
-	virtual ResponsePtr Get(ContextPtr ctx);
-
-private:
-	ResponsePtr OKResponse();
+	virtual ResponsePtr Process(ContextPtr ctx);
 };
 
 class HomeHandlerFactory : public HandlerFactory
 {
 protected:			
-	Handler* CreateImpl(const std::string url);
+	Handler* CreateImpl();
 public:
-	const std::string& ResourceUrl() const;
+	const std::string& Name() const;
 
 };
 

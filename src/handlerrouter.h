@@ -2,6 +2,7 @@
 #define __FUGU_CONTROLER_MANAGER_H__
 
 #include "prerequisites.h"
+#include "route.h"
 #include <boost/thread/shared_mutex.hpp>
 #include <vector>
 #include <map>
@@ -15,15 +16,16 @@ typedef std::map<std::string, HandlerFactoryPtr> HandlerFactories;
 class HandlerRouter : private boost::noncopyable
 {
 public:
-	HandlerRouter();
+	HandlerRouter(Config& config);
 	~HandlerRouter();
 	// Registration for all factories should be when the application starts
 	void RegisterFactory(HandlerFactory* factory);
 	// Free lock
-	ResponsePtr ProcessRequest(ContextPtr ctx);
+	ResponsePtr Route(ContextPtr ctx);
 
 private:
 	HandlerFactories _factories;
+	Routes _routes;
 };
 
 }

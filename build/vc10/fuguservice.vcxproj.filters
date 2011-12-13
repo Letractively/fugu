@@ -71,6 +71,9 @@
     <ClCompile Include="..\..\src\handlerrouter.cpp">
       <Filter>controllers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\viewfromdbhandler.cpp">
+      <Filter>controllers\ping</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="net">
@@ -178,6 +181,12 @@
       <Filter>controllers\ping</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\handlerrouter.h">
+      <Filter>controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\viewfromdbhandler.h">
+      <Filter>controllers\ping</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\route.h">
       <Filter>controllers</Filter>
     </ClInclude>
   </ItemGroup>

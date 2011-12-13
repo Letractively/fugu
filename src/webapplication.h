@@ -49,7 +49,7 @@ private:
 	//User manager
 	UserManager _userMgr;
 	// The handler for all incoming requests.
-	HandlerRouter _HandlerMgr;
+	HandlerRouter _router;
 	// Componets registratio
 	Registrator _registrator;
 };

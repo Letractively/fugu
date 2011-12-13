@@ -4,7 +4,7 @@
 
 namespace fugu {
 
-ResponsePtr HomeHandler::OKResponse()
+ResponsePtr HomeHandler::Process(ContextPtr ctx)
 {
 	std::ostringstream contentstream;
 	contentstream
@@ -19,7 +19,7 @@ ResponsePtr HomeHandler::OKResponse()
 	<< "<script type='text/javascript' src='fugu/headerview.js'></script>"
 	<< "<script type='text/javascript' src='fugu/menuview.js'></script>"
 	<< "<script type='text/javascript' src='fugu/contentview.js'></script>"
-	<< "<script type='text/javascript' src='fugu/appHandler.js'></script>"
+	<< "<script type='text/javascript' src='fugu/appcontroller.js'></script>"
 	<< "</head>"
 	<< "<body class='tundra'>"
 	<< "</body>"
@@ -37,20 +37,15 @@ ResponsePtr HomeHandler::OKResponse()
 	return new Response(response.str());
 }
 
-ResponsePtr HomeHandler::Get(ContextPtr ctx)
-{
-	return OKResponse();
-}
-
-Handler* HomeHandlerFactory::CreateImpl(const std::string url)
+Handler* HomeHandlerFactory::CreateImpl()
 {
 	return new HomeHandler();
 }
 
-const std::string& HomeHandlerFactory::ResourceUrl() const
+const std::string& HomeHandlerFactory::Name() const
 {
-	static std::string HOME_RESOURCE = "/home.fsp";
-	return HOME_RESOURCE;
+	static std::string HOME_HANDLER_NAME = "homehandler";
+	return HOME_HANDLER_NAME;
 }
 
 }

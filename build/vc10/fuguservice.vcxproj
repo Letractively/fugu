@@ -50,6 +50,7 @@
     <ClCompile Include="..\..\src\context.cpp" />
     <ClCompile Include="..\..\src\user.cpp" />
     <ClCompile Include="..\..\src\viewdata.cpp" />
+    <ClCompile Include="..\..\src\viewfromdbhandler.cpp" />
     <ClCompile Include="..\..\src\webapplication.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +59,7 @@
     <ClInclude Include="..\..\src\dbpool.h" />
     <ClInclude Include="..\..\src\exception.h" />
     <ClInclude Include="..\..\src\handler.h" />
+    <ClInclude Include="..\..\src\route.h" />
     <ClInclude Include="..\..\src\handlerrouter.h" />
     <ClInclude Include="..\..\src\homehandler.h" />
     <ClInclude Include="..\..\src\httpmessage.h" />
@@ -76,6 +78,7 @@
     <ClInclude Include="..\..\src\stdheaders.h" />
     <ClInclude Include="..\..\src\user.h" />
     <ClInclude Include="..\..\src\viewdata.h" />
+    <ClInclude Include="..\..\src\viewfromdbhandler.h" />
     <ClInclude Include="..\..\src\webapplication.h" />
   </ItemGroup>
   <ItemGroup>

@@ -2,14 +2,16 @@
 #include "handlerrouter.h"
 #include "pingHandler.h"
 #include "homeHandler.h"
+#include "viewfromdbhandler.h"
 
 namespace fugu {
 
-Registrator::Registrator(HandlerRouter& HandlerMgr)
-	:_HandlerMgr(HandlerMgr)
+Registrator::Registrator(HandlerRouter& router)
+	:_router(router)
 {
-	_HandlerMgr.RegisterFactory(new PingHandlerFactory);
-	_HandlerMgr.RegisterFactory(new HomeHandlerFactory);
+	_router.RegisterFactory(new PingHandlerFactory);
+	_router.RegisterFactory(new HomeHandlerFactory);
+	_router.RegisterFactory(new ViewFromDBHandlerFactory);
 }
 
 Registrator::~Registrator()

@@ -1,4 +1,5 @@
-#include "Handler.h"
+#include "handler.h"
+#include "route.h"
 #include <exception.h>
 
 namespace fugu {
@@ -9,26 +10,6 @@ namespace fugu {
 
 	Handler::~Handler()
 	{
-	}
-
-	ResponsePtr Handler::Get(ContextPtr ctx)
-	{
-		FUGU_THROW("GET does't inplemented for handle resource: " + _resourceUrl, "Handler::Get");
-	}
-
-	ResponsePtr Handler::Put(ContextPtr ctx)
-	{
-		FUGU_THROW("PUT does't inplemented for handle resource: " + _resourceUrl, "Handler::Get");
-	}
-
-	ResponsePtr Handler::Delete(ContextPtr ctx)
-	{
-		FUGU_THROW("DELETE does't inplemented for handle resource: " + _resourceUrl, "Handler::Get");
-	}
-
-	ResponsePtr Handler::Post(ContextPtr ctx)
-	{
-		FUGU_THROW("POST does't inplemented for handle resource: " + _resourceUrl, "Handler::Get");
 	}
 
 	ResponsePtr Handler::View()
@@ -51,11 +32,12 @@ namespace fugu {
 		return NULL;
 	}
 
-	HandlerPtr HandlerFactory::Create(const std::string url)
+	HandlerPtr HandlerFactory::Create(RoutePtr route)
 	{
-		HandlerPtr Handler(CreateImpl(url));
-		Handler->_resourceUrl = url;
-		return Handler;
+		HandlerPtr handler(CreateImpl());
+		handler->_name = route->HandlerName();
+		handler->_viewName = route->ViewName();
+		return handler;
 	}
 
 	bool HandlerFactory::HasRights(UserPtr user)

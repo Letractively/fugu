@@ -1,14 +1,18 @@
 #include "handlerrouter.h"
-#include "Handler.h"
+#include "handler.h"
+#include "route.h"
 #include "exception.h"
 #include "httprequest.h"
 #include "context.h"
+#include "config.h"
 #include <boost/thread/locks.hpp>
+#include <boost/foreach.hpp>
 
 namespace fugu {
 
-HandlerRouter::HandlerRouter()
+HandlerRouter::HandlerRouter(Config& config)
 {
+	config.GetRoutes(_routes);
 }
 
 HandlerRouter::~HandlerRouter()
@@ -17,38 +21,45 @@ HandlerRouter::~HandlerRouter()
 
 void HandlerRouter::RegisterFactory(HandlerFactory* factory)
 {
-	HandlerFactories::iterator iter = _factories.find(factory->ResourceUrl());
+	HandlerFactories::iterator iter = _factories.find(factory->Name());
 	if(iter != _factories.end()) {
-		FUGU_THROW("HandlerFactory : '" + factory->ResourceUrl() + "' already registered", 
+		FUGU_THROW("HandlerFactory : '" + factory->Name() + "' already registered", 
 					"HandlerRouter::RegisterFactory");
 	}
 
 	_factories.insert(
 		std::make_pair<std::string, HandlerFactoryPtr>(
-							factory->ResourceUrl(), 
+							factory->Name(), 
 							HandlerFactoryPtr(factory)));
 }
 
-ResponsePtr HandlerRouter::ProcessRequest(ContextPtr ctx)
+ResponsePtr HandlerRouter::Route(ContextPtr ctx)
 {
-	HandlerFactories::iterator iter = _factories.find(ctx->Request()->Url());
-	if(iter != _factories.end())
+	try
 	{
-		HandlerFactoryPtr factory = iter->second;
-		HandlerPtr Handler = factory->Create(ctx->Request()->Url());
+		Routes::const_iterator riter = _routes.find(ctx->Request()->Url());
 
-		switch(ctx->Request()->Method())
+		if(riter == _routes.end())
+			FUGU_THROW("Route for url '" + ctx->Request()->Url()+"' doesn't exists", "HandlerRouter::Route");
+
+		HandlerFactories::iterator iter = _factories.find(riter->second->HandlerName());
+		if(iter != _factories.end())
 		{
-			case HTTPMethods::HTTP_DELETE:
-				return Handler->Delete(ctx);
-			case HTTPMethods::HTTP_GET:
-				return Handler->Get(ctx);
-			case HTTPMethods::HTTP_POST:
-				return Handler->Post(ctx);
-			default:
-				FUGU_THROW("HTTP method does't support(support only the following methods: GET,POST,DELETE,PUT)"
-							,"HandlerRouter::ProcessRequest");
-		};
+			HandlerFactoryPtr factory = iter->second;
+			HandlerPtr handler = factory->Create(riter->second);
+
+			return handler->Process(ctx);
+
+		}
+	}
+	catch(Exception& fe)
+	{
+		throw fe;
+	}
+	catch(std::exception& e)
+	{
+		FUGU_THROW(e.what()
+					,"HandlerRouter::ProcessRequest");
 	}
 
 	return NULL;

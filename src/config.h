@@ -3,6 +3,7 @@
 
 #include "prerequisites.h"
 #include "stdheaders.h"
+#include "route.h"
 #include <boost/property_tree/ptree.hpp>
 
 namespace fugu {
@@ -16,12 +17,7 @@ public:
 	std::string Bind() const;
 	std::string Port() const;
 	unsigned int ThreadPoolSize() const;
-
-	int GetInt(const std::string& key, int _default) const;
-	unsigned int GetUInt(const std::string& key, unsigned int _default) const;
-	bool GetBool(const std::string& key, bool _default) const;
-	std::string GetString(const std::string& key, const std::string& _default="") const;
-	boost::property_tree::ptree Config::PropertyTree() const;
+	void GetRoutes(Routes& routes);
 
 private:
 	// property tree object

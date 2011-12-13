@@ -1,3 +1,3 @@
-fuguserviced.exe 127.0.0.1 9999 10 home
+fuguserviced.exe fugu.conf
 
 pause

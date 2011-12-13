@@ -1,5 +1,5 @@
-#ifndef __FUGU_CONTROLER_H__
-#define __FUGU_CONTROLER_H__
+#ifndef __FUGU_HANDLER_H__
+#define __FUGU_HANDLER_H__
 
 #include "prerequisites.h"
 #include <vector>
@@ -14,11 +14,9 @@ friend class HandlerFactory;
 public:
 	Handler();
 	virtual ~Handler();
-	virtual ResponsePtr Get(ContextPtr ctx);
-	virtual ResponsePtr Put(ContextPtr ctx);
-	virtual ResponsePtr Delete(ContextPtr ctx);
-	virtual ResponsePtr Post(ContextPtr ctx);
-	const std::string ResourceUrl() const { return _resourceUrl; }
+	virtual ResponsePtr Process(ContextPtr ctx)=0;
+	const std::string Name() const { return _name; }
+	const std::string ViewName() const { return _viewName; }
 
 protected:
 	ResponsePtr View();
@@ -27,16 +25,17 @@ protected:
 	ResponsePtr Xml(const std::string json);
 
 private:
-	std::string _resourceUrl;
+	std::string _name;
+	std::string _viewName;
 };
 
 class HandlerFactory : private boost::noncopyable
 {
 protected:			
-	virtual Handler* CreateImpl(const std::string url)=0;
+	virtual Handler* CreateImpl()=0;
 public:
-	virtual const std::string& ResourceUrl() const=0;
-	virtual HandlerPtr Create(const std::string url);
+	virtual const std::string& Name() const=0;
+	virtual HandlerPtr Create(RoutePtr route);
 	bool HasRights(UserPtr user);
 };
 

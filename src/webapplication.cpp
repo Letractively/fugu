@@ -11,8 +11,9 @@ namespace fugu {
 
 WebApplication::WebApplication(const std::string& configPath)
 	: _config(configPath)
-		,_acceptor(_service)
-		,_registrator(_HandlerMgr)
+	,_router(_config)
+	,_acceptor(_service)
+	,_registrator(_router)
 {
 	// Open the acceptor with the option to reuse the address (i.e. SO_REUSEADDR).
 	boost::asio::ip::tcp::resolver resolver(_service);
@@ -76,8 +77,8 @@ void WebApplication::ProcessRequest(HttpRequestPtr req, ConnectionPtr conn)
 		session = _sessionMgr.CreateSession(user);
 	}
 
-	ContextPtr ctx(new Context(session, conn, req, _config));
-	ResponsePtr resp = _HandlerMgr.ProcessRequest(ctx);
+	ContextPtr ctx(new Context(session, conn, req));
+	ResponsePtr resp = _router.Route(ctx);
 
 	if(resp == NULL) 
 		conn->Close();

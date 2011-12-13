@@ -1,12 +1,12 @@
-#include "pingHandler.h"
+#include "viewfromdbhandler.h"
 #include "response.h"
 #include <sstream>
 
 namespace fugu {
 
-ResponsePtr PingHandler::Process(ContextPtr ctx)
+ResponsePtr ViewFromDBHandler::Process(ContextPtr ctx)
 {
-	std::string content =  "<html><head><title>ping</title></head><body><h1>fugu service is running...</h1></body></html>";
+	std::string content =  "<html><head><title>ping</title></head><body><h1>db from view</h1></body></html>";
 	std::ostringstream response;
 	response<<"HTTP/1.0 200 OK\r\n"
 			<<"Location: www.google.com\r\n"
@@ -19,15 +19,15 @@ ResponsePtr PingHandler::Process(ContextPtr ctx)
 	return new Response(response.str());
 }
 	
-Handler* PingHandlerFactory::CreateImpl()
+Handler* ViewFromDBHandlerFactory::CreateImpl()
 {
-	return new PingHandler();
+	return new ViewFromDBHandler;
 }
 
-const std::string& PingHandlerFactory::Name() const
+const std::string& ViewFromDBHandlerFactory::Name() const
 {
-	static std::string PING_HANDLER_NAME = "pinghandler";
-	return PING_HANDLER_NAME;
+	const static std::string VIEW_FROM_DB_HANDLER = "viewfromdbhandler";
+	return VIEW_FROM_DB_HANDLER;
 }
 
 }
