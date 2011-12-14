@@ -15,6 +15,7 @@ public:
 	Handler();
 	virtual ~Handler();
 	virtual ResponsePtr Process(ContextPtr ctx)=0;
+	//bool LongRunning() const virtual = 0;
 	const std::string Name() const { return _name; }
 	const std::string ViewName() const { return _viewName; }
 

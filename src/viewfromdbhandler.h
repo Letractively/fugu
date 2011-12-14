@@ -9,6 +9,10 @@ class ViewFromDBHandler : public Handler
 {
 public:
 	ResponsePtr Process(ContextPtr ctx);
+
+private:
+	ResponsePtr GetView(ContextPtr ctx);
+	ResponsePtr UpdateView(ContextPtr ctx);
 };
 
 class ViewFromDBHandlerFactory : public HandlerFactory

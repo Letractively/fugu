@@ -120,4 +120,14 @@ HttpCookiesIterator HttpMessage::GetCookies()
 	return HttpCookiesIterator(_cookies);
 }
 
+const std::string& HttpMessage::Content() const
+{
+	return _content;
+}
+
+void HttpMessage::SetContent(const std::string& content)
+{
+	_content = content;
+}
+
 }

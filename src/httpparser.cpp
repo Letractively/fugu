@@ -210,7 +210,8 @@ int HttpParser::OnBody(http_parser *parser, const char *buf, size_t len)
 
 int HttpParser::OnCountBody(http_parser *parser, const char *buf, size_t len)
 {
-	HttpRequest* adapter = reinterpret_cast<HttpRequest*>(parser->data);
+	HttpParser* p = reinterpret_cast<HttpParser*>(parser->data);
+	p->_request->SetContent(std::string(buf, len));
 	return 0;
 }
 
@@ -235,24 +236,24 @@ int HttpParser::MessageCompleted(http_parser *parser)
 	return 0;
 }
 
-HTTPMethods HttpParser::ConvertHttpMethod(http_method method)
+HttpMethods HttpParser::ConvertHttpMethod(http_method method)
 {
 	switch(method)
 	{
 		case http_method::HTTP_DELETE:
-			return HTTPMethods::HTTP_DELETE;
+			return HttpMethods::HTTP_DELETE;
 			break;
 		case http_method::HTTP_GET:
-			return HTTPMethods::HTTP_GET;
+			return HttpMethods::HTTP_GET;
 			break;
 		case http_method::HTTP_POST:
-			return HTTPMethods::HTTP_POST;
+			return HttpMethods::HTTP_POST;
 			break;
 		case http_method::HTTP_PUT:
-			return HTTPMethods::HTTP_PUT;
+			return HttpMethods::HTTP_PUT;
 			break;
 		default:
-			return HTTPMethods::NOT_SUPPORTED;
+			return HttpMethods::NOT_SUPPORTED;
 			break;
 	}
 }

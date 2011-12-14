@@ -2,7 +2,23 @@
 
 namespace fugu {
 
-const std::string SET_COOKIE = "Set-Cookie";
+const std::string SET_COOKIE_HEADER_WITH_SEPARATOR = "Set-Cookie";
+const std::string CONTENT_LENGTH_HEADER_WITH_SEPARATOR = "Content-Length: ";
+const std::string CONTENT_TYPE_HEADER_WITH_SEPARATOR = "Content-Type: ";
+
+const std::string NAME_VALUE_HEADER_SEPARATOR = ": ";
+const std::string CRLF = "\r\n";
+
+const std::string& ParseStatus(HttppStatus status);
+
+HttpResponse::HttpResponse()
+	:_outstream(&_outstreambuf)
+{
+}
+
+HttpResponse::~HttpResponse()
+{
+}
 
 void HttpResponse::SetCookie(const std::string& name, const std::string& value)
 {
@@ -15,75 +31,82 @@ void HttpResponse::SetCookie(const std::string& name, const std::string& value)
 
 void HttpResponse::DeleteCookie(const std::string& name)
 {
+	_cookies.erase(_cookies.find(name));
 }
 
-/*
-const char name_value_separator[] = { ':', ' ' };
-const char crlf[] = { '\r', '\n' };
-
-std::vector<boost::asio::const_buffer> HttpResponse::ToBuffers()
+HttppStatus HttpResponse::Status() const
 {
-	std::vector<boost::asio::const_buffer> buffers;
-
-	for (std::size_t i = 0; i < _headers.size(); ++i)
-	{
-		HttpHeader& h = _headers[i];
-		buffers.push_back(boost::asio::buffer(h.Name()));
-		buffers.push_back(boost::asio::buffer(name_value_separator));
-		buffers.push_back(boost::asio::buffer(h.Value()));
-		buffers.push_back(boost::asio::buffer(crlf));
-	}
-
-	buffers.push_back(boost::asio::buffer(crlf));
-	buffers.push_back(boost::asio::buffer(content));
-
-	return buffers;
+	return _status;
 }
-*/
 
-const std::string HttpResponse::HTTP_REASON_CONTINUE                        = "Continue";
-const std::string HttpResponse::HTTP_REASON_SWITCHING_PROTOCOLS             = "Switching Protocols";
-const std::string HttpResponse::HTTP_REASON_OK                              = "OK";
-const std::string HttpResponse::HTTP_REASON_CREATED                         = "Created";
-const std::string HttpResponse::HTTP_REASON_ACCEPTED                        = "Accepted";
-const std::string HttpResponse::HTTP_REASON_NONAUTHORITATIVE                = "Non-Authoritative Information";
-const std::string HttpResponse::HTTP_REASON_NO_CONTENT                      = "No Content";
-const std::string HttpResponse::HTTP_REASON_RESET_CONTENT                   = "Reset Content";
-const std::string HttpResponse::HTTP_REASON_PARTIAL_CONTENT                 = "Partial Content";
-const std::string HttpResponse::HTTP_REASON_MULTIPLE_CHOICES                = "Multiple Choices";
-const std::string HttpResponse::HTTP_REASON_MOVED_PERMANENTLY               = "Moved Permanently";
-const std::string HttpResponse::HTTP_REASON_FOUND                           = "Found";
-const std::string HttpResponse::HTTP_REASON_SEE_OTHER                       = "See Other";
-const std::string HttpResponse::HTTP_REASON_NOT_MODIFIED                    = "Not Modified";
-const std::string HttpResponse::HTTP_REASON_USEPROXY                        = "Use Proxy";
-const std::string HttpResponse::HTTP_REASON_TEMPORARY_REDIRECT              = "Temporary Redirect";
-const std::string HttpResponse::HTTP_REASON_BAD_REQUEST                     = "Bad Request";
-const std::string HttpResponse::HTTP_REASON_UNAUTHORIZED                    = "Unauthorized";
-const std::string HttpResponse::HTTP_REASON_PAYMENT_REQUIRED                = "Payment Required";
-const std::string HttpResponse::HTTP_REASON_FORBIDDEN                       = "Forbidden";
-const std::string HttpResponse::HTTP_REASON_NOT_FOUND                       = "Not Found";
-const std::string HttpResponse::HTTP_REASON_METHOD_NOT_ALLOWED              = "Method Not Allowed";
-const std::string HttpResponse::HTTP_REASON_NOT_ACCEPTABLE                  = "Not Acceptable";
-const std::string HttpResponse::HTTP_REASON_PROXY_AUTHENTICATION_REQUIRED   = "Proxy Authentication Required";
-const std::string HttpResponse::HTTP_REASON_REQUEST_TIMEOUT                 = "Request Time-out";
-const std::string HttpResponse::HTTP_REASON_CONFLICT                        = "Conflict";
-const std::string HttpResponse::HTTP_REASON_GONE                            = "Gone";
-const std::string HttpResponse::HTTP_REASON_LENGTH_REQUIRED                 = "Length Required";
-const std::string HttpResponse::HTTP_REASON_PRECONDITION_FAILED             = "Precondition Failed";
-const std::string HttpResponse::HTTP_REASON_REQUESTENTITYTOOLARGE           = "Request Entity Too Large";
-const std::string HttpResponse::HTTP_REASON_REQUESTURITOOLONG               = "Request-URI Too Large";
-const std::string HttpResponse::HTTP_REASON_UNSUPPORTEDMEDIATYPE            = "Unsupported Media Type";
-const std::string HttpResponse::HTTP_REASON_REQUESTED_RANGE_NOT_SATISFIABLE = "Requested Range Not Satisfiable";
-const std::string HttpResponse::HTTP_REASON_EXPECTATION_FAILED              = "Expectation Failed";
-const std::string HttpResponse::HTTP_REASON_INTERNAL_SERVER_ERROR           = "Internal Server Error";
-const std::string HttpResponse::HTTP_REASON_NOT_IMPLEMENTED                 = "Not Implemented";
-const std::string HttpResponse::HTTP_REASON_BAD_GATEWAY                     = "Bad Gateway";
-const std::string HttpResponse::HTTP_REASON_SERVICE_UNAVAILABLE             = "Service Unavailable";
-const std::string HttpResponse::HTTP_REASON_GATEWAY_TIMEOUT                 = "Gateway Time-out";
-const std::string HttpResponse::HTTP_REASON_VERSION_NOT_SUPPORTED           = "HTTP Version not supported";
-const std::string HttpResponse::HTTP_REASON_UNKNOWN                         = "???";
+void HttpResponse::SetStatus(HttppStatus status)
+{
+	_status = status;
+}
 
-const std::string& HttpResponse::ParseStatus(HttppStatus status)
+const boost::asio::streambuf& HttpResponse::SendBuffer()
+{
+	_outstream << "HTTP/1.1 200 OK\r\n";
+
+	HttpHeaders::const_iterator headersIter = _headers.begin();
+	while(headersIter != _headers.end())
+		_outstream << headersIter->first << NAME_VALUE_HEADER_SEPARATOR << headersIter->second << CRLF;
+
+	_outstream << CONTENT_LENGTH_HEADER_WITH_SEPARATOR << _content.size() << CRLF;
+	_outstream << CONTENT_TYPE_HEADER_WITH_SEPARATOR << _contentType << CRLF;
+
+	HttpCookies::const_iterator cookiesIter = _cookies.begin();
+	while(cookiesIter != _cookies.end())
+		_outstream << SET_COOKIE_HEADER_WITH_SEPARATOR << cookiesIter->first
+					<< "=" << cookiesIter->second  << CRLF;	
+
+	_outstream << CRLF << _content << CRLF;
+	return _outstreambuf;
+}
+
+const std::string HTTP_REASON_CONTINUE                        = "Continue";
+const std::string HTTP_REASON_SWITCHING_PROTOCOLS             = "Switching Protocols";
+const std::string HTTP_REASON_OK                              = "OK";
+const std::string HTTP_REASON_CREATED                         = "Created";
+const std::string HTTP_REASON_ACCEPTED                        = "Accepted";
+const std::string HTTP_REASON_NONAUTHORITATIVE                = "Non-Authoritative Information";
+const std::string HTTP_REASON_NO_CONTENT                      = "No Content";
+const std::string HTTP_REASON_RESET_CONTENT                   = "Reset Content";
+const std::string HTTP_REASON_PARTIAL_CONTENT                 = "Partial Content";
+const std::string HTTP_REASON_MULTIPLE_CHOICES                = "Multiple Choices";
+const std::string HTTP_REASON_MOVED_PERMANENTLY               = "Moved Permanently";
+const std::string HTTP_REASON_FOUND                           = "Found";
+const std::string HTTP_REASON_SEE_OTHER                       = "See Other";
+const std::string HTTP_REASON_NOT_MODIFIED                    = "Not Modified";
+const std::string HTTP_REASON_USEPROXY                        = "Use Proxy";
+const std::string HTTP_REASON_TEMPORARY_REDIRECT              = "Temporary Redirect";
+const std::string HTTP_REASON_BAD_REQUEST                     = "Bad Request";
+const std::string HTTP_REASON_UNAUTHORIZED                    = "Unauthorized";
+const std::string HTTP_REASON_PAYMENT_REQUIRED                = "Payment Required";
+const std::string HTTP_REASON_FORBIDDEN                       = "Forbidden";
+const std::string HTTP_REASON_NOT_FOUND                       = "Not Found";
+const std::string HTTP_REASON_METHOD_NOT_ALLOWED              = "Method Not Allowed";
+const std::string HTTP_REASON_NOT_ACCEPTABLE                  = "Not Acceptable";
+const std::string HTTP_REASON_PROXY_AUTHENTICATION_REQUIRED   = "Proxy Authentication Required";
+const std::string HTTP_REASON_REQUEST_TIMEOUT                 = "Request Time-out";
+const std::string HTTP_REASON_CONFLICT                        = "Conflict";
+const std::string HTTP_REASON_GONE                            = "Gone";
+const std::string HTTP_REASON_LENGTH_REQUIRED                 = "Length Required";
+const std::string HTTP_REASON_PRECONDITION_FAILED             = "Precondition Failed";
+const std::string HTTP_REASON_REQUESTENTITYTOOLARGE           = "Request Entity Too Large";
+const std::string HTTP_REASON_REQUESTURITOOLONG               = "Request-URI Too Large";
+const std::string HTTP_REASON_UNSUPPORTEDMEDIATYPE            = "Unsupported Media Type";
+const std::string HTTP_REASON_REQUESTED_RANGE_NOT_SATISFIABLE = "Requested Range Not Satisfiable";
+const std::string HTTP_REASON_EXPECTATION_FAILED              = "Expectation Failed";
+const std::string HTTP_REASON_INTERNAL_SERVER_ERROR           = "Internal Server Error";
+const std::string HTTP_REASON_NOT_IMPLEMENTED                 = "Not Implemented";
+const std::string HTTP_REASON_BAD_GATEWAY                     = "Bad Gateway";
+const std::string HTTP_REASON_SERVICE_UNAVAILABLE             = "Service Unavailable";
+const std::string HTTP_REASON_GATEWAY_TIMEOUT                 = "Gateway Time-out";
+const std::string HTTP_REASON_VERSION_NOT_SUPPORTED           = "HTTP Version not supported";
+const std::string HTTP_REASON_UNKNOWN                         = "???";
+
+const std::string& ParseStatus(HttppStatus status)
 {
 	switch (status)
 	{

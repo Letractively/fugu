@@ -9,7 +9,7 @@ enum http_method;
 
 namespace fugu {
 
-enum HTTPMethods;
+enum HttpMethods;
 class HttpParser : private boost::noncopyable
 {
 public:
@@ -27,7 +27,7 @@ public:
 	static int HeadersCompleted(http_parser *parser);
 	static int MessageCompleted(http_parser *parser);
 
-	static HTTPMethods ConvertHttpMethod(http_method method);
+	static HttpMethods ConvertHttpMethod(http_method method);
 	static bool UrlDecode(const std::string& in, std::string& out);
 
 private:

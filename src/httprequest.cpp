@@ -11,12 +11,12 @@ HttpRequest::~HttpRequest()
 {
 }
 
-HTTPMethods HttpRequest::Method() const
+HttpMethods HttpRequest::Method() const
 {
 	return _method;
 }
 
-void HttpRequest::SetMethod(HTTPMethods method)
+void HttpRequest::SetMethod(HttpMethods method)
 {
 	_method = method;
 }
@@ -29,16 +29,6 @@ const std::string& HttpRequest::Url() const
 void HttpRequest::SetUrl(const std::string& url)
 {
 	_url = url;
-}
-
-const std::string& HttpRequest::Content() const
-{
-	return _content;
-}
-
-void HttpRequest::SetContent(const std::string& content)
-{
-	_content = content;
 }
 
 const std::string WS_HEADER = "websocket";

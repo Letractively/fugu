@@ -60,19 +60,19 @@
       <Filter>engine</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\handler.cpp">
-      <Filter>controllers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\homehandler.cpp">
-      <Filter>controllers\ping</Filter>
+      <Filter>handlers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\pinghandler.cpp">
-      <Filter>controllers\ping</Filter>
+      <Filter>handlers\ping</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\handlerrouter.cpp">
-      <Filter>controllers</Filter>
+      <Filter>handlers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\viewfromdbhandler.cpp">
-      <Filter>controllers\ping</Filter>
+      <Filter>handlers\db</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\homehandler.cpp">
+      <Filter>handlers\contents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -94,20 +94,26 @@
     <Filter Include="engine">
       <UniqueIdentifier>{30472b92-2643-4212-b238-ad06cbc514fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="controllers">
-      <UniqueIdentifier>{1830ae2f-c55b-43ae-8f78-319326fcbcd0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="net\request">
       <UniqueIdentifier>{ae30d91e-e86b-4ee3-bdc1-6d374ef3ddbd}</UniqueIdentifier>
     </Filter>
     <Filter Include="net\response">
       <UniqueIdentifier>{9303f12b-c40b-460c-80a8-1bb7e1f7496c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="controllers\ping">
-      <UniqueIdentifier>{c5d21d51-901f-46bf-be6d-eccb8a0e5fa3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="common\allocator">
       <UniqueIdentifier>{6c957a8d-8312-4a6f-8b94-c3547fd05e03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="handlers">
+      <UniqueIdentifier>{1830ae2f-c55b-43ae-8f78-319326fcbcd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="handlers\ping">
+      <UniqueIdentifier>{c5d21d51-901f-46bf-be6d-eccb8a0e5fa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="handlers\db">
+      <UniqueIdentifier>{2806e978-99d5-4bd6-a7fd-1033665c9155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="handlers\contents">
+      <UniqueIdentifier>{02f6f107-aa6f-4277-b3a6-9ab1b957b5c8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -172,22 +178,22 @@
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\handler.h">
-      <Filter>controllers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\homehandler.h">
-      <Filter>controllers\ping</Filter>
+      <Filter>handlers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\pinghandler.h">
-      <Filter>controllers\ping</Filter>
+      <Filter>handlers\ping</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\handlerrouter.h">
-      <Filter>controllers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\viewfromdbhandler.h">
-      <Filter>controllers\ping</Filter>
+      <Filter>handlers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\route.h">
-      <Filter>controllers</Filter>
+      <Filter>handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\viewfromdbhandler.h">
+      <Filter>handlers\db</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\homehandler.h">
+      <Filter>handlers\contents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

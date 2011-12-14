@@ -46,7 +46,7 @@ dojo.declare("AppController", null, {
 	CreateStandBy: function() {
 		this._standby = new dojox.widget.Standby({
 			target: "appContent",
-			image: "om/images/busy.gif"
+			image: "fugu/images/busy.gif"
 		});
 		
 		document.body.appendChild(this._standby.domNode);
@@ -54,7 +54,7 @@ dojo.declare("AppController", null, {
 	},
 	
 	LoadContentView: function (viewName) {
-		var viewurl = "om/views/"+viewName+".js";
+		var viewurl = "fugu/views/"+viewName+".js";
 		var self = this;
 		this.Loading(true);
 		dojo.xhrGet({
@@ -86,5 +86,4 @@ dojo.declare("AppController", null, {
 dojo.addOnLoad(function () {
 	controller = new AppController();
 	controller.CreateUI();
-	controller.CreateStandBy();
 });

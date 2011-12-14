@@ -4,46 +4,46 @@
 
 namespace fugu {
 
-	Handler::Handler()
-	{
-	}
+Handler::Handler()
+{
+}
 
-	Handler::~Handler()
-	{
-	}
+Handler::~Handler()
+{
+}
 
-	ResponsePtr Handler::View()
-	{
-		return NULL;
-	}
+ResponsePtr Handler::View()
+{
+	return NULL;
+}
 
-	ResponsePtr Handler::PartialView()
-	{
-		return NULL;
-	}
+ResponsePtr Handler::PartialView()
+{
+	return NULL;
+}
 
-	ResponsePtr Handler::Json(const std::string json)
-	{
-		return NULL;
-	}
+ResponsePtr Handler::Json(const std::string json)
+{
+	return NULL;
+}
 
-	ResponsePtr Handler::Xml(const std::string xml)
-	{
-		return NULL;
-	}
+ResponsePtr Handler::Xml(const std::string xml)
+{
+	return NULL;
+}
 
-	HandlerPtr HandlerFactory::Create(RoutePtr route)
-	{
-		HandlerPtr handler(CreateImpl());
-		handler->_name = route->HandlerName();
-		handler->_viewName = route->ViewName();
-		return handler;
-	}
+HandlerPtr HandlerFactory::Create(RoutePtr route)
+{
+	HandlerPtr handler(CreateImpl());
+	handler->_name = route->HandlerName();
+	handler->_viewName = route->ViewName();
+	return handler;
+}
 
-	bool HandlerFactory::HasRights(UserPtr user)
-	{
-		return true;
-	}
+bool HandlerFactory::HasRights(UserPtr user)
+{
+	return true;
+}
 
 }
 

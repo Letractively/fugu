@@ -5,7 +5,7 @@
 #include <boost/noncopyable.hpp>
 namespace fugu {
 
-enum HTTPMethods { 
+enum HttpMethods { 
 	HTTP_DELETE	= 0,
 	HTTP_GET,
 	HTTP_POST,
@@ -24,17 +24,13 @@ public:
 	~HttpRequest();
 
 	// Returns HTTP method: GET, POST, PUT, etc
-	HTTPMethods Method() const;
+	HttpMethods Method() const;
 	// Sets HTTP method
-	void SetMethod(HTTPMethods method);
+	void SetMethod(HttpMethods method);
 	// Returns request URL
 	const std::string& Url() const;
 	// Sets request URL
 	void SetUrl(const std::string& url);
-	// Returns request content
-	const std::string& Content() const;
-	// Sets request cotent
-	void SetContent(const std::string& content);
 	// Returts true, if web socket request
 	bool IsWebSocket() const;
 
@@ -44,8 +40,7 @@ private:
 
 private:
 	std::string _url;
-	std::string _content;
-	HTTPMethods _method;
+	HttpMethods _method;
 };
 
 }

@@ -60,6 +60,11 @@ public:
 	// Returns all cookies
 	HttpCookiesIterator GetCookies();
 
+	// Returns request content
+	const std::string& Content() const;
+	// Sets request cotent
+	void SetContent(const std::string& content);
+
 protected:
 	// HTTP version
 	unsigned short _httpVersionMajor;
@@ -69,6 +74,7 @@ protected:
 	bool _keepAlive;
 	HttpHeaders _headers;
 	HttpCookies _cookies;
+	std::string _content;
 };
 
 }
