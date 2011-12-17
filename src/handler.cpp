@@ -1,6 +1,8 @@
 #include "handler.h"
+#include "reply.h"
 #include "route.h"
 #include <exception.h>
+#include <dbclient.h>
 
 namespace fugu {
 
@@ -12,31 +14,40 @@ Handler::~Handler()
 {
 }
 
-ResponsePtr Handler::View()
+RoutePtr Handler::Route() const
 {
-	return NULL;
+	return _route;
 }
 
-ResponsePtr Handler::PartialView()
+ReplyPtr Handler::View(const std::string& page)
 {
-	return NULL;
+	return new Reply(page);
 }
 
-ResponsePtr Handler::Json(const std::string json)
+ReplyPtr Handler::PartialView(const JsonObj& json)
 {
-	return NULL;
+	return new Reply(json.jsonString(mongo::JsonStringFormat::JS));
 }
 
-ResponsePtr Handler::Xml(const std::string xml)
+ReplyPtr Handler::PartialView(const std::string& json)
 {
-	return NULL;
+	return new Reply(json);
+}
+
+ReplyPtr Handler::Json(const std::string& json)
+{
+	return new Reply(json);
+}
+
+ReplyPtr Handler::Json(const JsonObj& json)
+{
+	return new Reply(json.jsonString(mongo::JsonStringFormat::JS));
 }
 
 HandlerPtr HandlerFactory::Create(RoutePtr route)
 {
 	HandlerPtr handler(CreateImpl());
-	handler->_name = route->HandlerName();
-	handler->_viewName = route->ViewName();
+	handler->_route = route;
 	return handler;
 }
 

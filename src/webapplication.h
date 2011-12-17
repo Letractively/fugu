@@ -35,7 +35,7 @@ private:
 	// Handle a request to stop the server.
 	void HandleStop();
 	// Handle request data
-	void ProcessRequest(HttpRequestPtr request, ConnectionPtr conn);
+	void ProcessRequest(QueryPtr request, ConnectionPtr conn);
 
 private:
 	Config _config;

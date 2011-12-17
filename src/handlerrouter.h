@@ -21,7 +21,7 @@ public:
 	// Registration for all factories should be when the application starts
 	void RegisterFactory(HandlerFactory* factory);
 	// Free lock
-	ResponsePtr Route(ContextPtr ctx);
+	ReplyPtr Route(ContextPtr ctx);
 
 private:
 	HandlerFactories _factories;

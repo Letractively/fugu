@@ -7,12 +7,12 @@
 
 namespace fugu {
 
-class Response
+class Reply
 {
 public:
-	Response(const std::string data);
-	Response();
-	virtual ~Response();
+	Reply();
+	Reply(const std::string& data);
+	virtual ~Reply();
 	boost::asio::streambuf& StreamBuffer();
 
 protected:

@@ -1,10 +1,11 @@
-#include "homeHandler.h"
-#include "response.h"
+#include "homehandler.h"
+//#include "reply.h"
+//#include "query.h"
 #include <sstream>
 
 namespace fugu {
 
-ResponsePtr HomeHandler::Process(ContextPtr ctx)
+ReplyPtr HomeHandler::Process(ContextPtr ctx)
 {
 	std::ostringstream contentstream;
 	contentstream
@@ -34,7 +35,7 @@ ResponsePtr HomeHandler::Process(ContextPtr ctx)
 			<<"Set-Cookie: session=test"<<"\r\n"
 			<<"\r\n"<<content<<"\r\n";
 
-	return new Response(response.str());
+	return View(response.str());
 }
 
 Handler* HomeHandlerFactory::CreateImpl()

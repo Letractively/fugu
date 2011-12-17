@@ -1,18 +1,18 @@
 #ifndef __FUGU_VIEW_FROM_DB_HANDLER_H__
 #define __FUGU_VIEW_FROM_DB_HANDLER_H__
 
-#include "Handler.h"
+#include "handler.h"
 
 namespace fugu {
 
 class ViewFromDBHandler : public Handler
 {
 public:
-	ResponsePtr Process(ContextPtr ctx);
+	ReplyPtr Process(ContextPtr ctx);
 
 private:
-	ResponsePtr GetView(ContextPtr ctx);
-	ResponsePtr UpdateView(ContextPtr ctx);
+	ReplyPtr GetView(ContextPtr ctx);
+	ReplyPtr UpdateView(ContextPtr ctx);
 };
 
 class ViewFromDBHandlerFactory : public HandlerFactory

@@ -1,10 +1,11 @@
 #include "pingHandler.h"
-#include "response.h"
+#include "reply.h"
+#include "query.h"
 #include <sstream>
 
 namespace fugu {
 
-ResponsePtr PingHandler::Process(ContextPtr ctx)
+ReplyPtr PingHandler::Process(ContextPtr ctx)
 {
 	std::string content =  "<html><head><title>ping</title></head><body><h1>fugu service is running...</h1></body></html>";
 	std::ostringstream response;
@@ -16,7 +17,7 @@ ResponsePtr PingHandler::Process(ContextPtr ctx)
 			<<"Set-Cookie: session=test"<<"\r\n"
 			<<"\r\n"<<content<<"\r\n";
 
-	return new Response(response.str());
+	return View(response.str());
 }
 	
 Handler* PingHandlerFactory::CreateImpl()

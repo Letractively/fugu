@@ -1,8 +1,7 @@
 #include "webapplication.h"
 #include "context.h"
 #include "connection.h"
-#include "httprequest.h"
-#include "response.h"
+#include "query.h"
 #include "logger.h"
 #include <boost/cstdint.hpp>
 #include <boost/thread/thread.hpp>
@@ -68,22 +67,22 @@ void WebApplication::HandleStop()
 	_service.stop();
 }
 
-void WebApplication::ProcessRequest(HttpRequestPtr req, ConnectionPtr conn)
+void WebApplication::ProcessRequest(QueryPtr query, ConnectionPtr conn)
 {
-	SessionPtr session = _sessionMgr.GetSession(req->GetCookie("FUGU_SESSION_HASH"));
+	SessionPtr session = _sessionMgr.GetSession(query->SessionHash());
 
 	if(!session) {
-		UserPtr user = _userMgr.GetUser(req->GetCookie("FUGU_USER_HASH"));
+		UserPtr user = _userMgr.GetUser(query->UserHash());
 		session = _sessionMgr.CreateSession(user);
 	}
 
-	ContextPtr ctx(new Context(session, conn, req));
-	ResponsePtr resp = _router.Route(ctx);
+	ContextPtr ctx(new Context(session, conn, query));
+	ReplyPtr reply = _router.Route(ctx);
 
-	if(resp == NULL) 
+	if(reply == NULL) 
 		conn->Close();
 	else
-		conn->Send(resp);
+		conn->Send(reply);
 }
 
 }

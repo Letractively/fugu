@@ -14,20 +14,19 @@ friend class HandlerFactory;
 public:
 	Handler();
 	virtual ~Handler();
-	virtual ResponsePtr Process(ContextPtr ctx)=0;
+	virtual ReplyPtr Process(ContextPtr ctx)=0;
 	//bool LongRunning() const virtual = 0;
-	const std::string Name() const { return _name; }
-	const std::string ViewName() const { return _viewName; }
+	RoutePtr Route() const;
 
 protected:
-	ResponsePtr View();
-	ResponsePtr PartialView();
-	ResponsePtr Json(const std::string json);
-	ResponsePtr Xml(const std::string json);
+	ReplyPtr View(const std::string& page);
+	ReplyPtr PartialView(const JsonObj& json);
+	ReplyPtr PartialView(const std::string& json);
+	ReplyPtr Json(const std::string& json);
+	ReplyPtr Json(const JsonObj& json);
 
 private:
-	std::string _name;
-	std::string _viewName;
+	RoutePtr _route;
 };
 
 class HandlerFactory : private boost::noncopyable

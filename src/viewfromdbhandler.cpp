@@ -1,14 +1,15 @@
 #include "viewfromdbhandler.h"
-#include "response.h"
+//#include "reply.h"
+//#include "query.h"
 #include "viewdata.h"
 #include "context.h"
-#include "httprequest.h"
 #include <sstream>
 
 namespace fugu {
 
-ResponsePtr ViewFromDBHandler::Process(ContextPtr ctx)
+ReplyPtr ViewFromDBHandler::Process(ContextPtr ctx)
 {
+	/*
 	switch(ctx->Request()->Method())
 	{
 		case HttpMethods::HTTP_PUT:
@@ -19,40 +20,45 @@ ResponsePtr ViewFromDBHandler::Process(ContextPtr ctx)
 			return GetView(ctx);
 			break;
 	};
+	*/
+	return NULL;
 }
 	
-ResponsePtr ViewFromDBHandler::GetView(ContextPtr ctx)
+ReplyPtr ViewFromDBHandler::GetView(ContextPtr ctx)
 {
-	ViewDataManager mgr;
-	//ViewPtr view = mgr.CreateView(ctx->Request()->Content());
-	std::string content =  "<html><head><title>ping</title></head><body><h1>fugu service is running...</h1></body></html>";
-	std::ostringstream response;
-	response<<"HTTP/1.0 200 OK\r\n"
-			<<"Location: www.google.com\r\n"
-			<<"Content-Type: text/html; charset=UTF-8\r\n"
-			<<"Content-Length: "<<content.length()<<"\r\n"
-			<<"Set-Cookie: user=test"<<"\r\n"
-			<<"Set-Cookie: session=test"<<"\r\n"
-			<<"\r\n"<<content<<"\r\n";
+	//ViewDataManager mgr;
+	////ViewPtr view = mgr.CreateView(ctx->Request()->Content());
+	//std::string content =  "<html><head><title>ping</title></head><body><h1>fugu service is running...</h1></body></html>";
+	//std::ostringstream response;
+	//response<<"HTTP/1.0 200 OK\r\n"
+	//		<<"Location: www.google.com\r\n"
+	//		<<"Content-Type: text/html; charset=UTF-8\r\n"
+	//		<<"Content-Length: "<<content.length()<<"\r\n"
+	//		<<"Set-Cookie: user=test"<<"\r\n"
+	//		<<"Set-Cookie: session=test"<<"\r\n"
+	//		<<"\r\n"<<content<<"\r\n";
 
-	return new Response(response.str());
+	//return new Response(response.str());
+	return NULL;
 }
 
-ResponsePtr ViewFromDBHandler::UpdateView(ContextPtr ctx)
+ReplyPtr ViewFromDBHandler::UpdateView(ContextPtr ctx)
 {
-	ViewDataManager mgr;
-	mgr.CreateView(ctx->Request()->Content());
-	std::string content =  "<html><head><title>ping</title></head><body><h1>fugu service is running...</h1></body></html>";
-	std::ostringstream response;
-	response<<"HTTP/1.0 200 OK\r\n"
-			<<"Location: www.google.com\r\n"
-			<<"Content-Type: text/html; charset=UTF-8\r\n"
-			<<"Content-Length: "<<content.length()<<"\r\n"
-			<<"Set-Cookie: user=test"<<"\r\n"
-			<<"Set-Cookie: session=test"<<"\r\n"
-			<<"\r\n"<<content<<"\r\n";
+	//ViewDataManager mgr;
+	//mgr.CreateView(ctx->Request()->Content());
+	//std::string content =  "<html><head><title>ping</title></head><body><h1>fugu service is running...</h1></body></html>";
+	//std::ostringstream response;
+	//response<<"HTTP/1.0 200 OK\r\n"
+	//		<<"Location: www.google.com\r\n"
+	//		<<"Content-Type: text/html; charset=UTF-8\r\n"
+	//		<<"Content-Length: "<<content.length()<<"\r\n"
+	//		<<"Set-Cookie: user=test"<<"\r\n"
+	//		<<"Set-Cookie: session=test"<<"\r\n"
+	//		<<"\r\n"<<content<<"\r\n";
 
-	return new Response(response.str());
+	//return new Response(response.str());
+
+	return NULL;
 }
 
 Handler* ViewFromDBHandlerFactory::CreateImpl()

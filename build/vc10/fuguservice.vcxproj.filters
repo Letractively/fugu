@@ -11,18 +11,6 @@
     <ClCompile Include="..\..\src\session.cpp">
       <Filter>engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\httprequest.cpp">
-      <Filter>net\request</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\httpresponse.cpp">
-      <Filter>net\response</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\httpmessage.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\response.cpp">
-      <Filter>net\response</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\webapplication.cpp">
       <Filter>net</Filter>
     </ClCompile>
@@ -56,9 +44,6 @@
     <ClCompile Include="..\..\src\context.h">
       <Filter>engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\context.cpp">
-      <Filter>engine</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\handler.cpp">
       <Filter>handlers</Filter>
     </ClCompile>
@@ -73,6 +58,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\homehandler.cpp">
       <Filter>handlers\contents</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\reply.cpp">
+      <Filter>net\reply</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\jsonreply.cpp">
+      <Filter>net\reply</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\query.cpp">
+      <Filter>net\request</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -97,9 +91,6 @@
     <Filter Include="net\request">
       <UniqueIdentifier>{ae30d91e-e86b-4ee3-bdc1-6d374ef3ddbd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="net\response">
-      <UniqueIdentifier>{9303f12b-c40b-460c-80a8-1bb7e1f7496c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="common\allocator">
       <UniqueIdentifier>{6c957a8d-8312-4a6f-8b94-c3547fd05e03}</UniqueIdentifier>
     </Filter>
@@ -114,6 +105,9 @@
     </Filter>
     <Filter Include="handlers\contents">
       <UniqueIdentifier>{02f6f107-aa6f-4277-b3a6-9ab1b957b5c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\reply">
+      <UniqueIdentifier>{9303f12b-c40b-460c-80a8-1bb7e1f7496c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -131,18 +125,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\session.h">
       <Filter>engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\httprequest.h">
-      <Filter>net\request</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\httpresponse.h">
-      <Filter>net\response</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\response.h">
-      <Filter>net\response</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\httpmessage.h">
-      <Filter>net</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\webapplication.h">
       <Filter>net</Filter>
@@ -194,6 +176,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\homehandler.h">
       <Filter>handlers\contents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\reply.h">
+      <Filter>net\reply</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\jsonreply.h">
+      <Filter>net\reply</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\query.h">
+      <Filter>net\request</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

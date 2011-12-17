@@ -8,22 +8,25 @@ namespace fugu {
 class Context : private boost::noncopyable
 {
 public:
-	Context(SessionPtr session, ConnectionPtr connection, 
-					HttpRequestPtr request);
+	Context(SessionPtr session, ConnectionPtr connection, QueryPtr query)
+		:_session(session)
+		,_connection(connection)
+		,_query(query)
+	{}
 
-	virtual ~Context();
+	virtual ~Context(){}
 
-	SessionPtr Session() const;
-	HttpRequestPtr Request() const;
-	ConnectionPtr Connection() const;
+	SessionPtr Session() const { return _session; }
+	ConnectionPtr Connection() const { return _connection; }
+	QueryPtr Query() const { return _query; }
 
 private:
 	// User session
 	SessionPtr _session;
 	// Current connection
 	ConnectionPtr _connection;
-	// Processed request
-	HttpRequestPtr _request;
+	// Processed query
+	QueryPtr _query;
 };
 
 }

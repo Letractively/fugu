@@ -1,6 +1,7 @@
 #include "connection.h"
 #include "logger.h"
-#include "response.h"
+#include "reply.h"
+#include "query.h"
 #include <streambuf>
 
 namespace fugu {
@@ -11,7 +12,7 @@ Connection::Connection(boost::asio::io_service& io_service, RequestHandler handl
 	,_requestHandler(handler)
 	,_readers(0)
 	,_senders(0)
-	,_request(new HttpRequest)
+	,_query(new Query)
 	,_webSocketsConnection(false)
 {
 }
@@ -29,9 +30,9 @@ std::string Connection::Address() const
 	return remote_ad.to_string();
 }
 
-void Connection::Send(Response* resp)
+void Connection::Send(ReplyPtr reply)
 {
-	_toSendQueue.enqueue(resp);
+	_toSendQueue.enqueue(reply);
 	DoSend();
 }
 
@@ -77,10 +78,10 @@ void Connection::HandleRecive(const boost::system::error_code& error, std::size_
 		if(_webSocketsConnection) {
 		}
 		else {
-			if(_parser.ParseRequest(_request, _buffer.data(), bytesTransferred))
+			if(_parser.ParseRequest(_query, _buffer.data(), bytesTransferred))
 			{
-				_webSocketsConnection = _request->IsWebSocket();
-				_requestHandler(_request, shared_from_this());
+				//_webSocketsConnection = _request->IsWebSocket();
+				_requestHandler(_query, shared_from_this());
 			}
 		}
 	}
@@ -95,7 +96,7 @@ void Connection::DoSend()
 	// If expected == current_value then current_value = desired
 	if(_senders.compare_exchange_strong(expected, desired))
 	{
-		Response* out;
+		ReplyPtr out;
 		if(_toSendQueue.dequeue(out)) {
 			// Write whatever message we have for the client.
 			boost::asio::async_write(_socket, out->StreamBuffer(),
@@ -110,11 +111,11 @@ void Connection::DoSend()
 // references to the Connection object will disappear and the object will be
 // destroyed automatically after this handler returns. The Connection class's
 // destructor closes the socket.
-void Connection::HandleSend(const boost::system::error_code& error, Response* resp)
+void Connection::HandleSend(const boost::system::error_code& error, ReplyPtr reply)
 {
 	_senders.exchange(0);
 
-	delete resp;
+	delete reply;
 
 	if (!error)
 	{

@@ -3,7 +3,7 @@
 
 #include "prerequisites.h"
 #include "httpparser.h"
-#include "httprequest.h"
+#include "query.h"
 #include <boost/asio.hpp>
 #include <boost/array.hpp>
 #include <boost/atomic.hpp>
@@ -22,16 +22,14 @@ enum ConnectionState
 };
 
 
-class Response;
-
 // Represents a single connection from a client.
 class Connection : public boost::enable_shared_from_this<Connection>,
 					private boost::noncopyable
 {
 public:
 	friend class WebApplication;
-	typedef boost::lockfree::fifo<Response*> SendQueue;
-	typedef boost::function< void(HttpRequestPtr, ConnectionPtr)> RequestHandler;
+	typedef boost::lockfree::fifo<ReplyPtr> SendQueue;
+	typedef boost::function< void(QueryPtr, ConnectionPtr)> RequestHandler;
 
 	// Construct a connection with the given io_service.
 	explicit Connection(boost::asio::io_service& io_service, RequestHandler handler);
@@ -41,7 +39,7 @@ public:
 	// If true - web sockets connection, othewise http(s)
 	bool IsWebSockets() const { return _webSocketsConnection; }
 	// Put the data in the queue for sending
-	void Send(Response* data);
+	void Send(ReplyPtr reply);
 	// Close connection
 	void Close();
 
@@ -57,7 +55,7 @@ private:
 	// Write existsing buffer to the socket
 	void DoSend();
 	// Handle completion of a write operation.
-	void HandleSend(const boost::system::error_code& error, Response* resp);
+	void HandleSend(const boost::system::error_code& error, ReplyPtr reply);
 
 private:
 	// Strand to ensure the connection's handlers are not called concurrently.
@@ -81,7 +79,7 @@ private:
 	// Request parser
 	HttpParser _parser;
 	// Http request
-	HttpRequestPtr _request;
+	QueryPtr _query;
 };
 
 }

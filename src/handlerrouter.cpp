@@ -2,7 +2,7 @@
 #include "handler.h"
 #include "route.h"
 #include "exception.h"
-#include "httprequest.h"
+#include "query.h"
 #include "context.h"
 #include "config.h"
 #include <boost/thread/locks.hpp>
@@ -33,14 +33,14 @@ void HandlerRouter::RegisterFactory(HandlerFactory* factory)
 							HandlerFactoryPtr(factory)));
 }
 
-ResponsePtr HandlerRouter::Route(ContextPtr ctx)
+ReplyPtr HandlerRouter::Route(ContextPtr ctx)
 {
 	try
 	{
-		Routes::const_iterator riter = _routes.find(ctx->Request()->Url());
+		Routes::const_iterator riter = _routes.find(ctx->Query()->Url());
 
 		if(riter == _routes.end())
-			FUGU_THROW("Route for url '" + ctx->Request()->Url()+"' doesn't exists", "HandlerRouter::Route");
+			FUGU_THROW("Route for url '" + ctx->Query()->Url()+"' doesn't exists", "HandlerRouter::Route");
 
 		HandlerFactories::iterator iter = _factories.find(riter->second->HandlerName());
 		if(iter != _factories.end())

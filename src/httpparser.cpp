@@ -1,14 +1,17 @@
 #include "http_parser/http_parser.h"
 #include "httpparser.h"
-#include "httprequest.h"
+#include "query.h"
 #include <fstream>
 #include <sstream>
+#include <boost/regex.hpp>
 
 namespace fugu {
 
-const char			REQ_HEADER_COOKIE_NAME[]	= "Cookie";
-const unsigned int	COOKIE_VALUE_MAX		= 1024 * 1024;	// 1 MB
-const unsigned int	COOKIE_NAME_MAX			= 1024;	// 1 KB
+const char	REQ_HEADER_COOKIE_NAME[]	= "Cookie";
+const char	COOKIE_SESSION_HASH[]		= "FUGU_SESSION_HASH";
+const char	COOKIE_USER_HASH[]			= "FUGU_USER_HASH";
+
+QueryType GetQueryType(http_parser* parse);
 
 HttpParser::HttpParser()
 	:_headerNameLen(0)
@@ -20,9 +23,9 @@ HttpParser::~HttpParser()
 {
 }
 
-bool HttpParser::ParseRequest(HttpRequestPtr request, const char *data, size_t len)
+bool HttpParser::ParseRequest(QueryPtr query, const char *data, size_t len)
 {
-	_request = request;
+	_query = query;
 
 	http_parser_settings parserSettings;
 	parserSettings.on_message_begin = HttpParser::OnMessageBegin;
@@ -56,7 +59,20 @@ inline bool IsCookieAttribute(const std::string& name)
 
 void HttpParser::ParseCookieHeader(const char *ptr, const size_t len)
 {
+	boost::regex expression("(\w+)=([^;]*)");
 
+	/*
+	boost::tregex_iterator begin(fulls.GetString(),fulls.GetString()+fulls.GetLength(),re), end;
+	CString sub;
+	for (;begin!=end;++begin){
+		boost::tmatch const &what = *begin;
+		sub=CString(what[0].first,what[0].length());
+		if (sub!="")  //to avoid the empty results
+		AfxMessageBox(sub);
+	}
+	*/
+
+	/*
 	// The current implementation ignores cookie attributes which begin with '$'
 	// (i.e. $Path=/, $Domain=, etc.)
 
@@ -87,7 +103,7 @@ void HttpParser::ParseCookieHeader(const char *ptr, const size_t len)
 				if (! cookie_name.empty()) {
 					// value is empty (OK)
 					if (! IsCookieAttribute(cookie_name))
-						_request->AddCookie(cookie_name, cookie_value);
+						//TODO: _request->AddCookie(cookie_name, cookie_value);
 					cookie_name.erase();
 				}
 			} else if (*ptr != ' ') {	// ignore whitespace
@@ -106,7 +122,7 @@ void HttpParser::ParseCookieHeader(const char *ptr, const size_t len)
 				if (*ptr == ';' || *ptr == ',') {
 					// end of value found (OK if empty)
 					if (! IsCookieAttribute(cookie_name))
-						_request->AddCookie(cookie_name, cookie_value);
+						//TODO: _request->AddCookie(cookie_name, cookie_value);
 					cookie_name.erase();
 					cookie_value.erase();
 					parse_state = COOKIE_PARSE_NAME;
@@ -133,7 +149,7 @@ void HttpParser::ParseCookieHeader(const char *ptr, const size_t len)
 				if (*ptr == value_quote_character) {
 					// end of value found (OK if empty)
 					if (! IsCookieAttribute(cookie_name))
-						_request->AddCookie(cookie_name, cookie_value);
+						//TODO: _request->AddCookie(cookie_name, cookie_value);
 					cookie_name.erase();
 					cookie_value.erase();
 					parse_state = COOKIE_PARSE_IGNORE;
@@ -158,32 +174,25 @@ void HttpParser::ParseCookieHeader(const char *ptr, const size_t len)
 	}
 
 	// handle last cookie in string
-	if (! IsCookieAttribute(cookie_name))
-		_request->AddCookie(cookie_name, cookie_value);
+	if (! IsCookieAttribute(cookie_name)){
+		//TODO: _request->AddCookie(cookie_name, cookie_value);
+	}
+	*/
 }
 
 int HttpParser::OnRequestUrl(http_parser *parser, const char *buf, size_t len)
 {
 	HttpParser* p = reinterpret_cast<HttpParser*>(parser->data);
-	std::string url(buf, len), decodedUrl;
-
-	if(UrlDecode(url, decodedUrl))
-		p->_request->SetUrl(decodedUrl);
-	else
-		p->_request->SetUrl(url);
+	p->_query->SetUrl(buf, len);
 
 	return 0;
 }
 
 int HttpParser::OnHeaderField (http_parser *parser, const char *buf, size_t len)
 {
-	HttpParser* p = reinterpret_cast<HttpParser*>(parser->data);
 	if(memcmp(REQ_HEADER_COOKIE_NAME, buf, len)==0) {
+		HttpParser* p = reinterpret_cast<HttpParser*>(parser->data);
 		p->_cookieField = true;
-	}
-	else {
-		memcpy(p->_headerName, buf, len);
-		p->_headerNameLen = len;
 	}
 
 	return 0;
@@ -192,70 +201,19 @@ int HttpParser::OnHeaderField (http_parser *parser, const char *buf, size_t len)
 int HttpParser::OnHeaderValue(http_parser *parser, const char *buf, size_t len)
 {
 	HttpParser* p = reinterpret_cast<HttpParser*>(parser->data);
-	if(p->_cookieField) {
-		p->ParseCookieHeader(buf, len);
-	}
-	else {
-		p->_request->AddHeader(std::string(p->_headerName,p->_headerNameLen), std::string(buf,len));
-	}
-	return 0;
-}
 
-int HttpParser::OnBody(http_parser *parser, const char *buf, size_t len)
-{
-	HttpParser* p = reinterpret_cast<HttpParser*>(parser->data);
-	p->_request->SetContent(std::string(buf, len));
+	if(p->_cookieField)
+		p->ParseCookieHeader(buf, len);
+
+	p->_cookieField = false;
 	return 0;
 }
 
 int HttpParser::OnCountBody(http_parser *parser, const char *buf, size_t len)
 {
 	HttpParser* p = reinterpret_cast<HttpParser*>(parser->data);
-	p->_request->SetContent(std::string(buf, len));
+	p->_query->SetContent(buf, len);
 	return 0;
-}
-
-int HttpParser::OnMessageBegin(http_parser *parser)
-{
-	return 0;
-}
-
-int HttpParser::HeadersCompleted(http_parser *parser)
-{
-	HttpParser* p = reinterpret_cast<HttpParser*>(parser->data);
-	p->_request->SetContentLength(parser->content_length);
-	p->_request->SetMethod(ConvertHttpMethod((http_method)parser->method));
-	p->_request->SetMajorVersion(parser->http_major);
-	p->_request->SetMinorVersion(parser->http_minor);
-	p->_request->SetKeepAlive((bool)http_should_keep_alive(parser));
-	return 0;
-}
-
-int HttpParser::MessageCompleted(http_parser *parser)
-{
-	return 0;
-}
-
-HttpMethods HttpParser::ConvertHttpMethod(http_method method)
-{
-	switch(method)
-	{
-		case http_method::HTTP_DELETE:
-			return HttpMethods::HTTP_DELETE;
-			break;
-		case http_method::HTTP_GET:
-			return HttpMethods::HTTP_GET;
-			break;
-		case http_method::HTTP_POST:
-			return HttpMethods::HTTP_POST;
-			break;
-		case http_method::HTTP_PUT:
-			return HttpMethods::HTTP_PUT;
-			break;
-		default:
-			return HttpMethods::NOT_SUPPORTED;
-			break;
-	}
 }
 
 bool HttpParser::UrlDecode(const std::string& in, std::string& out)
@@ -284,5 +242,35 @@ bool HttpParser::UrlDecode(const std::string& in, std::string& out)
 	}
 	return true;
 }
+
+QueryType GetQueryType(http_parser* parser)
+{
+	if(parser->upgrade)
+		return QueryType::QUERY_WEBSOCKET;
+
+	switch(parser->method)
+	{
+		case http_method::HTTP_DELETE:
+			return QueryType::QUERY_DELETE;
+			break;
+		case http_method::HTTP_GET:
+			return QueryType::QUERY_GET;
+			break;
+		case http_method::HTTP_POST:
+			return QueryType::QUERY_POST;
+			break;
+		case http_method::HTTP_PUT:
+			return QueryType::QUERY_PUT;
+			break;
+		default:
+			return QueryType::NOT_SUPPORTED;
+			break;
+	}
+}
+
+int HttpParser::OnBody(http_parser *parser, const char *buf, size_t len) { return 0; }
+int HttpParser::OnMessageBegin(http_parser *parser) { return 0; }
+int HttpParser::MessageCompleted(http_parser *parser) { return 0; }
+int HttpParser::HeadersCompleted(http_parser *parser) { return 0; }
 
 }
