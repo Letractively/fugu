@@ -30,11 +30,13 @@
     <ClCompile Include="..\..\src\config.cpp" />
     <ClCompile Include="..\..\src\connection.cpp" />
     <ClCompile Include="..\..\src\dbpool.cpp" />
+    <ClCompile Include="..\..\src\dbviewhandler.cpp" />
     <ClCompile Include="..\..\src\entrypoint.cpp" />
     <ClCompile Include="..\..\src\exception.cpp" />
     <ClCompile Include="..\..\src\handler.cpp" />
     <ClCompile Include="..\..\src\handlerrouter.cpp" />
     <ClCompile Include="..\..\src\homehandler.cpp" />
+    <ClCompile Include="..\..\src\htmlreply.cpp" />
     <ClCompile Include="..\..\src\httpparser.cpp" />
     <ClCompile Include="..\..\src\http_parser\http_parser.c" />
     <ClCompile Include="..\..\src\jsonreply.cpp" />
@@ -48,15 +50,16 @@
     <ClCompile Include="..\..\src\session.cpp" />
     <ClCompile Include="..\..\src\user.cpp" />
     <ClCompile Include="..\..\src\viewdata.cpp" />
-    <ClCompile Include="..\..\src\viewfromdbhandler.cpp" />
     <ClCompile Include="..\..\src\webapplication.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\config.h" />
     <ClInclude Include="..\..\src\connection.h" />
     <ClInclude Include="..\..\src\dbpool.h" />
+    <ClInclude Include="..\..\src\dbviewhandler.h" />
     <ClInclude Include="..\..\src\exception.h" />
     <ClInclude Include="..\..\src\handler.h" />
+    <ClInclude Include="..\..\src\htmlreply.h" />
     <ClInclude Include="..\..\src\jsonreply.h" />
     <ClInclude Include="..\..\src\query.h" />
     <ClInclude Include="..\..\src\route.h" />
@@ -75,7 +78,6 @@
     <ClInclude Include="..\..\src\stdheaders.h" />
     <ClInclude Include="..\..\src\user.h" />
     <ClInclude Include="..\..\src\viewdata.h" />
-    <ClInclude Include="..\..\src\viewfromdbhandler.h" />
     <ClInclude Include="..\..\src\webapplication.h" />
   </ItemGroup>
   <ItemGroup>

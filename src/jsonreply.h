@@ -2,9 +2,7 @@
 #define __FUGU_JSON_RESPONSE__
 
 #include "prerequisites.h"
-#include <string>
-#include <streambuf>
-#include <boost/asio.hpp>
+#include "reply.h"
 
 namespace fugu {
 
@@ -19,26 +17,30 @@ namespace fugu {
 //	"JS": {"id": "scriptid_1", "js script"}
 //}
 
-class JsonReply : private boost::noncopyable
+class JsonReply : public Reply,  private boost::noncopyable
 {
 public:
 	JsonReply();
 	virtual ~JsonReply();
 
-	void SetError(const std::string& error, bool blocked = false);
 	bool HadError() const;
 	bool BlockedError() const;
+	void SetError(const std::string& error, bool blocked = false);
 	void SetJS(const std::string& id, const std::string& js);
 	void SetHtml(const std::string& region, const std::string& html);
-	boost::asio::streambuf& StreamBuffer();
+	bool Streamed() const;
+	boost::asio::streambuf& ResponseStream() const;
 
 protected:
+	bool _hasChanges;
 	bool _blockedError;
 	std::string _error;
 	std::string _jsId;
 	std::string _jsCode;
 	std::string _htmlRegion;
 	std::string _htmlContent;
+	mutable boost::asio::streambuf _streambuf;
+	mutable std::ostream _stream;
 };
 
 // Json response with the following  format:

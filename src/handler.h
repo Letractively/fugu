@@ -16,6 +16,7 @@ public:
 	virtual ReplyPtr Process(ContextPtr ctx)=0;
 	//bool LongRunning() const virtual = 0;
 	RoutePtr Route() const;
+	static ReplyPtr Error(std::exception& ex, bool critical);
 
 protected:
 	ReplyPtr View(const std::string& html);
@@ -23,6 +24,7 @@ protected:
 	ReplyPtr PartialView(const std::string& json);
 	ReplyPtr Json(const std::string& json);
 	ReplyPtr Json(const JsonObj& json);
+
 
 private:
 	RoutePtr _route;

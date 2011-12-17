@@ -1,5 +1,6 @@
 #include "handler.h"
 #include "htmlreply.h"
+#include "jsonreply.h"
 #include "route.h"
 #include <exception.h>
 #include <dbclient.h>
@@ -42,6 +43,13 @@ ReplyPtr Handler::Json(const JsonObj& json)
 {
 	return NULL;
 	//return new Reply(json.jsonString(mongo::JsonStringFormat::JS));
+}
+
+ReplyPtr Handler::Error(std::exception& ex, bool critical)
+{
+	JsonReply* reply = new JsonReply();
+	reply->SetError(ex.what(), critical);
+	return reply;
 }
 
 HandlerPtr HandlerFactory::Create(RoutePtr route)

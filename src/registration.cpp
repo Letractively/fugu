@@ -2,7 +2,7 @@
 #include "handlerrouter.h"
 #include "pingHandler.h"
 #include "homeHandler.h"
-#include "viewfromdbhandler.h"
+#include "dbviewhandler.h"
 
 namespace fugu {
 

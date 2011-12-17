@@ -54,12 +54,11 @@ ReplyPtr HandlerRouter::Route(ContextPtr ctx)
 	}
 	catch(Exception& fe)
 	{
-		throw fe;
+		return Handler::Error(fe, true);
 	}
 	catch(std::exception& e)
 	{
-		FUGU_THROW(e.what()
-					,"HandlerRouter::ProcessRequest");
+		return Handler::Error(FUGU_EXCEPT(e.what() ,"HandlerRouter::Route"), true);
 	}
 
 	return NULL;

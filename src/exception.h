@@ -40,6 +40,10 @@ protected:
 
 }
 
+#ifndef FUGU_EXCEPT
+#define FUGU_EXCEPT(desc, src) fugu::Exception(desc, src, __FILE__, __LINE__ )
+#endif
+
 #ifndef FUGU_THROW
 #define FUGU_THROW(desc, src) throw fugu::Exception(desc, src, __FILE__, __LINE__ );
 #endif
