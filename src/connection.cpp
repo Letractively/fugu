@@ -96,12 +96,23 @@ void Connection::DoSend()
 	// If expected == current_value then current_value = desired
 	if(_senders.compare_exchange_strong(expected, desired))
 	{
-		ReplyPtr out;
-		if(_toSendQueue.dequeue(out)) {
-			// Write whatever message we have for the client.
-			boost::asio::async_write(_socket, out->StreamBuffer(),
-										_strand.wrap(boost::bind(&Connection::HandleSend, shared_from_this(), 
-										boost::asio::placeholders::error, out)));
+		ReplyPtr reply;
+		if(_toSendQueue.dequeue(reply)) {
+
+			if(reply->Streamed())
+			{
+				// Write whatever message we have for the client.
+				boost::asio::async_write(_socket, reply->ResponseStream(),
+											_strand.wrap(boost::bind(&Connection::HandleSend, shared_from_this(), 
+											boost::asio::placeholders::error, reply)));
+			}
+			else
+			{
+				// Write whatever message we have for the client.
+				boost::asio::async_write(_socket, boost::asio::buffer(reply->Response()),
+											_strand.wrap(boost::bind(&Connection::HandleSend, shared_from_this(), 
+											boost::asio::placeholders::error, reply)));
+			}
 		}
 	}
 }

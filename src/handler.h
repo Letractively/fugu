@@ -7,19 +7,18 @@
 
 namespace fugu {
 
-class Handler : private boost::noncopyable
+class Handler
 {
 friend class HandlerFactory;
 
 public:
-	Handler();
 	virtual ~Handler();
 	virtual ReplyPtr Process(ContextPtr ctx)=0;
 	//bool LongRunning() const virtual = 0;
 	RoutePtr Route() const;
 
 protected:
-	ReplyPtr View(const std::string& page);
+	ReplyPtr View(const std::string& html);
 	ReplyPtr PartialView(const JsonObj& json);
 	ReplyPtr PartialView(const std::string& json);
 	ReplyPtr Json(const std::string& json);

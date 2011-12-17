@@ -8,6 +8,7 @@
 
 #define FUGU_MULTI_THREADING
 
+#include <string>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
@@ -22,6 +23,7 @@ class Query;
 namespace fugu {
 
 typedef mongo::BSONObj JsonObj;
+typedef boost::shared_ptr<std::string> StringPtr;
 
 class User;
 typedef boost::shared_ptr<User> UserPtr;

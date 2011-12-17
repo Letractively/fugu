@@ -5,7 +5,7 @@
 
 namespace fugu {
 
-class ViewFromDBHandler : public Handler
+class ViewFromDBHandler : public Handler, private boost::noncopyable
 {
 public:
 	ReplyPtr Process(ContextPtr ctx);

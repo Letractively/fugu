@@ -5,7 +5,7 @@
 
 namespace fugu {
 
-class PingHandler : public Handler
+class PingHandler : public Handler, private boost::noncopyable
 {
 public:
 	ReplyPtr Process(ContextPtr ctx);

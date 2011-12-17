@@ -5,7 +5,7 @@
 
 namespace fugu {
 
-class HomeHandler : public Handler
+class HomeHandler : public Handler, private boost::noncopyable
 {
 public:
 	virtual ReplyPtr Process(ContextPtr ctx);

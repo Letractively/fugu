@@ -2,24 +2,32 @@
 
 namespace fugu {
 
-Reply::Reply()
-	:_stream(&_streambuf)
-{
-}
-
-Reply::Reply(const std::string& data)
-	:_stream(&_streambuf)
-{
-	_stream << data;
-}
-
 Reply::~Reply()
 {
 }
 
-boost::asio::streambuf& Reply::StreamBuffer()
+boost::asio::streambuf& Reply::ResponseStream() const
 {
-	return _streambuf;
+	return EmptyResponseStream();
+}
+
+const std::string& Reply::Response() const
+{
+	return EmptyResponse();
+}
+
+const std::string& Reply::EmptyResponse()
+{
+	static std::string empty = "";
+	return empty;
+}
+
+boost::asio::streambuf& Reply::EmptyResponseStream()
+{
+	static boost::asio::streambuf streambuf;
+	static std::ostream stream(&streambuf);
+
+	return streambuf;
 }
 
 }

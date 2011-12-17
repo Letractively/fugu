@@ -1,5 +1,5 @@
-#ifndef __FUGU_BASE_RESPONSE__
-#define __FUGU_BASE_RESPONSE__
+#ifndef __FUGU_REPLY__
+#define __FUGU_REPLY__
 
 #include <string>
 #include <streambuf>
@@ -10,14 +10,13 @@ namespace fugu {
 class Reply
 {
 public:
-	Reply();
-	Reply(const std::string& data);
 	virtual ~Reply();
-	boost::asio::streambuf& StreamBuffer();
-
+	virtual bool Streamed() const =0;
+	virtual boost::asio::streambuf& ResponseStream() const;
+	virtual const std::string& Response() const;
 protected:
-	std::ostream _stream;
-	boost::asio::streambuf _streambuf;
+	static boost::asio::streambuf& EmptyResponseStream();
+	static const std::string& EmptyResponse();
 };
 
 }
