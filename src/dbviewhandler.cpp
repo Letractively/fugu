@@ -1,6 +1,6 @@
 #include "dbviewhandler.h"
-//#include "reply.h"
-//#include "query.h"
+#include "jsonreply.h"
+#include "query.h"
 #include "viewdata.h"
 #include "context.h"
 #include <sstream>
@@ -9,6 +9,8 @@ namespace fugu {
 
 ReplyPtr ViewFromDBHandler::Process(ContextPtr ctx)
 {
+	JsonReply* reply = new JsonReply();
+	reply->SetError("Test error", false);
 	/*
 	switch(ctx->Request()->Method())
 	{
@@ -21,7 +23,7 @@ ReplyPtr ViewFromDBHandler::Process(ContextPtr ctx)
 			break;
 	};
 	*/
-	return NULL;
+	return reply;
 }
 	
 ReplyPtr ViewFromDBHandler::GetView(ContextPtr ctx)
@@ -68,7 +70,7 @@ Handler* ViewFromDBHandlerFactory::CreateImpl()
 
 const std::string& ViewFromDBHandlerFactory::Name() const
 {
-	const static std::string VIEW_FROM_DB_HANDLER = "viewfromdbhandler";
+	const static std::string VIEW_FROM_DB_HANDLER = "dbviewhandler";
 	return VIEW_FROM_DB_HANDLER;
 }
 

@@ -69,20 +69,27 @@ void WebApplication::HandleStop()
 
 void WebApplication::ProcessRequest(QueryPtr query, ConnectionPtr conn)
 {
-	SessionPtr session = _sessionMgr.GetSession(query->SessionHash());
+	try
+	{
+		SessionPtr session = _sessionMgr.GetSession(query->SessionHash());
 
-	if(!session) {
-		UserPtr user = _userMgr.GetUser(query->UserHash());
-		session = _sessionMgr.CreateSession(user);
+		if(!session) {
+			UserPtr user = _userMgr.GetUser(query->UserHash());
+			session = _sessionMgr.CreateSession(user);
+		}
+
+		ContextPtr ctx(new Context(session, conn, query));
+		ReplyPtr reply = _router.Route(ctx);
+
+		if(reply == NULL) 
+			conn->Close();
+		else
+			conn->Send(reply);
 	}
-
-	ContextPtr ctx(new Context(session, conn, query));
-	ReplyPtr reply = _router.Route(ctx);
-
-	if(reply == NULL) 
-		conn->Close();
-	else
-		conn->Send(reply);
+	catch(std::exception& ex)
+	{
+		Log(ex.what());
+	}
 }
 
 }

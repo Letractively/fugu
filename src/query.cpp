@@ -1,5 +1,5 @@
 #include "query.h"
-
+#include "logger.h"
 namespace fugu {
 
 Query::Query()
@@ -56,7 +56,14 @@ const JsonObj& Query::Content() const
 // Sets json content
 void Query::SetContent(const char* buf, size_t len)
 {
-	_content = mongo::fromjson(buf, (int*)&len);
+	try
+	{
+		_content = mongo::fromjson(buf, (int*)&len);
+	}
+	catch(std::exception& ex)
+	{
+		Log(ex.what());
+	}
 }
 
 }

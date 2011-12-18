@@ -19,7 +19,7 @@ public:
 	static ReplyPtr Error(std::exception& ex, bool critical);
 
 protected:
-	ReplyPtr View(const std::string& html);
+	ReplyPtr View(StringPtr html);
 	ReplyPtr PartialView(const JsonObj& json);
 	ReplyPtr PartialView(const std::string& json);
 	ReplyPtr Json(const std::string& json);

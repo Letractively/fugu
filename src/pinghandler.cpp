@@ -7,17 +7,11 @@ namespace fugu {
 
 ReplyPtr PingHandler::Process(ContextPtr ctx)
 {
-	std::string content =  "<html><head><title>ping</title></head><body><h1>fugu service is running...</h1></body></html>";
-	std::ostringstream response;
-	response<<"HTTP/1.0 200 OK\r\n"
-			<<"Location: www.google.com\r\n"
-			<<"Content-Type: text/html; charset=UTF-8\r\n"
-			<<"Content-Length: "<<content.length()<<"\r\n"
-			<<"Set-Cookie: user=test"<<"\r\n"
-			<<"Set-Cookie: session=test"<<"\r\n"
-			<<"\r\n"<<content<<"\r\n";
-
-	return View(response.str());
+	
+	StringPtr ptr(new std::string(
+		"<html><head><title>ping</title></head><body><h1>fugu service is running...</h1></body></html>"
+	));
+	return View(ptr);
 }
 	
 Handler* PingHandlerFactory::CreateImpl()

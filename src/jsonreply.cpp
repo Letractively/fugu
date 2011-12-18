@@ -3,9 +3,9 @@
 namespace fugu {
 
 JsonReply::JsonReply()
-	:_stream(&_streambuf)
+	:Reply(ReplyType::HTTP_REPLY)
+	,_stream(&_streambuf)
 	,_blockedError(false)
-	,_hasChanges(false)
 {
 }
 
@@ -15,7 +15,6 @@ JsonReply::~JsonReply()
 
 void JsonReply::SetError(const std::string& error, bool blocked)
 {
-	_hasChanges = true;
 	_error = error;
 	_blockedError = blocked;
 }
@@ -32,14 +31,17 @@ bool JsonReply::BlockedError() const
 
 void JsonReply::SetJS(const std::string& id, const std::string& js)
 {
-	_hasChanges = true;
 	_jsId = id;
 	_jsCode = js;
 }
 
+void JsonReply::SetJson(const std::string& json)
+{
+	_json = json;
+}
+
 void JsonReply::SetHtml(const std::string& region, const std::string& html)
 {
-	_hasChanges = true;
 	_htmlRegion = region;
 	_htmlContent = html;
 }
@@ -62,27 +64,43 @@ static std::string FALSE_JSON_VALUE = "\"false\"";
 //		"Message": "string"
 //	},
 //	"Html": { "region": "center", "content" : "content html" },
+//	"Json": { any data },
 //	"JS": {"id": "scriptid_1", "js script"}
 //}
-	if(_hasChanges)
-	{
-		_stream << "{ \"Error\": { \"Blocked\":";
 
-		if(_blockedError)
-			_stream << TRUE_JSON_VALUE;
-		else
-			_stream << FALSE_JSON_VALUE;
+	_stream << "{ \"Error\": { \"Blocked\":";
 
-		_stream	<< ", \"Message\":\"" << _error << "\"}";
+	if(_blockedError)
+		_stream << TRUE_JSON_VALUE;
+	else
+		_stream << FALSE_JSON_VALUE;
 
-		if(!_htmlRegion.empty() && !_htmlContent.empty())
-			_stream	<< ", \"Html\": {\"Region\": " << _htmlRegion << "\" \"Content\": \"" << _htmlContent << "\" }";
+	_stream	<< ", \"Message\":\"" << _error << "\"}";
 
-		if(!_jsId.empty() && !_jsCode.empty())
-				_stream << ", \"JS\": {\"" << _jsId << "\", \"Script\": \"" << _jsCode << "\" }";
+	if(!_htmlRegion.empty() && !_htmlContent.empty())
+		_stream	<< ", \"Html\": {\"Region\": " << _htmlRegion << "\" \"Content\": \"" << _htmlContent << "\" }";
 
-		_stream	<< "}";
+	if(!_json.empty()) {
+		// TODO: check for {}
+		_stream << ", \"Json\":" << _json;
 	}
+
+	if(!_jsId.empty() && !_jsCode.empty())
+		_stream << ", \"JS\": {\"" << _jsId << "\", \"Script\": \"" << _jsCode << "\" }";
+
+	_stream	<< "}";
+
+	size_t contentSize = _streambuf.size();
+	_stream.seekp(0);
+
+	_stream << "HTTP/1.0 200 OK\r\nContent-Type: json\r\nContent-Length: "
+			<< contentSize << "\r\n";
+
+	StringPtr headers = Reply::Headers();
+	if(headers && !headers->empty())
+		_stream << *headers;
+
+	_stream << "\r\n";
 
 	return _streambuf;
 }

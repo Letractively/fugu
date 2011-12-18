@@ -2,20 +2,22 @@
 #define __FUGU_HTML_REPLY__
 
 #include "reply.h"
-#include <boost/noncopyable.hpp>
 
 namespace fugu {
 
 class HtmlReply : public Reply, private boost::noncopyable
 {
 public:
-	HtmlReply(const std::string& html);
+	HtmlReply(StringPtr html);
 	virtual ~HtmlReply();
 	bool Streamed() const;
-	boost::asio::streambuf& StreamBuffer() const;
+	boost::asio::streambuf& ResponseStream() const;
 	const std::string& Response() const;
+
 protected:
-	std::string _html;
+	StringPtr _html;
+	mutable boost::asio::streambuf _streambuf;
+	mutable std::ostream _stream;
 };
 
 }

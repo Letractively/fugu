@@ -42,15 +42,16 @@ ReplyPtr HandlerRouter::Route(ContextPtr ctx)
 		if(riter == _routes.end())
 			FUGU_THROW("Route for url '" + ctx->Query()->Url()+"' doesn't exists", "HandlerRouter::Route");
 
-		HandlerFactories::iterator iter = _factories.find(riter->second->HandlerName());
-		if(iter != _factories.end())
-		{
-			HandlerFactoryPtr factory = iter->second;
-			HandlerPtr handler = factory->Create(riter->second);
+		HandlerFactories::iterator fiter = _factories.find(riter->second->HandlerName());
 
-			return handler->Process(ctx);
+		if(fiter == _factories.end())
+			FUGU_THROW("Handler factory with name '" 
+					+ riter->second->HandlerName() + "' doesn't exists", "HandlerRouter::Route");
 
-		}
+		HandlerFactoryPtr factory = fiter->second;
+		HandlerPtr handler = factory->Create(riter->second);
+
+		return handler->Process(ctx);
 	}
 	catch(Exception& fe)
 	{

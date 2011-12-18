@@ -11,9 +11,6 @@
     <ClCompile Include="..\..\src\session.cpp">
       <Filter>engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\webapplication.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\logger.cpp">
       <Filter>common</Filter>
     </ClCompile>
@@ -24,10 +21,10 @@
       <Filter>common\allocator</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\http_parser\http_parser.c">
-      <Filter>net\request</Filter>
+      <Filter>net\query</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\httpparser.cpp">
-      <Filter>net\request</Filter>
+      <Filter>net\query</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\registration.cpp">
       <Filter>common</Filter>
@@ -51,7 +48,7 @@
       <Filter>net\reply</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\query.cpp">
-      <Filter>net\request</Filter>
+      <Filter>net\query</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\htmlreply.cpp">
       <Filter>net\reply</Filter>
@@ -71,6 +68,7 @@
     <ClCompile Include="..\..\src\dbviewhandler.cpp">
       <Filter>handlers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\webapplication.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="net">
@@ -91,9 +89,6 @@
     <Filter Include="engine">
       <UniqueIdentifier>{30472b92-2643-4212-b238-ad06cbc514fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="net\request">
-      <UniqueIdentifier>{ae30d91e-e86b-4ee3-bdc1-6d374ef3ddbd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="common\allocator">
       <UniqueIdentifier>{6c957a8d-8312-4a6f-8b94-c3547fd05e03}</UniqueIdentifier>
     </Filter>
@@ -105,6 +100,9 @@
     </Filter>
     <Filter Include="handlers\common">
       <UniqueIdentifier>{348bd636-1872-474a-ab1e-1045bfdbc5ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\query">
+      <UniqueIdentifier>{ae30d91e-e86b-4ee3-bdc1-6d374ef3ddbd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -123,9 +121,6 @@
     <ClInclude Include="..\..\src\session.h">
       <Filter>engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\webapplication.h">
-      <Filter>net</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\logger.h">
       <Filter>common</Filter>
     </ClInclude>
@@ -136,10 +131,10 @@
       <Filter>common\allocator</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\http_parser\http_parser.h">
-      <Filter>net\request</Filter>
+      <Filter>net\query</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\httpparser.h">
-      <Filter>net\request</Filter>
+      <Filter>net\query</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\registrator.h">
       <Filter>common</Filter>
@@ -163,7 +158,7 @@
       <Filter>net\reply</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\query.h">
-      <Filter>net\request</Filter>
+      <Filter>net\query</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\htmlreply.h">
       <Filter>net\reply</Filter>
@@ -186,6 +181,7 @@
     <ClInclude Include="..\..\src\dbviewhandler.h">
       <Filter>handlers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\webapplication.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\fugu.conf" />

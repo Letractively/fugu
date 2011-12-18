@@ -26,16 +26,8 @@ ReplyPtr HomeHandler::Process(ContextPtr ctx)
 	<< "</body>"
 	<< "</html>";
 
-	std::string content =  contentstream.str();
-	std::ostringstream response;
-	response<<"HTTP/1.0 200 OK\r\n"
-			<<"Content-Type: text/html; charset=UTF-8\r\n"
-			<<"Content-Length: "<<content.length()<<"\r\n"
-			<<"Set-Cookie: user=test"<<"\r\n"
-			<<"Set-Cookie: session=test"<<"\r\n"
-			<<"\r\n"<<content<<"\r\n";
-
-	return View(response.str());
+	StringPtr ptr(new std::string(contentstream.rdbuf()->str()));
+	return View(ptr);
 }
 
 Handler* HomeHandlerFactory::CreateImpl()
