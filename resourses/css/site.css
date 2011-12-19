@@ -1,95 +1,87 @@
 html, body {
-	height: 100%;
-	margin: 0;
-	overflow: hidden;
-	padding: 0;
-	background-color: #DC4D1A;
+height: 100%;
+margin: 0;
+padding: 0;
+background-color:#BADBF2;
+font-family:'Lucida Casual', 'Comic Sans MS';
 }
 
-H1 {
-font-family: 'Times New Roman', Times, serif; /* Гарнитура текста */ 
-font-size: 250%; /* Размер шрифта в процентах */ 
-} 
-P {
-font-family: Verdana, Arial, Helvetica, sans-serif; 
-font-size: 11pt; /* Размер шрифта в пунктах */ 
+div#container {
+position:relative; /* needed for footer positioning*/
+margin:0 auto; /* center, not in IE5 */
+width:100%;
+height:auto !important; /* real browsers */
+height:100%; /* IE6: treaded as min-height*/
+min-height:100%; /* real browsers */
+background: url(../images/logo_fugu_large.png) no-repeat center center;
+}
+
+div#header {
+height:30px;
+width:100%;
+}
+
+div#content {
+display: block;
+position:absolute;
+height:auto;
+bottom:0;
+top:0;
+left:0;
+right:0%;
+margin-top:80px;
+margin-bottom:10px;
+margin-left:10px;
+margin-right:10px;
+padding:1em 1em 1em; /* bottom padding for footer */
+border-radius:10px 10px 10px 10px;
+background: #65C5DC;
+opacity: 0.8;
+overflow: auto;
+}
+
+
+#navigation {
+margin-top: 4px;
+}
+
+#navigation ul {
+margin: 0px;
+padding: 0px;
+list-style-type: none;
+}
+
+#navigation a {
+font-size: 180%;
+font-family:'Lucida Casual', 'Comic Sans MS';
+vertical-align: middle;
+color: white;
+height: 30px;
+border-radius:10px 10px 10px 10px;
+display: block;
+background-color: #65C5DC;
+text-decoration: none;
+text-align: center;
+}
+
+#navigation a:hover {
+background-color: #339933;
+}
+
+#navigation li:first-child {
+margin-left: 0.5%;
+}
+
+#navigation li {
+line-height: 2em;
+float: left;
+width: 16%;
+margin-right: 0.5%;
 }
 
 canvas {
-    border-radius:10px 10px 10px 10px;
-	background-color:#333388;
-	width:99%;
-	height:99%;
+border-radius:10px 10px 10px 10px;
+background-color:#333388;
+margin-left:15%;
 }
 
-#appLayout {
-	height: 100%;
-}
-
-.tundra .demoLayout .edgePanel {
-	background-color: #DC4D1A;
-}
-
-.omHomeIcon {
-	background-image: url('../images/home.png');
-	background-repeat: no-repeat;
-	width: 18px;
-	height: 18px;
-	text-align: center;
-}
-
-.omPlayIcon {
-	background-image: url('../images/brainstorming.png');
-	background-repeat: no-repeat;
-	width: 18px;
-	height: 18px;
-	text-align: center;
-}
-
-.omEditorIcon {
-	background-image: url('../images/config.png');
-	background-repeat: no-repeat;
-	width: 18px;
-	height: 18px;
-	text-align: center;
-}
-
-.omAboutIcon {
-	background-image: url('../images/product.png');
-	background-repeat: no-repeat;
-	width: 18px;
-	height: 18px;
-	text-align: center;
-}
-
-.omLightbulbIcon {
-	background-image: url('../images/lightbulb.png');
-	background-repeat: no-repeat;
-	width: 18px;
-	height: 18px;
-	text-align: center;
-}
-
-.omFolderIcon {
-	background-image: url('../images/folder.png');
-	background-repeat: no-repeat;
-	width: 18px;
-	height: 18px;
-	text-align: center;
-}
-
-.omUserIcon {
-	background-image: url('../images/user.png');
-	background-repeat: no-repeat;
-	width: 18px;
-	height: 18px;
-	text-align: center;
-}
-
-.omSettingsIcon {
-	background-image: url('../images/settings.png');
-	background-repeat: no-repeat;
-	width: 18px;
-	height: 18px;
-	text-align: center;
-}
