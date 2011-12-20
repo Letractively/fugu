@@ -79,9 +79,8 @@ width: 16%;
 margin-right: 0.5%;
 }
 
-canvas {
+#canvas {
 border-radius:10px 10px 10px 10px;
 background-color:#333388;
-margin-left:15%;
 }
 
