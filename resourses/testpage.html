@@ -4,34 +4,36 @@
 	<title>fugu</title>	
 	<link rel='stylesheet' type='text/css' href='css/site.css'/>
 	<script type='text/javascript' src='jquery-1.6.min.js'></script>
-	<script type="text/javascript" src="box2d.js"></script>
-	<script type="text/javascript" src="physics.js"></script>
-	<!--script type="text/javascript" src="http://box2dweb.googlecode.com/svn/trunk/Box2d.min.js"></script-->
+	<script type='text/javascript' src='entity.js'></script>
+	<!--script type="text/javascript" src="box2d.js"></script>
+	<script type="text/javascript" src="physics.js"></script-->
 	
 	<script type='text/javascript'>	
-	
-       function TickHamdler() {
-           Physics.Simulate();
-       }
-	   
+	 
        $(document).ready(function () {
-			var canvas = $("#canvas");
-			Physics.ReInit({ density: 1, friction: 0.5, restitution: 0.2, canvas: canvas });			
-			Physics.CreateStaticBox({ halfWdth: 20, halfHeight: 2, posX: 10, posY: canvas[0].clientHeight / 30 + 1.8 });
-			Physics.CreateStaticBox({ halfWdth: 20, halfHeight: 2, posX: 10, posY: -1.8 });
-			Physics.CreateStaticBox({ halfWdth: 2, halfHeight: 14, posX: -1.8, posY: 13 });
-			Physics.CreateStaticBox({ halfWdth: 2, halfHeight: 14, posX: 31.8, posY: 13 });
+	   	
+			var ctx = document.getElementById("canvas").getContext("2d");
 			
-			for (i = 0; i < 15; i++) {
-				Physics.CreateDynamicBox(null);
-				Physics.CreateDynamicCircle(null);
+			var world = {};
+			for (var i = 0; i < 20; i++) {
+				world[i] = randomEntity(i);
 			}
 
-			Physics.PauseResume();
+			var worker = new Worker("physics.js");
+
+			worker.onmessage = function(e) {
+				ctx.clearRect(0, 0, 900, 700);
+				for (var id in e.data) {
+					var entity = world[id];
+					if (entity) {
+						entity.update(e.data[id]);
+						entity.draw(ctx);
+					}
+				}
+			};
 			
-			window.setInterval(TickHamdler, 1000 / 60);
-       });
-	   
+			worker.postMessage(world);
+	   });
 	</script>
 	
 </head>

@@ -1,3 +1,8 @@
+self.importScripts('Box2D.js');
+
+
+
+
 //Box2d aliases
 var b2Vec2 = Box2D.Common.Math.b2Vec2;
 var b2AABB = Box2D.Collision.b2AABB;
@@ -109,6 +114,25 @@ var Physics = {
         return desc ? this.CreateCircle(desc.radius, desc.posX, desc.posY) : this.CreateCircle(null, null, null);
     },
 
+	
+	SetBodies: function(bodyEntities) {
+		this._bodyDef.type = b2Body.b2_dynamicBody;
+		for(var id in bodyEntities) {
+			var entity = bodyEntities[id];
+			if (entity.radius) {
+				this._fixDef.shape = new b2CircleShape(entity.radius);
+			} else {
+				this._fixDef.shape = new b2PolygonShape;
+				this._fixDef.shape.SetAsBox(entity.halfWidth, entity.halfHeight);
+			}
+		   this._bodyDef.position.x = entity.x;
+		   this._bodyDef.position.y = entity.y;
+		   this._bodyDef.userData = entity.id;
+		   Physics._world.CreateBody(this._bodyDef).CreateFixture(this._fixDef);
+		}
+		this.ready = true;
+	},
+
     // Processing simalution step
     Simulate: function (self) {
 
@@ -118,6 +142,36 @@ var Physics = {
                 Physics._world.DrawDebugData();
             }
             Physics._world.ClearForces();
+			Physics.SendUpdate();
         }
-    }
+    },
+	
+	SendUpdate: function() {
+		  var world = {};
+			for (var b = Physics._world.GetBodyList(); b; b = b.m_next) {
+				var userData = b.GetUserData();
+				if(userData) {
+					world[userData] = {x: b.GetPosition().x, y: b.GetPosition().y, a: b.GetAngle()};
+				}
+			  }
+			postMessage(world);
+	}
+	
+};
+
+Physics.ReInit({ density: 1, friction: 0.5, restitution: 0.2 });			
+Physics.CreateStaticBox({ halfWdth: 20, halfHeight: 2, posX: 10, posY: 700 / 30 + 1.8 });
+Physics.CreateStaticBox({ halfWdth: 20, halfHeight: 2, posX: 10, posY: -1.8 });
+Physics.CreateStaticBox({ halfWdth: 2, halfHeight: 14, posX: -1.8, posY: 13 });
+Physics.CreateStaticBox({ halfWdth: 2, halfHeight: 14, posX: 31.8, posY: 13 });
+
+
+var loop = function() {
+    Physics.Simulate()
+}
+				
+onmessage = function(e) {
+    Physics.SetBodies(e.data);
+	Physics.PauseResume();
+	setInterval(loop, 1000 / 100);
 };
