@@ -25,19 +25,18 @@
        $(document).ready(function () {
 			
 			var world = {};
-			for (var i = 1; i <= 15; i++) {
+			for (var i = 1; i <= 30; i++) {
 				world[i] = randomEntity(i);
 			}
 
 			var worker = new Worker("physics.js");
-			worker.postMessage(world);
-			
 			worker.onmessage = function(e) {
 				for (var id in e.data) {
 					var entity = world[id];
 					if (entity) entity.update(e.data[id]);
 				}
 			};
+			worker.postMessage(world);
 			
 			var ctx = document.getElementById("canvas").getContext("2d");
 			
