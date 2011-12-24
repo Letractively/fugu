@@ -84,7 +84,7 @@ private:
 };
 
 typedef std::map<std::string, UserPtr> Users;
-typedef MapIterator<Users> UsersIterator;
+typedef ConstMapIterator<Users> UsersIterator;
 
 class UserManager
 {

@@ -11,6 +11,7 @@ public:
 	ReplyPtr Process(ContextPtr ctx);
 
 private:
+	ReplyPtr GetViewsList(ContextPtr ctx);
 	ReplyPtr GetView(ContextPtr ctx);
 	ReplyPtr UpdateView(ContextPtr ctx);
 };

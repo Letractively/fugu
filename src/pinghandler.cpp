@@ -11,7 +11,7 @@ ReplyPtr PingHandler::Process(ContextPtr ctx)
 	StringPtr ptr(new std::string(
 		"<html><head><title>ping</title></head><body><h1>fugu service is running...</h1></body></html>"
 	));
-	return View(ptr);
+	return Html(ptr);
 }
 	
 Handler* PingHandlerFactory::CreateImpl()

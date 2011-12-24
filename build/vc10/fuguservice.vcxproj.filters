@@ -32,9 +32,6 @@
     <ClCompile Include="..\..\src\viewdata.cpp">
       <Filter>models\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\dbpool.cpp">
-      <Filter>models\db</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\config.cpp">
       <Filter>common</Filter>
     </ClCompile>
@@ -69,6 +66,12 @@
       <Filter>handlers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\webapplication.cpp" />
+    <ClCompile Include="..\..\src\jsonmodel.cpp">
+      <Filter>models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dbpool.cpp">
+      <Filter>models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="net">
@@ -82,9 +85,6 @@
     </Filter>
     <Filter Include="models\core">
       <UniqueIdentifier>{4c9ba150-3c87-48e1-af82-8e7ff6781a19}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="models\db">
-      <UniqueIdentifier>{0c30033a-6fcd-4497-9770-28a45d868b30}</UniqueIdentifier>
     </Filter>
     <Filter Include="engine">
       <UniqueIdentifier>{30472b92-2643-4212-b238-ad06cbc514fc}</UniqueIdentifier>
@@ -142,9 +142,6 @@
     <ClInclude Include="..\..\src\viewdata.h">
       <Filter>models\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\dbpool.h">
-      <Filter>models\db</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\stdheaders.h">
       <Filter>common</Filter>
     </ClInclude>
@@ -182,6 +179,12 @@
       <Filter>handlers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\webapplication.h" />
+    <ClInclude Include="..\..\src\jsonmodel.h">
+      <Filter>models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dbpool.h">
+      <Filter>models</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\fugu.conf" />

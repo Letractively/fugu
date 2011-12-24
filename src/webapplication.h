@@ -7,7 +7,9 @@
 #include "handlerrouter.h"
 #include "registrator.h"
 #include "config.h"
+#include "connection.h"
 #include <boost/asio.hpp>
+#include <boost/pool/object_pool.hpp>
 
 namespace fugu {
 
@@ -17,6 +19,8 @@ enum ConnectionState;
 class WebApplication : private boost::noncopyable
 {
 public:
+	typedef boost::object_pool<Connection> ConnectionPool;
+
 	// Construct the server to listen on the specified TCP address and port, and
 	// serve up files from the given directory.
 	explicit WebApplication(const std::string& configPath);
@@ -38,6 +42,9 @@ private:
 	void ProcessRequest(QueryPtr request, ConnectionPtr conn);
 
 private:
+	// Connection pool
+	ConnectionPool _connectionPool;
+	// Fugu service configuration
 	Config _config;
 	// The io_service used to handle asynchronous incoming connections, 
 	// and perform asynchronous operations(read/write socket, process requests, backend calls, etc)

@@ -1,6 +1,8 @@
 #ifndef __FUGU_THREAD_SAFE_ITERS_H
 #define __FUGU_THREAD_SAFE_ITERS_H
 
+#include <boost/thread/shared_mutex.hpp>
+#include <boost/thread/locks.hpp>
 
 namespace fugu  
 {
@@ -345,39 +347,16 @@ class ConstMapIterator : public MapIteratorWrapper<T,  typename T::const_iterato
 		 : MapIteratorWrapper<T,  typename T::const_iterator> (c.begin() , c.end() )
 		{
 		}
+
+		explicit ConstMapIterator ( const T& c, boost::shared_mutex& access )
+		 : MapIteratorWrapper<T,  typename T::const_iterator> (c.begin() , c.end() )
+			//,_lock(access)
+		{
+		}
+	private:
+		//boost::shared_lock<boost::shared_mutex> _lock;
 };
 
 }
-
-/*
-template<typename map_type>
-class key_iterator : public map_type::iterator
-{
-public:
-    typedef typename map_type::iterator map_iterator;
-    typedef typename map_iterator::value_type::first_type key_type;
-
-    key_iterator(const map_iterator& other) : map_type::iterator(other) {} ;
-
-    key_type& operator *()
-    {
-        return map_type::iterator::operator*().first;
-    }
-};
-
-// helpers to create iterators easier:
-template<typename map_type>
-key_iterator<map_type> key_begin(map_type& m)
-{
-    return key_iterator<map_type>(m.begin());
-}
-template<typename map_type>
-key_iterator<map_type> key_end(map_type& m)
-{
-    return key_iterator<map_type>(m.end());
-}
-}
-*/
 
 #endif
-// vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

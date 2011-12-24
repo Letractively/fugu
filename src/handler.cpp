@@ -16,7 +16,7 @@ RoutePtr Handler::Route() const
 	return _route;
 }
 
-ReplyPtr Handler::View(StringPtr html)
+ReplyPtr Handler::Html(StringPtr html)
 {
 	return new HtmlReply(html);
 }

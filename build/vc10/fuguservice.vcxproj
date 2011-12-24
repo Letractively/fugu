@@ -39,6 +39,7 @@
     <ClCompile Include="..\..\src\htmlreply.cpp" />
     <ClCompile Include="..\..\src\httpparser.cpp" />
     <ClCompile Include="..\..\src\http_parser\http_parser.c" />
+    <ClCompile Include="..\..\src\jsonmodel.cpp" />
     <ClCompile Include="..\..\src\jsonreply.cpp" />
     <ClCompile Include="..\..\src\logger.cpp" />
     <ClCompile Include="..\..\src\nedmalloc\nedmalloc.c" />
@@ -60,6 +61,7 @@
     <ClInclude Include="..\..\src\exception.h" />
     <ClInclude Include="..\..\src\handler.h" />
     <ClInclude Include="..\..\src\htmlreply.h" />
+    <ClInclude Include="..\..\src\jsonmodel.h" />
     <ClInclude Include="..\..\src\jsonreply.h" />
     <ClInclude Include="..\..\src\query.h" />
     <ClInclude Include="..\..\src\route.h" />

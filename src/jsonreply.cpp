@@ -2,31 +2,41 @@
 
 namespace fugu {
 
-JsonReply::JsonReply()
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+BaseJsonReply::BaseJsonReply()
 	:Reply(ReplyType::HTTP_REPLY)
-	,_stream(&_streambuf)
 	,_blockedError(false)
 {
 }
 
-JsonReply::~JsonReply()
+BaseJsonReply::~BaseJsonReply()
 {
 }
 
-void JsonReply::SetError(const std::string& error, bool blocked)
+void BaseJsonReply::SetError(const std::string& error, bool blocked)
 {
 	_error = error;
 	_blockedError = blocked;
 }
 
-bool JsonReply::HadError() const
+bool BaseJsonReply::HasError() const
 {
 	return _error.empty() || _blockedError;
 }
 
-bool JsonReply::BlockedError() const
+bool BaseJsonReply::BlockedError() const
 {
 	return _blockedError;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+JsonReply::JsonReply()
+	:_stream(&_streambuf)
+{
+}
+
+JsonReply::~JsonReply()
+{
 }
 
 void JsonReply::SetJS(const std::string& id, const std::string& js)

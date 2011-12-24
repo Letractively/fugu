@@ -1,4 +1,5 @@
 #include "reply.h"
+#include "exception.h"
 
 namespace fugu {
 
@@ -27,16 +28,12 @@ StringPtr Reply::Headers() const
 
 boost::asio::streambuf& Reply::ResponseStream() const
 {
-	static boost::asio::streambuf streambuf;
-	static std::ostream stream(&streambuf);
-
-	return streambuf;
+	FUGU_THROW("Virtual method 'Reply::ResponseStream' doesn't implemented", "Reply::ResponseStream");
 }
 
 const std::string& Reply::Response() const
 {
-	static std::string empty = "";
-	return empty;
+	FUGU_THROW("Virtual method 'Reply::Response' doesn't implemented", "Reply::Response");
 }
 
 }

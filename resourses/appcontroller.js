@@ -12,5 +12,10 @@ var AppController = {
 	},
 	
 	Loading: function(state) {
+	},
+	
+	
+	LoadView: function(viewName) {
+		alert(viewName);
 	}
 }

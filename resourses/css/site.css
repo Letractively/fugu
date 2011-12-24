@@ -6,6 +6,7 @@ background-color:#BADBF2;
 font-family:'Lucida Casual', 'Comic Sans MS';
 }
 
+/************************CONTENT*************************/
 div#container {
 position:relative; /* needed for footer positioning*/
 margin:0 auto; /* center, not in IE5 */
@@ -21,7 +22,7 @@ height:30px;
 width:100%;
 }
 
-div#content {
+.content {
 display: block;
 position:absolute;
 height:auto;
@@ -39,6 +40,8 @@ opacity: 0.8;
 overflow: auto;
 padding:1em 1em 1em; // bottom padding for footer
 }
+
+/************************MAIN**************************/
 
 #navigation {
 margin-top: 4px;
@@ -76,6 +79,20 @@ line-height: 2em;
 float: left;
 width: 16%;
 margin-right: 0.5%;
+}
+
+/************************MAIN**************************/
+
+div#menu {
+text-align: left;
+}
+
+#menu a {
+font-size: 100%;
+font-family:'Lucida Casual', 'Comic Sans MS';
+color: white;
+text-decoration: none;
+text-align: left;
 }
 
 #canvas {

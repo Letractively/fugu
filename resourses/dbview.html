@@ -4,12 +4,46 @@
 	<title>fugu</title>	
 	<link rel='stylesheet' type='text/css' href='css/site.css'/>
 	<script type='text/javascript' src='jquery-1.6.min.js'></script>
+	<script type='text/javascript' src='appcontroller.js'></script>
 
 	
 	<script type='text/javascript'>	
 	 
        $(document).ready(function () {
 	   });
+	   
+	   function LoadViews() {
+	   
+			$.ajax({
+			  type: 'POST',
+			  url: "/dbview.fsp",
+			  data: "",
+			  dataType: "json"
+			})
+			.success(function(data) { 
+				if(data.Error.Blocked==true) {
+					$("<h1>" + data.Error.Message + "</h1>").appendTo($('#viewsList'));
+				}
+				
+				else {
+					var items = [];
+
+					$.each(data.Json, function(key, val) {
+					items.push('<li id="' + key + '">' + val.Name + '</li>');
+					});
+
+					$('<ul/>', {
+					html: items.join('')
+					}).appendTo($('#viewsList'));
+				}
+			})
+			.error(function(data) { 
+				alert("Error");
+				//alert(data.Error.Message); 
+			});
+			//.complete(function() { alert("complete"); });
+	   }
+	   
 	</script>
 	
 </head>
@@ -22,12 +56,12 @@
 			
 			<div id='navigation'>
 				<ul>
-					<li><a href='#'>Home</a></li>
-					<li><a href='#'>Play</a></li>
-					<li><a href='#'>Editor</a></li>
-					<li><a href='#'>Profile</a></li>
-					<li><a href='#'>Downloads</a></li>
-					<li><a href='#'>About</a></li>
+					<li><a href='javascript:AppController.LoadView("home")'>Home</a></li>
+					<li><a href='javascript:AppController.LoadView("Play")'>Play</a></li>
+					<li><a href='javascript:AppController.LoadView("Editor")'>Editor</a></li>
+					<li><a href='javascript:AppController.LoadView("Profile")'>Profile</a></li>
+					<li><a href='javascript:AppController.LoadView("Forum")'>Forum</a></li>
+					<li><a href='javascript:AppController.LoadView("About")'>About</a></li>
 				</ul>
 			</div>	
 	</div>
@@ -35,11 +69,19 @@
 	<table>
 		<tr>
 			<td>
-				<div id='content' style='right:82.5%;margin-top:100px;'>
+				<div class='content' style='right:82.5%;margin-top:100px;'>
+					<div id='menu'>
+						<ul style='list-style-type:none'>
+							<li><a href='javascript:LoadViews()'>Load views</a></li>
+							<li><a href='#'>Create view</a></li>
+							<li><a href='#'>Delete selected</a></li>
+						</ul>
+					</div>	
 				</div>
 			</td>
 			<td>
-				<div id='content' style='left:16.8%;margin-top:100px;'>
+				<div class='content' style='left:16.8%;margin-top:100px;'>
+					<div id='viewsList'></div>
 				</div>
 			</td>
 		</tr>

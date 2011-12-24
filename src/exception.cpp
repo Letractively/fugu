@@ -1,15 +1,9 @@
 #include "exception.h"
 #include <iostream>
 #include <sstream>
+#include "logger.h"
 
 namespace fugu {
-
-Exception::Exception(const std::string& desc, const std::string& src)
-	:_line( 0 )
-    ,_description(desc)
-    ,_source(src)
-{
-}
 
 Exception::Exception(const std::string& desc, const std::string& src, const char* file, long line)
 	:_line(line)
@@ -17,7 +11,7 @@ Exception::Exception(const std::string& desc, const std::string& src, const char
     ,_description(desc)
     ,_source(src)
 {
-	//TODO: Log message
+	Log(FullDescription());
 }
 
 Exception::Exception(const Exception& rhs)

@@ -46,6 +46,9 @@ void WebApplication::Run()
 
 void WebApplication::DoAccept()
 {
+	//ConnectionPtr conn(_connectionPool.construct<boost::asio::io_service&, Connection::RequestHandler>
+			//(_service, boost::bind(&WebApplication::ProcessRequest, this,_1,_2)));
+
 	// The next connection to be accepted.
 	ConnectionPtr conn(new Connection(_service, boost::bind(&WebApplication::ProcessRequest, this,_1,_2)));
 	_acceptor.async_accept(conn->Socket(), boost::bind(&WebApplication::HandleAccept, this,

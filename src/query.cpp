@@ -1,5 +1,6 @@
 #include "query.h"
-#include "logger.h"
+#include "exception.h"
+
 namespace fugu {
 
 Query::Query()
@@ -60,9 +61,13 @@ void Query::SetContent(const char* buf, size_t len)
 	{
 		_content = mongo::fromjson(buf, (int*)&len);
 	}
+	catch(mongo::MsgAssertionException& ex)
+	{
+		FUGU_THROW(ex.what() ,"Query::SetContent");
+	}
 	catch(std::exception& ex)
 	{
-		Log(ex.what());
+		FUGU_THROW(ex.what() ,"Query::SetContent");
 	}
 }
 

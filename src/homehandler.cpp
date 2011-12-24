@@ -27,7 +27,7 @@ ReplyPtr HomeHandler::Process(ContextPtr ctx)
 	<< "</html>";
 
 	StringPtr ptr(new std::string(contentstream.rdbuf()->str()));
-	return View(ptr);
+	return Html(ptr);
 }
 
 Handler* HomeHandlerFactory::CreateImpl()

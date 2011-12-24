@@ -3,14 +3,16 @@
 #include "query.h"
 #include "viewdata.h"
 #include "context.h"
+#include "exception.h"
 #include <sstream>
 
 namespace fugu {
 
 ReplyPtr ViewFromDBHandler::Process(ContextPtr ctx)
 {
-	JsonReply* reply = new JsonReply();
-	reply->SetError("Test error", false);
+
+	//JsonReply* reply = new JsonReply();
+	//reply->SetError("Test error", false);
 	/*
 	switch(ctx->Request()->Method())
 	{
@@ -23,9 +25,47 @@ ReplyPtr ViewFromDBHandler::Process(ContextPtr ctx)
 			break;
 	};
 	*/
-	return reply;
+
+	return GetViewsList(ctx);
 }
 	
+ReplyPtr ViewFromDBHandler::GetViewsList(ContextPtr ctx)
+{
+	try
+	{
+		JsonReply* reply = new JsonReply();
+
+		JsonModelCache mgr("test.fugu.views", "Name");
+		JsonModelMapIterator viewsIter = mgr.All();
+		std::string json = "[";
+		bool has = false;
+		while(viewsIter.HasMore()) {
+			has = true;
+			JsonModelPtr view = viewsIter.PeekNextValue();
+			ViewData* v = (ViewData*)view.get();
+			json.append("{\"Name\":\"" +  v->Name() + "\"},");
+			viewsIter.MoveNext();
+		}
+
+		if(has)
+			json.erase(json.length()-1);
+
+		json.append("]");
+
+		reply->SetJson(json);
+
+		return reply;
+	}
+	catch(Exception& fe)
+	{
+		return Handler::Error(fe, true);
+	}
+	catch(std::exception& e)
+	{
+		return Handler::Error(FUGU_EXCEPT(e.what() ,"ViewFromDBHandler::GetViewsList"), true);
+	}
+}
+
 ReplyPtr ViewFromDBHandler::GetView(ContextPtr ctx)
 {
 	//ViewDataManager mgr;

@@ -56,6 +56,9 @@ typedef boost::shared_ptr<Query> QueryPtr;
 class Handler;
 typedef boost::shared_ptr<Handler> HandlerPtr;
 
+class JsonModel;
+typedef boost::shared_ptr<JsonModel> JsonModelPtr;
+
 class WebServer;
 class Config;
 class Config;

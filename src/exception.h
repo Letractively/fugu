@@ -9,7 +9,6 @@ namespace fugu {
 class Exception : public std::exception
 {
 public:
-    Exception(const std::string& description, const std::string& source);
     Exception(const std::string& description, const std::string& source, const char* file, long line);
     // Copy constructor.
     Exception(const Exception& rhs);

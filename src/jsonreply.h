@@ -18,15 +18,26 @@ namespace fugu {
 //	"JS": {"Id": "scriptid_1", "js script"}
 //}
 
-class JsonReply : public Reply,  private boost::noncopyable
+class BaseJsonReply : public Reply
+{
+public:
+	BaseJsonReply();
+	virtual ~BaseJsonReply();
+
+	bool HasError() const;
+	bool BlockedError() const;
+	void SetError(const std::string& error, bool blocked = false);
+
+protected:
+	bool _blockedError;
+	std::string _error;
+};
+
+class JsonReply : public BaseJsonReply,  private boost::noncopyable
 {
 public:
 	JsonReply();
 	virtual ~JsonReply();
-
-	bool HadError() const;
-	bool BlockedError() const;
-	void SetError(const std::string& error, bool blocked = false);
 	void SetJS(const std::string& id, const std::string& js);
 	void SetJson(const std::string& json);
 	void SetHtml(const std::string& region, const std::string& html);
@@ -34,8 +45,6 @@ public:
 	boost::asio::streambuf& ResponseStream() const;
 
 protected:
-	bool _blockedError;
-	std::string _error;
 	std::string _jsId;
 	std::string _jsCode;
 	std::string _htmlRegion;
