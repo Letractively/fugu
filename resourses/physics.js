@@ -1,7 +1,4 @@
-self.importScripts('Box2D.js');
-
-
-
+self.importScripts('box2d.js', 'inheritance.js');
 
 //Box2d aliases
 var b2Vec2 = Box2D.Common.Math.b2Vec2;
@@ -38,82 +35,84 @@ var b2MouseJointDef = Box2D.Dynamics.Joints.b2MouseJointDef;
 
 //           $("#canvas").mousemove(ShowCanvasCoords);
 
-var Physics = {
 
-    // Box2d physics world
-    _world: null,
-    _fixDef: null,
-    _bodyDef: null,
-    _intervalId: null,
-    _config: null,
-    _simulated: null,
+var PhysWorld = Class.extend({
 
-    ReInit: function (config) {
+	init: function(config){
 		this._simulated = false;
-        this._config = config;
-        this._world = new Box2D.Dynamics.b2World(new b2Vec2(0, 10), true);
-        this._bodyDef = new b2BodyDef;
-        this._fixDef = new b2FixtureDef;
-        this._fixDef.density = this._config.density ? this._config.density : 1.0;
-        this._fixDef.friction = this._config.friction ? this._config.friction : 0.5;
-        this._fixDef.restitution = this._config.restitution ? this._config.restitution : 0.2;
+		this._config = config;
+		this._world = new Box2D.Dynamics.b2World(new b2Vec2(0, 15), true);
+		this._bodyDef = new b2BodyDef;
+		this._fixDef = new b2FixtureDef;
+		this._fixDef.density = this._config.density ? this._config.density : 1.0;
+		this._fixDef.friction = this._config.friction ? this._config.friction : 0.5;
+		this._fixDef.restitution = this._config.restitution ? this._config.restitution : 0.2;
 
-        if (this._config.canvas) {
-            //Setup debug draw
-            var debugDraw = new b2DebugDraw();
-            debugDraw.SetSprite(this._config.canvas[0].getContext("2d"));
-            debugDraw.SetDrawScale(30.0);
-            debugDraw.SetFillAlpha(0.5);
-            debugDraw.SetLineThickness(0.1);
-            debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
-            this._world.SetDebugDraw(debugDraw);
+		if (this._config.canvas) {
+			//Setup debug draw
+			var debugDraw = new b2DebugDraw();
+			debugDraw.SetSprite(this._config.canvas[0].getContext("2d"));
+			debugDraw.SetDrawScale(30.0);
+			debugDraw.SetFillAlpha(0.5);
+			debugDraw.SetLineThickness(0.1);
+			debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
+			this._world.SetDebugDraw(debugDraw);
+		}
+	},
+
+	Go: function(){
+		this._simulated = true;
+	},
+
+	Stop: function() {
+		this._simulated = false;
+	},
+
+	CreateBox: function (halfWdth, halfHeight, x, y) {
+		this._fixDef.shape = new b2PolygonShape;
+		this._fixDef.shape.SetAsBox(halfWdth ? halfWdth : Math.random() + 0.1, halfHeight ? halfHeight : Math.random() + 0.1);
+		this._bodyDef.position.Set(x ? x : Math.random() * 10, y ? y : Math.random() * 10);
+		return this._world.CreateBody(this._bodyDef).CreateFixture(this._fixDef);
+	},
+
+	CreateDynamicBox: function (desc) {
+		this._bodyDef.type = b2Body.b2_dynamicBody;
+		return desc ? this.CreateBox(desc.halfWdth, desc.halfHeight, desc.posX, desc.posY) : this.CreateBox(null, null, null, null);
+	},
+
+	CreateStaticBox: function (desc) {
+		this._bodyDef.type = b2Body.b2_staticBody;
+		return desc ? this.CreateBox(desc.halfWdth, desc.halfHeight, desc.posX, desc.posY) : this.CreateBox(null, null, null, null);
+	},
+
+	CreateCircle: function (radius, x, y) {
+		this._fixDef.shape = new b2CircleShape(radius ? radius : Math.random() + 0.1);
+		this._bodyDef.position.Set(x ? x : Math.random() * 10, y ? y : Math.random() * 10);
+		return this._world.CreateBody(this._bodyDef).CreateFixture(this._fixDef);
+	},
+
+	CreateDynamicCircle: function (desc) {
+		this._bodyDef.type = b2Body.b2_dynamicBody;
+		return desc ? this.CreateCircle(desc.radius, desc.posX, desc.posY) : this.CreateCircle(null, null, null);
+	},
+
+	CreateStaticCircle: function (desc) {
+		this._bodyDef.type = b2Body.b2_staticBody;
+		return desc ? this.CreateCircle(desc.radius, desc.posX, desc.posY) : this.CreateCircle(null, null, null);
+	},
+	
+    // Processing simalution step
+    Simulate: function (self) {
+
+        if (this._simulated == true) {
+            this._world.Step(1 / 60, 10, 10);
+            if (this._config.canvas) {
+                this._world.DrawDebugData();
+            }
+            this._world.ClearForces();
+			this.SendUpdate();
         }
     },
-
-    PauseResume: function (paused) {
-        if (this._simulated == false)
-            this._simulated = true;
-        else
-            this._simulated = false;
-    },
-
-    IsRunning: function () {
-        return this._intervalId != null;
-    },
-
-    CreateBox: function (halfWdth, halfHeight, x, y) {
-        this._fixDef.shape = new b2PolygonShape;
-        this._fixDef.shape.SetAsBox(halfWdth ? halfWdth : Math.random() + 0.1, halfHeight ? halfHeight : Math.random() + 0.1);
-        this._bodyDef.position.Set(x ? x : Math.random() * 10, y ? y : Math.random() * 10);
-        return this._world.CreateBody(this._bodyDef).CreateFixture(this._fixDef);
-    },
-
-    CreateDynamicBox: function (desc) {
-        this._bodyDef.type = b2Body.b2_dynamicBody;
-        return desc ? this.CreateBox(desc.halfWdth, desc.halfHeight, desc.posX, desc.posY) : this.CreateBox(null, null, null, null);
-    },
-
-    CreateStaticBox: function (desc) {
-        this._bodyDef.type = b2Body.b2_staticBody;
-        return desc ? this.CreateBox(desc.halfWdth, desc.halfHeight, desc.posX, desc.posY) : this.CreateBox(null, null, null, null);
-    },
-
-    CreateCircle: function (radius, x, y) {
-        this._fixDef.shape = new b2CircleShape(radius ? radius : Math.random() + 0.1);
-        this._bodyDef.position.Set(x ? x : Math.random() * 10, y ? y : Math.random() * 10);
-        return this._world.CreateBody(this._bodyDef).CreateFixture(this._fixDef);
-    },
-
-    CreateDynamicCircle: function (desc) {
-        this._bodyDef.type = b2Body.b2_dynamicBody;
-        return desc ? this.CreateCircle(desc.radius, desc.posX, desc.posY) : this.CreateCircle(null, null, null);
-    },
-
-    CreateStaticCircle: function (desc) {
-        this._bodyDef.type = b2Body.b2_staticBody;
-        return desc ? this.CreateCircle(desc.radius, desc.posX, desc.posY) : this.CreateCircle(null, null, null);
-    },
-
 	
 	SetBodies: function(bodyEntities) {
 		this._bodyDef.type = b2Body.b2_dynamicBody;
@@ -128,27 +127,14 @@ var Physics = {
 		   this._bodyDef.position.x = entity.x;
 		   this._bodyDef.position.y = entity.y;
 		   this._bodyDef.userData = entity.id;
-		   Physics._world.CreateBody(this._bodyDef).CreateFixture(this._fixDef);
+		   this._world.CreateBody(this._bodyDef).CreateFixture(this._fixDef);
 		}
 		this.ready = true;
 	},
-
-    // Processing simalution step
-    Simulate: function (self) {
-
-        if (Physics._simulated == true) {
-            Physics._world.Step(1 / 60, 10, 10);
-            if (Physics._config.canvas) {
-                Physics._world.DrawDebugData();
-            }
-            Physics._world.ClearForces();
-			Physics.SendUpdate();
-        }
-    },
 	
 	SendUpdate: function() {
 		  var world = {};
-			for (var b = Physics._world.GetBodyList(); b; b = b.m_next) {
+			for (var b = this._world.GetBodyList(); b; b = b.m_next) {
 				var userData = b.GetUserData();
 				if(userData) {
 					world[userData] = {x: b.GetPosition().x, y: b.GetPosition().y, a: b.GetAngle()};
@@ -157,21 +143,21 @@ var Physics = {
 			postMessage(world);
 	}
 	
-};
+});
 
-Physics.ReInit({ density: 1, friction: 0.5, restitution: 0.2 });			
-Physics.CreateStaticBox({ halfWdth: 20, halfHeight: 2, posX: 10, posY: 700 / 30 + 1.8 });
-Physics.CreateStaticBox({ halfWdth: 20, halfHeight: 2, posX: 10, posY: -1.8 });
-Physics.CreateStaticBox({ halfWdth: 2, halfHeight: 14, posX: -1.8, posY: 13 });
-Physics.CreateStaticBox({ halfWdth: 2, halfHeight: 14, posX: 31.8, posY: 13 });
-
+var box = new PhysWorld({ density: 1, friction: 0.5, restitution: 0.2 });
 
 var loop = function() {
-    Physics.Simulate()
+    box.Simulate()
 }
+
+setInterval(loop, 1000 / 40);
 				
-onmessage = function(e) {
-    Physics.SetBodies(e.data);
-	Physics.PauseResume();
-	setInterval(loop, 1000 / 100);
+self.onmessage = function(e) {		
+	box.CreateStaticBox({ halfWdth: 20, halfHeight: 2, posX: 10, posY: 480 / 30 + 1.8 });
+	box.CreateStaticBox({ halfWdth: 20, halfHeight: 2, posX: 10, posY: -1.8 });
+	box.CreateStaticBox({ halfWdth: 2, halfHeight: 14, posX: -1.8, posY: 13 });
+	box.CreateStaticBox({ halfWdth: 2, halfHeight: 14, posX: 31.8, posY: 13 });
+    box.SetBodies(e.data);
+	box.Go();
 };

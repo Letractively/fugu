@@ -5,34 +5,50 @@
 	<link rel='stylesheet' type='text/css' href='css/site.css'/>
 	<script type='text/javascript' src='jquery-1.6.min.js'></script>
 	<script type='text/javascript' src='entity.js'></script>
-	<!--script type="text/javascript" src="box2d.js"></script>
-	<script type="text/javascript" src="physics.js"></script-->
+	
+    <script>
+    // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+    window.requestAnimFrame = (function(){
+          return  window.requestAnimationFrame       || 
+                  window.webkitRequestAnimationFrame || 
+                  window.mozRequestAnimationFrame    || 
+                  window.oRequestAnimationFrame      || 
+                  window.msRequestAnimationFrame     || 
+                  function(/* function */ callback, /* DOMElement */ element){
+                    window.setTimeout(callback, 1000 / 60);
+                  };
+    })();
+    </script>
 	
 	<script type='text/javascript'>	
 	 
        $(document).ready(function () {
-	   	
-			var ctx = document.getElementById("canvas").getContext("2d");
 			
 			var world = {};
-			for (var i = 0; i < 20; i++) {
+			for (var i = 1; i <= 15; i++) {
 				world[i] = randomEntity(i);
 			}
 
 			var worker = new Worker("physics.js");
-
+			worker.postMessage(world);
+			
 			worker.onmessage = function(e) {
-				ctx.clearRect(0, 0, 900, 700);
 				for (var id in e.data) {
 					var entity = world[id];
-					if (entity) {
-						entity.update(e.data[id]);
-						entity.draw(ctx);
-					}
+					if (entity) entity.update(e.data[id]);
 				}
 			};
 			
-			worker.postMessage(world);
+			var ctx = document.getElementById("canvas").getContext("2d");
+			
+			(function loop() {
+			  ctx.clearRect(0, 0, 900, 700);
+			  for (var id in world) {
+				var entity = world[id];
+				entity.draw(ctx);
+			  }
+			  requestAnimFrame(loop);
+			})();
 	   });
 	</script>
 	
@@ -62,7 +78,7 @@
 
 	<div id="content">
 		<div>
-				<canvas id="canvas" width="900px" height="700px" ></canvas>
+				<canvas id="canvas" width="640px" height="480px" ></canvas>
 		</div>
 	</div>
 	
