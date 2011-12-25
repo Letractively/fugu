@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\..\src\entrypoint.cpp" />
-    <ClCompile Include="..\..\src\user.cpp">
-      <Filter>models\core</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\connection.cpp">
       <Filter>net</Filter>
     </ClCompile>
@@ -28,9 +25,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\registration.cpp">
       <Filter>common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\viewdata.cpp">
-      <Filter>models\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\config.cpp">
       <Filter>common</Filter>
@@ -66,11 +60,17 @@
       <Filter>handlers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\webapplication.cpp" />
-    <ClCompile Include="..\..\src\jsonmodel.cpp">
+    <ClCompile Include="..\..\src\dbpool.cpp">
+      <Filter>models\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\user.cpp">
       <Filter>models</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\dbpool.cpp">
+    <ClCompile Include="..\..\src\viewdata.cpp">
       <Filter>models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\jsonmodel.cpp">
+      <Filter>models\core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,9 +106,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\user.h">
-      <Filter>models\core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\iterators.h">
       <Filter>common</Filter>
     </ClInclude>
@@ -138,9 +135,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\registrator.h">
       <Filter>common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\viewdata.h">
-      <Filter>models\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\stdheaders.h">
       <Filter>common</Filter>
@@ -179,10 +173,16 @@
       <Filter>handlers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\webapplication.h" />
-    <ClInclude Include="..\..\src\jsonmodel.h">
+    <ClInclude Include="..\..\src\dbpool.h">
+      <Filter>models\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\user.h">
       <Filter>models</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\dbpool.h">
+    <ClInclude Include="..\..\src\jsonmodel.h">
+      <Filter>models\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\viewdata.h">
       <Filter>models</Filter>
     </ClInclude>
   </ItemGroup>

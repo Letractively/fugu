@@ -47,6 +47,9 @@ public:
 	JsonModelPtr GetById(const std::string& id) const;
 	// Gets all models
 	JsonModelMapIterator All();
+	// Gets all models in json format
+	// toReplace - data should be replaced, as example: passwords before sending to client
+	StringPtr AllAsJson(const std::string& toReplace="");
 
 protected:
 	virtual JsonModelPtr CreateImpl(const std::string& json);

@@ -56,6 +56,20 @@ JsonModelMapIterator JsonModelCache::All()
 	return JsonModelMapIterator(_models, _access);
 }
 
+StringPtr JsonModelCache::AllAsJson(const std::string& toReplace)
+{
+	LoadAll();
+	bool has;
+	JsonModelMapIterator iter(_models);
+	while(iter.HasMore()) {
+		has = true;
+		JsonModelPtr view = iter.PeekNextValue();
+		iter.MoveNext();
+	}
+
+	return StringPtr();
+}
+
 JsonModelPtr JsonModelCache::CreateImpl(const std::string& json)
 {
 	try
@@ -108,28 +122,43 @@ JsonModelPtr JsonModelCache::CreateImpl(const std::string& json)
 
 void JsonModelCache::LoadAll()
 {
-	JsonModelMap fromdb;
-	std::auto_ptr<mongo::DBClientCursor> cursor =  
-		DBPool::Get().Queue()->query(_ns, mongo::Query());
+	try
+	{
+		JsonModelMap fromdb;
+		std::auto_ptr<mongo::DBClientCursor> cursor =  
+			DBPool::Get().Queue()->query(_ns, mongo::Query());
 
-	//getLastError();
-	while(cursor->more()) {
-		JsonObj json = cursor->next();
-		const char* id = json.getStringField(_idFieldName.c_str());
+		//getLastError();
+		while(cursor->more()) {
+			JsonObj json = cursor->next();
+			const char* id = json.getStringField(_idFieldName.c_str());
 
-		if(id != NULL) {
-			JsonModelPtr model(new JsonModel(json.copy()));
-			fromdb.insert(std::make_pair<std::string, JsonModelPtr>(id, model));
+			if(id != NULL) {
+				JsonModelPtr model(new JsonModel(json.copy()));
+				fromdb.insert(std::make_pair<std::string, JsonModelPtr>(id, model));
+			}
+		}
+
+		{
+			// Get upgradable access
+			boost::upgrade_lock<boost::shared_mutex> lock(_access);
+			// Get exclusive access
+			boost::upgrade_to_unique_lock<boost::shared_mutex> uniqueLock(lock);
+			// Now we have exclusive access
+			fromdb.swap(_models);
 		}
 	}
-
+	catch(Exception& ex)
 	{
-		// Get upgradable access
-		boost::upgrade_lock<boost::shared_mutex> lock(_access);
-		// Get exclusive access
-		boost::upgrade_to_unique_lock<boost::shared_mutex> uniqueLock(lock);
-		// Now we have exclusive access
-		fromdb.swap(_models);
+		throw ex;
+	}
+	catch(mongo::DBException& ex)
+	{
+		FUGU_THROW(ex.toString(), "JsonModelCache::LoadAll");
+	}
+	catch(std::exception& ex)
+	{
+		FUGU_THROW(ex.what(), "JsonModelCache::LoadAll");
 	}
 }
 

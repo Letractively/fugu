@@ -31,10 +31,10 @@ ReplyPtr ViewFromDBHandler::Process(ContextPtr ctx)
 	
 ReplyPtr ViewFromDBHandler::GetViewsList(ContextPtr ctx)
 {
+	JsonReply* reply = new JsonReply();
+
 	try
 	{
-		JsonReply* reply = new JsonReply();
-
 		JsonModelCache mgr("test.fugu.views", "Name");
 		JsonModelMapIterator viewsIter = mgr.All();
 		std::string json = "[";
@@ -42,8 +42,8 @@ ReplyPtr ViewFromDBHandler::GetViewsList(ContextPtr ctx)
 		while(viewsIter.HasMore()) {
 			has = true;
 			JsonModelPtr view = viewsIter.PeekNextValue();
-			ViewData* v = (ViewData*)view.get();
-			json.append("{\"Name\":\"" +  v->Name() + "\"},");
+			//ViewData* v = (ViewData*)view.get();
+			json.append(view->JsonString() + ",");
 			viewsIter.MoveNext();
 		}
 
@@ -58,10 +58,12 @@ ReplyPtr ViewFromDBHandler::GetViewsList(ContextPtr ctx)
 	}
 	catch(Exception& fe)
 	{
+		delete reply;
 		return Handler::Error(fe, true);
 	}
 	catch(std::exception& e)
 	{
+		delete reply;
 		return Handler::Error(FUGU_EXCEPT(e.what() ,"ViewFromDBHandler::GetViewsList"), true);
 	}
 }
