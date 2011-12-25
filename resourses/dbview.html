@@ -2,18 +2,67 @@
 <html dir='ltr'>
 <head>
 	<title>fugu</title>	
+	<!-- jquery -->
+	<script type='text/javascript' src='jquery-1.6.2.min.js'></script>
+	<script type='text/javascript' src='jquery.blockUI.js'></script>
+	
+	<!-- jquery ui -->
+	<link rel='stylesheet' type='text/css' href='jquery-ui/css/start/jquery-ui-1.8.16.custom.css'/>
+	<script type='text/javascript' src='jquery-ui/js/jquery-ui-1.8.16.custom.min.js'></script>
+	
+	<!-- jwysiwyg -->
+	<link rel="stylesheet" href="jwysiwyg/jquery.wysiwyg.css" type="text/css"/>
+	<script type="text/javascript" src="jwysiwyg/jquery.wysiwyg.js"></script>
+	<script type="text/javascript" src="jwysiwyg/controls/wysiwyg.image.js"></script>
+	<script type="text/javascript" src="jwysiwyg/controls/wysiwyg.link.js"></script>
+	<script type="text/javascript" src="jwysiwyg/controls/wysiwyg.table.js"></script>
+	
 	<link rel='stylesheet' type='text/css' href='css/site.css'/>
-	<script type='text/javascript' src='jquery-1.6.min.js'></script>
 	<script type='text/javascript' src='appcontroller.js'></script>
-
 	
 	<script type='text/javascript'>	
 	 
        $(document).ready(function () {
 	   });
 	   
-	   function LoadViews() {
+	   function OpenViewDialog(viewName) {
+			var view = window.Views[viewName];
+			
+			$('#wysiwyg').text(view.Content);
+			var editor = $('#wysiwyg').wysiwyg({dialog:'jqueryui'});
+			$('#wysiwyg').wysiwyg('setContent', view.Content);
+				
+			var dialog = $('#dialog').dialog({
+				title:"View name: " + view.Name,
+				modal: true,
+				resizable: false,
+				position: [100,100],
+				height: 600,
+				buttons: {
+					"Save": function() { 
+						$(this).dialog("close");  
+					}, 
+					"Cancel": function() { 
+						$(this).dialog("close"); 
+					} 
+				}
+			}).ready(function () {
+				$('#dialog').dialog({width:editor.width()-60});
+			});
+	   }
+	   	
+	   function CreateViewsList(viewsList) {
+			window.Views = {};
+			var items = [];
+			$.each(viewsList, function(key, val) {
+				window.Views[val.Name] = val;
+				items.push("<li><a class='menulink' href=javascript:OpenViewDialog('" + val.Name +"')>" + val.Name + "</a></li>");
+			});
+			$('<ul/>', { html: items.join('') }).appendTo($('#viewsList'));
+	   }
 	   
+	   function LoadViews() {
+			$('#viewsList').empty();
 			$.ajax({
 			  type: 'POST',
 			  url: "/dbview.fsp",
@@ -21,27 +70,13 @@
 			  dataType: "json"
 			})
 			.success(function(data) { 
-				if(data.Error.Blocked==true) {
-					$("<h1>" + data.Error.Message + "</h1>").appendTo($('#viewsList'));
-				}
-				
-				else {
-					var items = [];
-
-					$.each(data.Json, function(key, val) {
-					items.push('<li id="' + key + '">' + val.Name + '</li>');
-					});
-
-					$('<ul/>', {
-					html: items.join('')
-					}).appendTo($('#viewsList'));
-				}
+				if(data.Error.Blocked==true) alert("Error: " + data.Error.Message);
+				else CreateViewsList(data.Json);
 			})
-			.error(function(data) { 
-				alert("Error");
-				//alert(data.Error.Message); 
-			});
-			//.complete(function() { alert("complete"); });
+			.error(function(data) { alert("Error");})
+			.complete(function(data) { AppController.Loading(false); })
+			
+			AppController.Loading(true);
 	   }
 	   
 	</script>
@@ -51,6 +86,10 @@
 
 <div id='container'>
 
+	<div id="dialog" style="display:none">
+		<textarea id="wysiwyg" rows="5" cols="100"></textarea>
+	</div>
+		
 	<div  id='header'>
 			<div style='background-color:#319AB2;height:60px;width:100%;'></div>
 			
@@ -70,18 +109,16 @@
 		<tr>
 			<td>
 				<div class='content' style='right:82.5%;margin-top:100px;'>
-					<div id='menu'>
 						<ul style='list-style-type:none'>
-							<li><a href='javascript:LoadViews()'>Load views</a></li>
-							<li><a href='#'>Create view</a></li>
-							<li><a href='#'>Delete selected</a></li>
-						</ul>
-					</div>	
+							<li><a class='menulink' href='javascript:LoadViews()'>Load views</a></li>
+							<li><a class='menulink' href='#'>Create view</a></li>
+							<li><a class='menulink' href='#'>Delete selected</a></li>
+						</ul>	
 				</div>
 			</td>
 			<td>
 				<div class='content' style='left:16.8%;margin-top:100px;'>
-					<div id='viewsList'></div>
+					<div id='viewsList'></div>					
 				</div>
 			</td>
 		</tr>

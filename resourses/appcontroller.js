@@ -12,10 +12,15 @@ var AppController = {
 	},
 	
 	Loading: function(state) {
+		if(state == true) {
+			$.blockUI();
+		}
+		else $.unblockUI();
 	},
-	
 	
 	LoadView: function(viewName) {
 		alert(viewName);
-	}
+	},
+	
+	
 }

@@ -54,9 +54,8 @@ list-style-type: none;
 }
 
 #navigation a {
-font-size: 180%;
+font-size: 150%;
 font-family:'Lucida Casual', 'Comic Sans MS';
-vertical-align: middle;
 color: white;
 height: 30px;
 border-radius:10px 10px 10px 10px;
@@ -81,13 +80,9 @@ width: 16%;
 margin-right: 0.5%;
 }
 
-/************************MAIN**************************/
+/******************************************************/
 
-div#menu {
-text-align: left;
-}
-
-#menu a {
+.menulink {
 font-size: 100%;
 font-family:'Lucida Casual', 'Comic Sans MS';
 color: white;
@@ -100,3 +95,4 @@ border-radius:10px 10px 10px 10px;
 background-color:#333388;
 }
 
+.ui-progressbar-value { background-image: url(images/busy.gif); }
