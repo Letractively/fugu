@@ -10,8 +10,6 @@ Connection::Connection(boost::asio::io_service& io_service, RequestHandler handl
   : _strand(io_service)
     ,_socket(io_service)
 	,_requestHandler(handler)
-	,_readers(0)
-	,_senders(0)
 	,_query(new Query)
 	,_webSocketsConnection(false)
 {
@@ -32,8 +30,7 @@ std::string Connection::Address() const
 
 void Connection::Send(ReplyPtr reply)
 {
-	_toSendQueue.enqueue(reply);
-	DoSend();
+	DoSend(reply);
 }
 
 void Connection::Close()
@@ -50,19 +47,10 @@ void Connection::DoRun()
 
 void Connection::DoRecive()
 {
-	unsigned char expected = 0, desired = 1;
-	// Compare current value with expected, change it to desired if matches. 
-	// Returns true if an exchange has been performed, and always writes the previous value back in expected.
-	//  _readers_ == 0 - no sender, othewise sender is exist
-	// If expected == current_value then current_value = desired
-	if(_readers.compare_exchange_strong(expected, desired)) 
-	{
-		_socket.async_read_some(boost::asio::buffer(_buffer),
-			_strand.wrap( boost::bind(&Connection::HandleRecive, shared_from_this(),
-							boost::asio::placeholders::error,
-							boost::asio::placeholders::bytes_transferred)));
-	}
-	
+	_socket.async_read_some(boost::asio::buffer(_buffer),
+		_strand.wrap( boost::bind(&Connection::HandleRecive, shared_from_this(),
+						boost::asio::placeholders::error,
+						boost::asio::placeholders::bytes_transferred)));	
 }
 
 // If an error occurs then no new asynchronous operations are started. This
@@ -71,8 +59,6 @@ void Connection::DoRecive()
 // handler returns. The Connection class's destructor closes the socket.
 void Connection::HandleRecive(const boost::system::error_code& error, std::size_t bytesTransferred)
 {
-	_readers.exchange(0);
-
 	if(!error)
 	{
 		if(_webSocketsConnection) {
@@ -87,33 +73,21 @@ void Connection::HandleRecive(const boost::system::error_code& error, std::size_
 	}
 }
 
-void Connection::DoSend()
+void Connection::DoSend(ReplyPtr reply)
 {
-	unsigned char expected = 0, desired = 1;
-	// Compare current value with expected, change it to desired if matches. 
-	// Returns true if an exchange has been performed, and always writes the previous value back in expected.
-	//  _senders == 0 - no sender, othewise sender is exist
-	// If expected == current_value then current_value = desired
-	if(_senders.compare_exchange_strong(expected, desired))
+	if(reply->Streamed())
 	{
-		ReplyPtr reply;
-		if(_toSendQueue.dequeue(reply)) {
-
-			if(reply->Streamed())
-			{
-				// Write whatever message we have for the client.
-				boost::asio::async_write(_socket, reply->ResponseStream(),
-											_strand.wrap(boost::bind(&Connection::HandleSend, shared_from_this(), 
-											boost::asio::placeholders::error, reply)));
-			}
-			else
-			{
-				// Write whatever message we have for the client.
-				boost::asio::async_write(_socket, boost::asio::buffer(reply->Response()),
-											_strand.wrap(boost::bind(&Connection::HandleSend, shared_from_this(), 
-											boost::asio::placeholders::error, reply)));
-			}
-		}
+		// Write whatever message we have for the client.
+		boost::asio::async_write(_socket, reply->ResponseStream(),
+									_strand.wrap(boost::bind(&Connection::HandleSend, shared_from_this(), 
+									boost::asio::placeholders::error, reply)));
+	}
+	else
+	{
+		// Write whatever message we have for the client.
+		boost::asio::async_write(_socket, boost::asio::buffer(reply->Response()),
+									_strand.wrap(boost::bind(&Connection::HandleSend, shared_from_this(), 
+									boost::asio::placeholders::error, reply)));
 	}
 }
 
@@ -124,10 +98,6 @@ void Connection::DoSend()
 // destructor closes the socket.
 void Connection::HandleSend(const boost::system::error_code& error, ReplyPtr reply)
 {
-	_senders.exchange(0);
-
-	delete reply;
-
 	if (!error)
 	{
 		boost::system::error_code ignored_ec;

@@ -46,7 +46,7 @@
     <ClCompile Include="..\..\src\context.h" />
     <ClCompile Include="..\..\src\pinghandler.cpp" />
     <ClCompile Include="..\..\src\query.cpp" />
-    <ClCompile Include="..\..\src\registration.cpp" />
+    <ClCompile Include="..\..\src\registrator.cpp" />
     <ClCompile Include="..\..\src\reply.cpp" />
     <ClCompile Include="..\..\src\session.cpp" />
     <ClCompile Include="..\..\src\user.cpp" />

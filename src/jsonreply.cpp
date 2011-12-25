@@ -35,6 +35,12 @@ JsonReply::JsonReply()
 {
 }
 
+JsonReply::JsonReply(const std::string json)
+	:_stream(&_streambuf)
+	,_json(json)
+{
+}
+
 JsonReply::~JsonReply()
 {
 }

@@ -10,8 +10,9 @@
 
 namespace fugu {
 
-class JsonModel //: public boost::enable_shared_from_this<JsonModel>,
-					//private boost::noncopyable
+class JsonModel : private boost::noncopyable
+				//?, public boost::enable_shared_from_this<JsonModel>,
+
 {
 public:
 	JsonModel(const JsonObj& obj);
@@ -20,9 +21,9 @@ public:
 	const JsonObj& JsonObject() const;
 
 	template<typename T>
-	boost::shared_ptr<T> As()
+	T* As()
 	{
-		return boost::shared_ptr<T>(this);
+		return static_cast<T*>(this);
 	}
 
 protected:
@@ -41,6 +42,8 @@ public:
 	JsonModelCache(const std::string& ns, const std::string& idFieldName);
 	virtual ~JsonModelCache();
 
+	// Creates new model by json object, and add it to the database, or update existing
+	JsonModelPtr Create(const JsonObj& jsonObj);
 	// Creates new model by json string, and add it to the database, or update existing
 	JsonModelPtr Create(const std::string& json);
 	// Gets model by id
@@ -52,7 +55,7 @@ public:
 	StringPtr AllAsJson(const std::string& toReplace="");
 
 protected:
-	virtual JsonModelPtr CreateImpl(const std::string& json);
+	virtual JsonModelPtr CreateImpl(const JsonObj& json);
 	virtual void LoadAll();
 
 protected:

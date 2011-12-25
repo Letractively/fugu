@@ -32,7 +32,13 @@ class Request;
 typedef boost::shared_ptr<Request> RequestPtr;
 
 class Reply;
-typedef Reply* ReplyPtr;
+typedef boost::shared_ptr<Reply> ReplyPtr;
+
+class HtmlReply;
+typedef boost::shared_ptr<HtmlReply> HtmlReplyPtr;
+
+class JsonReply;
+typedef boost::shared_ptr<JsonReply> JsonReplyPtr;
 
 class Session;
 class SessionManager;

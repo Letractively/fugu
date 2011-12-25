@@ -61,8 +61,6 @@ ReplyPtr HandlerRouter::Route(ContextPtr ctx)
 	{
 		return Handler::Error(FUGU_EXCEPT(e.what() ,"HandlerRouter::Route"), true);
 	}
-
-	return NULL;
 }
 
 }

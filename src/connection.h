@@ -28,7 +28,6 @@ class Connection : public boost::enable_shared_from_this<Connection>,
 {
 public:
 	friend class WebApplication;
-	typedef boost::lockfree::fifo<ReplyPtr> SendQueue;
 	typedef boost::function< void(QueryPtr, ConnectionPtr)> RequestHandler;
 
 	// Construct a connection with the given io_service.
@@ -53,7 +52,7 @@ private:
 	// Handle completion of a read operation.
 	void HandleRecive(const boost::system::error_code& e, std::size_t bytesTransferred);
 	// Write existsing buffer to the socket
-	void DoSend();
+	void DoSend(ReplyPtr reply);
 	// Handle completion of a write operation.
 	void HandleSend(const boost::system::error_code& error, ReplyPtr reply);
 
@@ -64,12 +63,6 @@ private:
 	boost::asio::ip::tcp::socket _socket;
 	// Buffer for incoming data.
 	boost::array<char, 8192> _buffer;
-	// Send queue, lock-free queque
-	SendQueue _toSendQueue;
-	// > 0 - reading operation in the process
-	boost::atomic_uchar _readers;
-	// > 0 - sending operation in the process
-	boost::atomic_uchar _senders;
 	// Web sockets connection
 	bool _webSocketsConnection;
 	// Handler of the incoming data

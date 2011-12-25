@@ -37,6 +37,7 @@ class JsonReply : public BaseJsonReply,  private boost::noncopyable
 {
 public:
 	JsonReply();
+	JsonReply(const std::string json);
 	virtual ~JsonReply();
 	void SetJS(const std::string& id, const std::string& js);
 	void SetJson(const std::string& json);

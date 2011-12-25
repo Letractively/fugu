@@ -2,6 +2,7 @@
 #include "htmlreply.h"
 #include "jsonreply.h"
 #include "route.h"
+#include "jsonmodel.h"
 #include <exception.h>
 #include <dbclient.h>
 
@@ -18,36 +19,30 @@ RoutePtr Handler::Route() const
 
 ReplyPtr Handler::Html(StringPtr html)
 {
-	return new HtmlReply(html);
+	return ReplyPtr(new HtmlReply(html));
 }
 
-ReplyPtr Handler::PartialView(const JsonObj& json)
+ReplyPtr Handler::PartialView(JsonModelPtr view)
 {
-	return NULL;
-	//return new Reply(json.jsonString(mongo::JsonStringFormat::JS));
-}
-
-ReplyPtr Handler::PartialView(const std::string& json)
-{
-	return NULL;
-	//return new Reply(json);
+	ReplyPtr reply(new JsonReply((view->JsonString())));
+	return reply;
 }
 
 ReplyPtr Handler::Json(const std::string& json)
 {
-	return NULL;
-	//return new Reply(json);
+	ReplyPtr reply(new JsonReply(json));
+	return reply;
 }
 
 ReplyPtr Handler::Json(const JsonObj& json)
 {
-	return NULL;
-	//return new Reply(json.jsonString(mongo::JsonStringFormat::JS));
+	ReplyPtr reply(new JsonReply(json.jsonString(mongo::JsonStringFormat::JS)));
+	return reply;
 }
 
 ReplyPtr Handler::Error(std::exception& ex, bool critical)
 {
-	JsonReply* reply = new JsonReply();
+	JsonReplyPtr reply(new JsonReply());
 	reply->SetError(ex.what(), critical);
 	return reply;
 }

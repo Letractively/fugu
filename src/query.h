@@ -40,6 +40,7 @@ private:
 	void SetType(QueryType type);
 	// Sets query url
 	void SetUrl(const char* buf, size_t len);
+	void SetUrl(const std::string& url);
 	// Sets user hash
 	void SetUserHash(const char* buf, size_t len);
 	// Sets session hash

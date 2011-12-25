@@ -39,6 +39,11 @@ void  Query::SetUrl(const char* buf, size_t len)
 {
 	_url.assign(buf, 0, len);
 }
+
+void Query::SetUrl(const std::string& url)
+{
+	_url = url;
+}
 // Sets user hash
 void  Query::SetUserHash(const char* buf, size_t len)
 {

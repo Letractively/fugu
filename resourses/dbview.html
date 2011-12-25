@@ -22,8 +22,24 @@
 	
 	<script type='text/javascript'>	
 	 
-       $(document).ready(function () {
-	   });
+	   
+	   function SaveView(viewName) {
+			var view = window.Views[viewName];
+			
+			var json_text = JSON.stringify(view);
+			
+			$.ajax({
+			  type: 'POST',
+			  url: "/fugu/saveview.fsp",
+			  data: json_text,
+			  dataType: "json"
+			})
+			.success(function(data) {})
+			.error(function(error) { alert("Error:" + error);})
+			.complete(function() { AppController.Loading(false); })
+			
+			AppController.Loading(true);
+	   }
 	   
 	   function OpenViewDialog(viewName) {
 			var view = window.Views[viewName];
@@ -39,8 +55,10 @@
 				position: [100,100],
 				height: 600,
 				buttons: {
-					"Save": function() { 
-						$(this).dialog("close");  
+					"Save": function() {
+						$(this).dialog("close");
+						view.Content = $('#wysiwyg').val();
+						SaveView(viewName);
 					}, 
 					"Cancel": function() { 
 						$(this).dialog("close"); 
@@ -65,12 +83,12 @@
 			$('#viewsList').empty();
 			$.ajax({
 			  type: 'POST',
-			  url: "/dbview.fsp",
+			  url: "/fugu/getallviews.fsp",
 			  data: "",
 			  dataType: "json"
 			})
 			.success(function(data) { 
-				if(data.Error.Blocked==true) alert("Error: " + data.Error.Message);
+				if(data.Error.Blocked==true) alert("Error1: " + data.Error.Message);
 				else CreateViewsList(data.Json);
 			})
 			.error(function(data) { alert("Error");})

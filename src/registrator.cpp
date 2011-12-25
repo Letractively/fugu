@@ -11,7 +11,7 @@ Registrator::Registrator(HandlerRouter& router)
 {
 	_router.RegisterFactory(new PingHandlerFactory);
 	_router.RegisterFactory(new HomeHandlerFactory);
-	_router.RegisterFactory(new ViewFromDBHandlerFactory);
+	_router.RegisterFactory(new DBViewHandlerFactory);
 }
 
 Registrator::~Registrator()

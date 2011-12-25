@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <boost/regex.hpp>
+#include <algorithm>
 
 namespace fugu {
 
@@ -183,7 +184,20 @@ void HttpParser::ParseCookieHeader(const char *ptr, const size_t len)
 int HttpParser::OnRequestUrl(http_parser *parser, const char *buf, size_t len)
 {
 	HttpParser* p = reinterpret_cast<HttpParser*>(parser->data);
-	p->_query->SetUrl(buf, len);
+	std::string x;
+	UrlDecode(std::string(buf, len), x);
+	p->_query->SetUrl(x);
+
+	std::size_t sp = x.find_first_of( '/', 7  ); // skip http:// part
+	if ( sp != std::string::npos ) {
+		std::string base_url( x.begin()+7, x.begin()+sp );
+		std::cout << base_url << std::endl;
+		sp = x.find_last_of( '/' );
+		if ( sp != std::string::npos ) {
+				std::string query( x.begin()+sp+1, x.end() );
+				std::cout << query << std::endl;
+		}
+	}
 
 	return 0;
 }

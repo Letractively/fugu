@@ -23,9 +23,6 @@
     <ClCompile Include="..\..\src\httpparser.cpp">
       <Filter>net\query</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\registration.cpp">
-      <Filter>common</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\config.cpp">
       <Filter>common</Filter>
     </ClCompile>
@@ -71,6 +68,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\jsonmodel.cpp">
       <Filter>models\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\registrator.cpp">
+      <Filter>common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

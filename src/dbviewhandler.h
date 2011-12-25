@@ -5,18 +5,18 @@
 
 namespace fugu {
 
-class ViewFromDBHandler : public Handler, private boost::noncopyable
+class DBViewHandler : public Handler, private boost::noncopyable
 {
 public:
 	ReplyPtr Process(ContextPtr ctx);
 
 private:
-	ReplyPtr GetViewsList(ContextPtr ctx);
+	ReplyPtr GetAllViews(ContextPtr ctx);
 	ReplyPtr GetView(ContextPtr ctx);
 	ReplyPtr UpdateView(ContextPtr ctx);
 };
 
-class ViewFromDBHandlerFactory : public HandlerFactory
+class DBViewHandlerFactory : public HandlerFactory
 {
 protected:			
 	Handler* CreateImpl();

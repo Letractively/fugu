@@ -28,15 +28,21 @@ JsonModelCache::JsonModelCache(const std::string& ns, const std::string& idField
 	:_ns(ns)
 	,_idFieldName(idFieldName)
 {
+	LoadAll();
 }
 
 JsonModelCache::~JsonModelCache()
 {
 }
 
+JsonModelPtr JsonModelCache::Create(const JsonObj& jsonObj)
+{
+	return CreateImpl(jsonObj);
+}
+
 JsonModelPtr JsonModelCache::Create(const std::string& json)
 {
-	return CreateImpl(json);
+	return CreateImpl(mongo::fromjson(json));
 }
 
 JsonModelPtr JsonModelCache::GetById(const std::string& id) const
@@ -70,16 +76,16 @@ StringPtr JsonModelCache::AllAsJson(const std::string& toReplace)
 	return StringPtr();
 }
 
-JsonModelPtr JsonModelCache::CreateImpl(const std::string& json)
+JsonModelPtr JsonModelCache::CreateImpl(const JsonObj& json)
 {
 	try
 	{
-		JsonModelPtr jmodel(new JsonModel(mongo::fromjson(json)));
+		JsonModelPtr jmodel(new JsonModel(json));
 
-		const char* id = jmodel->JsonObject().getStringField(_idFieldName.c_str());
+		const char* id = json.getStringField(_idFieldName.c_str());
 		if(id == NULL) {
-			FUGU_THROW("json string '" + json + "' doesn't have id fiels('" + id+"')", 
-						"JsonModelCache::CreateImpl");
+			//FUGU_THROW("json string doesn't have id fiels('" + id+"')", 
+						//"JsonModelCache::CreateImpl");
 		}
 
 		DBConnectionPtr conn = DBPool::Get().Queue();
