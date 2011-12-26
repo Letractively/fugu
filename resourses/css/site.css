@@ -2,7 +2,7 @@ html, body {
 height: 100%;
 margin: 0;
 padding: 0;
-background-color:#BADBF2;
+background-color:#73bacc;
 font-family:'Lucida Casual', 'Comic Sans MS';
 }
 
@@ -20,6 +20,7 @@ background: url(../images/logo_fugu_large.png) no-repeat center center;
 div#header {
 height:30px;
 width:100%;
+background: url(../images/header.png) no-repeat; /* что-то не получилось */
 }
 
 .content {
@@ -35,7 +36,7 @@ margin-bottom:10px;
 margin-left:10px;
 margin-right:10px;
 border-radius:10px 10px 10px 10px;
-background-color: #65C5DC;
+background-color: #36a6c7;
 opacity: 0.8;
 overflow: auto;
 padding:1em 1em 1em; // bottom padding for footer
@@ -60,13 +61,13 @@ color: white;
 height: 30px;
 border-radius:10px 10px 10px 10px;
 display: block;
-background-color: #65C5DC;
+background-color: #36a6c7;
 text-decoration: none;
 text-align: center;
 }
 
 #navigation a:hover {
-background-color: #99ccff;
+background-color: #4346ff;
 }
 
 #navigation li:first-child {
@@ -92,7 +93,7 @@ text-align: left;
 
 #canvas {
 border-radius:10px 10px 10px 10px;
-background-color:#333388;
+background-color:#3f7380;
 }
 
 .ui-progressbar-value { background-image: url(images/busy.gif); }
