@@ -1,0 +1,41 @@
+html, body {
+height: 100%;
+margin: 0;
+padding: 0;
+background-color:#73bacc;
+font-family:'Lucida Casual', 'Comic Sans MS';
+}
+
+
+.content {
+display: block;
+position:absolute;
+bottom:0;
+top:0;
+left:0;
+right:0;
+margin-top:0px;
+margin-bottom:0px;
+margin-left:0px;
+margin-right:0px;
+background: url(../images/logo_fugu_large.png) no-repeat center center;
+}
+
+#tabs { 
+position:relative;
+display: inline-block; 
+margin-top:1%;
+margin-bottom:1%;
+margin-left:1.5%;
+margin-right:1%;
+min-height:97%;
+width:97%;
+border-radius:10px 10px 10px 10px;
+opacity: 0.9;
+
+}
+
+#canvas {
+border-radius:10px 10px 10px 10px;
+background-color:#3f7380;
+}
