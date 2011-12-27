@@ -20,7 +20,14 @@ background: url(../images/logo_fugu_large.png) no-repeat center center;
 div#header {
 height:30px;
 width:100%;
-background: url(../images/header.png) no-repeat; /* что-то не получилось */
+}
+
+div#headerimg {
+background-image: url(../images/header.png);
+background-repeat: repeat-y;
+background-position: left;
+height:56px;
+width:100%;
 }
 
 .content {
@@ -31,7 +38,7 @@ bottom:0;
 top:0;
 left:0;
 right:0;
-margin-top:80px;
+margin-top:96px;
 margin-bottom:10px;
 margin-left:10px;
 margin-right:10px;
@@ -67,7 +74,7 @@ text-align: center;
 }
 
 #navigation a:hover {
-background-color: #4346ff;
+background-color: #79c9ec;
 }
 
 #navigation li:first-child {
