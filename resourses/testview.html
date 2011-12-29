@@ -1,40 +1,38 @@
 <!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01//EN' 'http://www.w3.org/TR/html4/strict.dtd'>
 <html dir='ltr'>
 <head>
-	<title>fugu</title>	
-	<!-- jquery -->
+	<title>fugu</title>
+	
+	<!-- jquery, jquery ui -->
+	<link rel='stylesheet' type='text/css' href='jquery-ui/css/redmond/jquery-ui-1.8.16.custom.css'/>
 	<script type='text/javascript' src='jquery-1.6.2.min.js'></script>
 	<script type='text/javascript' src='jquery.blockUI.js'></script>
-	
-	<!-- jquery ui -->
-	<link rel='stylesheet' type='text/css' href='jquery-ui/css/redmond/jquery-ui-1.8.16.custom.css'/>
 	<script type='text/javascript' src='jquery-ui/js/jquery-ui-1.8.16.custom.min.js'></script>
 	
 	<link rel='stylesheet' type='text/css' href='css/fugu.css'/>
+	<script type='text/javascript' src='inheritance.js'></script>
 	<script type='text/javascript' src='appcontroller.js'></script>
 	
 	<script type='text/javascript'>	
-       $(document).ready(function () {
-			$( "#tabs" ).tabs();
-			$( "#tabs" ).tabs({
-			   //select: function(event, ui) { alert(ui.panel.id); }
-			});
-	   });
-
+	
+	window.appController = new AppController();
+	$(document).ready(function () {
+		window.appController.CreateNavigation($("#tabs"));
+		window.appController.CreateContentSizeAdjuster();
+	});
 	</script>
 	
 </head>
 <body>
-<div class="content">
+<div id="container">
 		<div id="tabs">
 			<ul>
 				<li><a href="#tab-home">Home</a></li>
 				<li><a href="#tab-play">Play</a></li>
 				<li><a href="#tab-editor">Editor</a></li>
 				<li><a href="#tab-forum">Forum</a></li>
-				<li><a href="#tab-about">About</a></li>
 				<li><a href="#tab-administer">Administer</a></li>
-				<li><a href="#tab-profile">LogOn</a></li>
+				<li><a href="#tab-profile">LogIn</a></li>
 			</ul>
 			
 			<div id="tab-home">
@@ -47,12 +45,8 @@
 					<canvas id="canvas" width="640px" height="480px" ></canvas>
 			</div>
 			
-			<div id="tab-forum">
+			<div id="tab-forum" class="content">
 				<p>Forum</p>
-			</div>
-			
-			<div id="tab-about">
-				<p>About</p>
 			</div>
 			
 			<div id="tab-administer">
@@ -62,8 +56,65 @@
 			
 			<div id="tab-profile">
 				<p>Profile</p>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/><p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
+				<p>Profile</p><br/>
 			</div>
 		</div>
 </div>
+<div id="loadingScreen"></div>
 </body>
 </html>
