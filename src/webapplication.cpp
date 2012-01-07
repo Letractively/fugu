@@ -1,6 +1,8 @@
 #include "webapplication.h"
+#include "config.h"
 #include "context.h"
 #include "connection.h"
+#include "database.h"
 #include "query.h"
 #include "logger.h"
 #include <boost/cstdint.hpp>
@@ -9,14 +11,15 @@
 namespace fugu {
 
 WebApplication::WebApplication(const std::string& configPath)
-	: _config(configPath)
+	: _config(new Config(configPath))
 	,_router(_config)
 	,_acceptor(_service)
 	,_registrator(_router)
+	,_database(new Database(_config))
 {
 	// Open the acceptor with the option to reuse the address (i.e. SO_REUSEADDR).
 	boost::asio::ip::tcp::resolver resolver(_service);
-	boost::asio::ip::tcp::resolver::query query(_config.Bind(), _config.Port());
+	boost::asio::ip::tcp::resolver::query query(_config->Host(), _config->Port());
 	boost::asio::ip::tcp::endpoint endpoint = *resolver.resolve(query);
 	_acceptor.open(endpoint.protocol());
 	_acceptor.set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
@@ -37,7 +40,7 @@ void WebApplication::Run()
 	boost::thread_group threads;
 
 	// Create threads for read/write async operations
-	for (std::size_t i = 0; i < _config.ThreadPoolSize(); ++i)
+	for (std::size_t i = 0; i < _config->ThreadPoolSize(); ++i)
 		threads.create_thread( boost::bind(&boost::asio::io_service::run, &_service));
 
     // wait for them
@@ -81,7 +84,7 @@ void WebApplication::ProcessRequest(QueryPtr query, ConnectionPtr conn)
 			session = _sessionMgr.CreateSession(user);
 		}
 
-		ContextPtr ctx(new Context(session, conn, query));
+		ContextPtr ctx(new Context(session, conn, query, _config, _database));
 		ReplyPtr reply = _router.Route(ctx);
 
 		if(reply == NULL) 

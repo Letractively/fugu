@@ -16,7 +16,7 @@ typedef std::map<std::string, HandlerFactoryPtr> HandlerFactories;
 class HandlerRouter : private boost::noncopyable
 {
 public:
-	HandlerRouter(Config& config);
+	HandlerRouter(ConfigPtr config);
 	~HandlerRouter();
 	// Registration for all factories should be when the application starts
 	void RegisterFactory(HandlerFactory* factory);

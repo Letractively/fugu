@@ -8,6 +8,8 @@
 
 #define FUGU_MULTI_THREADING
 
+#include <map>
+#include <vector>
 #include <string>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
@@ -52,6 +54,7 @@ typedef boost::shared_ptr<Connection> ConnectionPtr;
 
 class Route;
 typedef boost::shared_ptr<Route> RoutePtr;
+typedef std::map<std::string, RoutePtr> Routes;
 
 class ViewData;
 typedef boost::shared_ptr<ViewData> ViewDataPtr;
@@ -65,8 +68,16 @@ typedef boost::shared_ptr<Handler> HandlerPtr;
 class JsonModel;
 typedef boost::shared_ptr<JsonModel> JsonModelPtr;
 
-class WebServer;
+class JsonModelStorage;
+typedef boost::shared_ptr<JsonModelStorage> JsonModelStoragePtr;
+
 class Config;
+typedef boost::shared_ptr<Config> ConfigPtr;
+
+class Database;
+typedef boost::shared_ptr<Database> DatabasePtr;
+
+class WebServer;
 class Config;
 class HandlerRouter;
 }

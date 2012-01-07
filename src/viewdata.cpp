@@ -11,22 +11,22 @@ ViewData::~ViewData()
 
 std::string ViewData::Name() const
 {
-	return _jsonObj.getStringField("Name");
+	return getStringField("Name");
 }
 
 std::string ViewData::Region() const
 {
-	return _jsonObj.getStringField("Region");
+	return getStringField("Region");
 }
 
 std::string ViewData::Content() const
 {
-	return _jsonObj.getStringField("Content");
+	return getStringField("Content");
 }
 
 std::string ViewData::JavaScript() const
 {
-	return _jsonObj.getStringField("JavaScript");
+	return getStringField("JavaScript");
 }
 
 }

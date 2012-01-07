@@ -1,8 +1,10 @@
 #include "dbviewhandler.h"
+#include "config.h"
+#include "context.h"
+#include "database.h"
 #include "jsonreply.h"
 #include "query.h"
 #include "viewdata.h"
-#include "context.h"
 #include "exception.h"
 #include <sstream>
 
@@ -10,19 +12,29 @@ namespace fugu {
 
 ReplyPtr DBViewHandler::Process(ContextPtr ctx)
 {
-	const std::string& url = ctx->Query()->Url();
+	const std::string& url = ctx->Query()->Uri();
 
-	if(url.compare("/fugu/getview.fsp") == 0) {
+	if(url.compare("/") == 0 || url.empty())
+		return GetPage(ctx);
+
+	if(url.compare("/getview") == 0)
 		return GetView(ctx);
-	}
-	else if(url.compare("/fugu/getallviews.fsp") == 0) {
-		return GetAllViews(ctx); 
-	}
-	else if(url.compare("/fugu/saveview.fsp") == 0) {
+
+	if(url.compare("/getallviews") == 0)
+		return GetAllViews(ctx);
+
+	if(url.compare("/saveview") == 0) {
 		return UpdateView(ctx);
 	}
 
 	FUGU_THROW("Unknown url:'" + url + "'", "DBViewHandler::Process");
+}
+
+ReplyPtr DBViewHandler::GetPage(ContextPtr ctx)
+{
+	JsonModelPtr view = ctx->Db()->Views()->GetById(ctx->Cfg()->PageTemplate());
+	StringPtr page(new std::string(view->getStringField("Content")));
+	return Html(page);
 }
 
 ReplyPtr DBViewHandler::GetAllViews(ContextPtr ctx)
@@ -31,8 +43,8 @@ ReplyPtr DBViewHandler::GetAllViews(ContextPtr ctx)
 	{
 		JsonReplyPtr reply(new JsonReply());
 
-		JsonModelCache mgr("test.fugu.views", "Name");
-		JsonModelMapIterator viewsIter = mgr.All();
+
+		JsonModelMapIterator viewsIter = ctx->Db()->Views()->All();
 		std::string json = "[";
 		bool has = false;
 		while(viewsIter.HasMore()) {
@@ -60,13 +72,50 @@ ReplyPtr DBViewHandler::GetAllViews(ContextPtr ctx)
 
 ReplyPtr DBViewHandler::GetView(ContextPtr ctx)
 {
-	return ReplyPtr();
+	try
+	{
+		JsonModelPtr view = ctx->Db()->Views()->GetById(ctx->Query()->Content().getStringField("ViewName"));
+		return PartialView(view);
+	}
+	catch(Exception& fe)
+	{
+		return Handler::Error(fe, true);
+	}
+	catch(std::exception& e)
+	{
+		return Handler::Error(FUGU_EXCEPT(e.what() ,"DBViewHandler::GetView"), true);
+	}
 }
 
 ReplyPtr DBViewHandler::UpdateView(ContextPtr ctx)
 {
-	JsonModelCache mgr("test.fugu.views", "Name");
-	mgr.Create(ctx->Query()->Content());
+	try
+	{
+		if(ctx->Query()->Content().firstElement().isABSONObj())
+		{
+			mongo::BSONObjIterator iter = ctx->Query()->Content();
+			while(iter.more())
+			{
+				mongo::BSONElement el = iter.next();
+				mongo::BSONObj view;
+				el.Val(view);
+				ctx->Db()->Views()->Create(view);
+			}
+		}
+		else
+		{
+			ctx->Db()->Views()->Create(ctx->Query()->Content());
+		}
+	}
+	catch(Exception& fe)
+	{
+		return Handler::Error(fe, true);
+	}
+	catch(std::exception& e)
+	{
+		return Handler::Error(FUGU_EXCEPT(e.what() ,"DBViewHandler::GetView"), true);
+	}
+	
 	return GetAllViews(ctx);
 }
 

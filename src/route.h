@@ -2,8 +2,6 @@
 #define __FUGU_HANDLER_INFO_H__
 
 #include "prerequisites.h"
-#include <vector>
-#include <map>
 
 namespace fugu {
 
@@ -21,8 +19,6 @@ private:
 	std::string _handlerName;
 	std::string _viewName;
 };
-
-typedef std::map<std::string, RoutePtr> Routes;
 
 }
 

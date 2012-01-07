@@ -47,30 +47,30 @@
     <ClCompile Include="..\..\src\handlerrouter.cpp">
       <Filter>handlers\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\homehandler.cpp">
-      <Filter>handlers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\pinghandler.cpp">
-      <Filter>handlers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dbviewhandler.cpp">
       <Filter>handlers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\webapplication.cpp" />
     <ClCompile Include="..\..\src\dbpool.cpp">
-      <Filter>models\core</Filter>
+      <Filter>db\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\user.cpp">
-      <Filter>models</Filter>
+      <Filter>db</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\viewdata.cpp">
-      <Filter>models</Filter>
+      <Filter>db</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\jsonmodel.cpp">
-      <Filter>models\core</Filter>
+      <Filter>db\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\registrator.cpp">
       <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\database.cpp">
+      <Filter>db\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dbviewhandler.cpp">
+      <Filter>handlers\views</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,12 +79,6 @@
     </Filter>
     <Filter Include="common">
       <UniqueIdentifier>{c7857e05-3c83-47ac-991e-deee42a3672b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="models">
-      <UniqueIdentifier>{d4a5ba95-f4a4-44f0-9d50-9e8fe80bd61f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="models\core">
-      <UniqueIdentifier>{4c9ba150-3c87-48e1-af82-8e7ff6781a19}</UniqueIdentifier>
     </Filter>
     <Filter Include="engine">
       <UniqueIdentifier>{30472b92-2643-4212-b238-ad06cbc514fc}</UniqueIdentifier>
@@ -103,6 +97,15 @@
     </Filter>
     <Filter Include="net\query">
       <UniqueIdentifier>{ae30d91e-e86b-4ee3-bdc1-6d374ef3ddbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="db">
+      <UniqueIdentifier>{d4a5ba95-f4a4-44f0-9d50-9e8fe80bd61f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="db\core">
+      <UniqueIdentifier>{4c9ba150-3c87-48e1-af82-8e7ff6781a19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="handlers\views">
+      <UniqueIdentifier>{cffcea11-13b6-4bd4-89a3-9c0752b1de78}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -163,27 +166,27 @@
     <ClInclude Include="..\..\src\handlerrouter.h">
       <Filter>handlers\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\homehandler.h">
-      <Filter>handlers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\pinghandler.h">
-      <Filter>handlers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\dbviewhandler.h">
       <Filter>handlers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\webapplication.h" />
     <ClInclude Include="..\..\src\dbpool.h">
-      <Filter>models\core</Filter>
+      <Filter>db\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\user.h">
-      <Filter>models</Filter>
+      <Filter>db</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\jsonmodel.h">
-      <Filter>models\core</Filter>
+      <Filter>db\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\viewdata.h">
-      <Filter>models</Filter>
+      <Filter>db</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\database.h">
+      <Filter>db\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dbviewhandler.h">
+      <Filter>handlers\views</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

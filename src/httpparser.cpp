@@ -8,11 +8,22 @@
 
 namespace fugu {
 
-const char	REQ_HEADER_COOKIE_NAME[]	= "Cookie";
-const char	COOKIE_SESSION_HASH[]		= "FUGU_SESSION_HASH";
-const char	COOKIE_USER_HASH[]			= "FUGU_USER_HASH";
+const char	REQ_HEADER_COOKIE_NAME[]		= "Cookie";
 
-QueryType GetQueryType(http_parser* parse);
+const char	COOKIE_SESSION_HASH[]			= "FUGU_SESSION_HASH=";
+const int	COOKIE_SESSION_HASH_LEN			= sizeof(COOKIE_SESSION_HASH)-1;
+
+const char	COOKIE_USER_HASH[]				= "FUGU_USER_HASH=";
+const int	COOKIE_USER_HASH_LEN			= sizeof(COOKIE_USER_HASH)-1;
+
+const char	FUGU_CONTENT[]					= "FUGU_CONTENT=";
+const int	FUGU_CONTENT_LEN				= sizeof(FUGU_CONTENT)-1;
+
+const char	QUERY_STRING_VIEW_NAME[]		= "view=";
+const char	QUERY_STRING_VIEW_NAME_HIGH[]	= "VIEW=";
+const int QUERY_STRING_VIEW_NAME_LEN		= sizeof(QUERY_STRING_VIEW_NAME)-1;
+
+QueryMethod GetQueryMethod(http_parser* parse);
 
 HttpParser::HttpParser()
 	:_headerNameLen(0)
@@ -44,159 +55,67 @@ bool HttpParser::ParseRequest(QueryPtr query, const char *data, size_t len)
 	return parser.http_errno == 0;
 }
 
-inline bool IsControl(int c)
-{
-	return( (c >= 0 && c <= 31) || c == 127);
-}
-
-
-inline bool IsCookieAttribute(const std::string& name)
-{
-	return (name.empty() || name[0] == '$' 
-			|| (name=="Comment" || name=="Domain" 
-			|| name=="Max-Age" || name=="Path" 
-			|| name=="Secure" || name=="Version" || name=="Expires"));
-}
-
 void HttpParser::ParseCookieHeader(const char *ptr, const size_t len)
 {
-	boost::regex expression("(\w+)=([^;]*)");
-
-	/*
-	boost::tregex_iterator begin(fulls.GetString(),fulls.GetString()+fulls.GetLength(),re), end;
-	CString sub;
-	for (;begin!=end;++begin){
-		boost::tmatch const &what = *begin;
-		sub=CString(what[0].first,what[0].length());
-		if (sub!="")  //to avoid the empty results
-		AfxMessageBox(sub);
-	}
-	*/
-
-	/*
-	// The current implementation ignores cookie attributes which begin with '$'
-	// (i.e. $Path=/, $Domain=, etc.)
-
-	// used to track what we are parsing
-	enum CookieParseState {
-		COOKIE_PARSE_NAME, COOKIE_PARSE_VALUE, COOKIE_PARSE_IGNORE
-	} parse_state = COOKIE_PARSE_NAME;
+	// Example: "FUGU_CONTENT=viewseditor; FUGU_TEST=viewseditor"
 
 	// misc other variables used for parsing
 	const char * const end = ptr + len;
-	std::string cookie_name;
-	std::string cookie_value;
-	char value_quote_character = '\0';
+	const char* cookie = ptr;
+	
+	do
+	{
+		const char* endvalue = strchr(cookie, ';');
+		
+		if(!endvalue)
+			endvalue = end;
+		else if(endvalue > end)
+			return;
 
-	// iterate through each character
-	while (ptr < end) {
-		switch (parse_state) {
-
-		case COOKIE_PARSE_NAME:
-			// parsing cookie name
-			if (*ptr == '=') {
-				// end of name found (OK if empty)
-				value_quote_character = '\0';
-				parse_state = COOKIE_PARSE_VALUE;
-			} else if (*ptr == ';' || *ptr == ',') {
-				// ignore empty cookie names since this may occur naturally
-				// when quoted values are encountered
-				if (! cookie_name.empty()) {
-					// value is empty (OK)
-					if (! IsCookieAttribute(cookie_name))
-						//TODO: _request->AddCookie(cookie_name, cookie_value);
-					cookie_name.erase();
-				}
-			} else if (*ptr != ' ') {	// ignore whitespace
-				// check if control character detected, or max sized exceeded
-				if (IsControl(*ptr) || cookie_name.size() >= COOKIE_NAME_MAX)
-					return;
-				// character is part of the name
-				cookie_name.push_back(*ptr);
-			}
-			break;
-
-		case COOKIE_PARSE_VALUE:
-			// parsing cookie value
-			if (value_quote_character == '\0') {
-				// value is not (yet) quoted
-				if (*ptr == ';' || *ptr == ',') {
-					// end of value found (OK if empty)
-					if (! IsCookieAttribute(cookie_name))
-						//TODO: _request->AddCookie(cookie_name, cookie_value);
-					cookie_name.erase();
-					cookie_value.erase();
-					parse_state = COOKIE_PARSE_NAME;
-				} else if (*ptr == '\'' || *ptr == '"') {
-					if (cookie_value.empty()) {
-						// begin quoted value
-						value_quote_character = *ptr;
-					} else if (cookie_value.size() >= COOKIE_VALUE_MAX) {
-						// max size exceeded
-						return;
-					} else {
-						// assume character is part of the (unquoted) value
-						cookie_value.push_back(*ptr);
-					}
-				} else if (*ptr != ' ' || !cookie_value.empty()) {	// ignore leading unquoted whitespace
-					// check if control character detected, or max sized exceeded
-					if (IsControl(*ptr) || cookie_value.size() >= COOKIE_VALUE_MAX)
-						return;
-					// character is part of the (unquoted) value
-					cookie_value.push_back(*ptr);
-				}
-			} else {
-				// value is quoted
-				if (*ptr == value_quote_character) {
-					// end of value found (OK if empty)
-					if (! IsCookieAttribute(cookie_name))
-						//TODO: _request->AddCookie(cookie_name, cookie_value);
-					cookie_name.erase();
-					cookie_value.erase();
-					parse_state = COOKIE_PARSE_IGNORE;
-				} else if (cookie_value.size() >= COOKIE_VALUE_MAX) {
-					// max size exceeded
-					return;
-				} else {
-					// character is part of the (quoted) value
-					cookie_value.push_back(*ptr);
-				}
-			}
-			break;
-
-		case COOKIE_PARSE_IGNORE:
-			// ignore everything until we reach a comma "," or semicolon ";"
-			if (*ptr == ';' || *ptr == ',')
-				parse_state = COOKIE_PARSE_NAME;
-			break;
+		if(_query->ViewName().empty() && strncmp(FUGU_CONTENT, cookie, FUGU_CONTENT_LEN) == 0) {
+			_query->SetViewName(cookie + FUGU_CONTENT_LEN, endvalue - (cookie + FUGU_CONTENT_LEN));
+		}
+		else if(strncmp(COOKIE_SESSION_HASH, cookie, COOKIE_SESSION_HASH_LEN) == 0) {
+			_query->SetSessionHash(cookie + COOKIE_SESSION_HASH_LEN, endvalue - (cookie + COOKIE_SESSION_HASH_LEN));
+		}
+		else if(strncmp(COOKIE_USER_HASH, cookie, COOKIE_USER_HASH_LEN) == 0) {
+			_query->SetUserHash(cookie + COOKIE_USER_HASH_LEN, endvalue - (cookie + COOKIE_USER_HASH_LEN));
 		}
 
-		++ptr;
-	}
+		cookie = strchr(cookie, ' ');
 
-	// handle last cookie in string
-	if (! IsCookieAttribute(cookie_name)){
-		//TODO: _request->AddCookie(cookie_name, cookie_value);
+		if(!cookie) return;
+
+		while(isspace(*cookie)) 
+			cookie++;
 	}
-	*/
+	while(cookie < end);
 }
+
+
 
 int HttpParser::OnRequestUrl(http_parser *parser, const char *buf, size_t len)
 {
 	HttpParser* p = reinterpret_cast<HttpParser*>(parser->data);
-	std::string x;
-	UrlDecode(std::string(buf, len), x);
-	p->_query->SetUrl(x);
 
-	std::size_t sp = x.find_first_of( '/', 7  ); // skip http:// part
-	if ( sp != std::string::npos ) {
-		std::string base_url( x.begin()+7, x.begin()+sp );
-		std::cout << base_url << std::endl;
-		sp = x.find_last_of( '/' );
-		if ( sp != std::string::npos ) {
-				std::string query( x.begin()+sp+1, x.end() );
-				std::cout << query << std::endl;
+	const char * const end = buf + len;
+	const char* querystring = strchr(buf, '?');
+
+	if(querystring && querystring <  end) {
+		p->_query->SetUri(buf, querystring - buf);
+
+		// Skip character '?'
+		querystring += 1;
+
+		if(strncmp(QUERY_STRING_VIEW_NAME, querystring, QUERY_STRING_VIEW_NAME_LEN) == 0 
+			||strncmp(QUERY_STRING_VIEW_NAME_HIGH, querystring, QUERY_STRING_VIEW_NAME_LEN) == 0 ) 
+		{
+			p->_query->SetViewName(querystring + QUERY_STRING_VIEW_NAME_LEN, 
+									end - (querystring + QUERY_STRING_VIEW_NAME_LEN));
 		}
+	}
+	else {
+		p->_query->SetUri(buf, len);
 	}
 
 	return 0;
@@ -230,54 +149,27 @@ int HttpParser::OnCountBody(http_parser *parser, const char *buf, size_t len)
 	return 0;
 }
 
-bool HttpParser::UrlDecode(const std::string& in, std::string& out)
-{
-	out.clear();
-	out.reserve(in.size());
-	for (std::size_t i = 0; i < in.size(); ++i)
-	{
-		if (in[i] == '%')
-		{
-			if (i + 3 <= in.size())
-			{
-				int value = 0;
-				std::istringstream is(in.substr(i + 1, 2));
-				if (is >> std::hex >> value)
-				{
-					out += static_cast<char>(value);
-					i += 2;
-				}
-				else return false;
-			}
-			else return false;
-		}
-		else if (in[i] == '+') out += ' ';
-		else out += in[i];
-	}
-	return true;
-}
-
-QueryType GetQueryType(http_parser* parser)
+QueryMethod GetQueryMethod(http_parser* parser)
 {
 	if(parser->upgrade)
-		return QueryType::QUERY_WEBSOCKET;
+		return QueryMethod::QUERY_WEBSOCKET;
 
 	switch(parser->method)
 	{
 		case http_method::HTTP_DELETE:
-			return QueryType::QUERY_DELETE;
+			return QueryMethod::QUERY_DELETE;
 			break;
 		case http_method::HTTP_GET:
-			return QueryType::QUERY_GET;
+			return QueryMethod::QUERY_GET;
 			break;
 		case http_method::HTTP_POST:
-			return QueryType::QUERY_POST;
+			return QueryMethod::QUERY_POST;
 			break;
 		case http_method::HTTP_PUT:
-			return QueryType::QUERY_PUT;
+			return QueryMethod::QUERY_PUT;
 			break;
 		default:
-			return QueryType::NOT_SUPPORTED;
+			return QueryMethod::NOT_SUPPORTED;
 			break;
 	}
 }

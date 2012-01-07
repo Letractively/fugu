@@ -2,12 +2,11 @@
 #define __FUGU_QUERY__
 
 #include "prerequisites.h"
-#include <string>
 #include <dbclient.h>
 
 namespace fugu {
 
-enum QueryType { 
+enum QueryMethod { 
 	QUERY_DELETE	= 0,
 	QUERY_GET,
 	QUERY_POST,
@@ -26,9 +25,11 @@ public:
 	virtual ~Query();
 
 	// Returns query type
-	QueryType Type() const;
+	QueryMethod Type() const;
 	// Returns request URL
-	const std::string& Url() const;
+	const std::string& Uri() const;
+	// Returns request view name
+	const std::string& ViewName() const;
 	// Returns user hash
 	const std::string UserHash() const;
 	// Returns session hash
@@ -37,10 +38,11 @@ public:
 	const JsonObj& Content() const;
 private:
 	// Sets query type
-	void SetType(QueryType type);
+	void SetType(QueryMethod type);
 	// Sets query url
-	void SetUrl(const char* buf, size_t len);
-	void SetUrl(const std::string& url);
+	void SetUri(const char* buf, size_t len);
+	// Sets query url
+	void SetViewName(const char* buf, size_t len);
 	// Sets user hash
 	void SetUserHash(const char* buf, size_t len);
 	// Sets session hash
@@ -49,8 +51,9 @@ private:
 	void SetContent(const char* buf, size_t len);
 
 private:
-	QueryType _type;
-	std::string _url;
+	QueryMethod _type;
+	std::string _uri;
+	std::string _viewName;
 	std::string _userHash;
 	std::string _sessionHash;
 	JsonObj _content;

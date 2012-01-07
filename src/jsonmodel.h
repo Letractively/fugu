@@ -3,44 +3,37 @@
 
 #include "prerequisites.h"
 #include "iterators.h"
-#include <map>
 #include <dbclient.h>
 #include <boost/thread/shared_mutex.hpp>
 #include <boost/enable_shared_from_this.hpp>
 
 namespace fugu {
 
-class JsonModel : private boost::noncopyable
-				//?, public boost::enable_shared_from_this<JsonModel>,
-
+class JsonModel : public JsonObj
 {
 public:
-	JsonModel(const JsonObj& obj);
+	JsonModel();
+	explicit JsonModel(const JsonObj& obj);
 	virtual ~JsonModel();
 	std::string JsonString() const;
-	const JsonObj& JsonObject() const;
 
 	template<typename T>
 	T* As()
 	{
 		return static_cast<T*>(this);
 	}
-
-protected:
-	JsonObj _jsonObj;
 };
-
 
 typedef std::map<std::string, JsonModelPtr> JsonModelMap;
 typedef ConstMapIterator<JsonModelMap> JsonModelMapIterator;
 
-// In memeoty sorage
-class JsonModelCache
+// In memory sorage
+class JsonModelStorage
 {
 public:
 	// ns - db table name
-	JsonModelCache(const std::string& ns, const std::string& idFieldName);
-	virtual ~JsonModelCache();
+	JsonModelStorage(const std::string& ns, const std::string& idFieldName);
+	virtual ~JsonModelStorage();
 
 	// Creates new model by json object, and add it to the database, or update existing
 	JsonModelPtr Create(const JsonObj& jsonObj);
@@ -64,9 +57,6 @@ protected:
 	JsonModelMap _models;
 	mutable boost::shared_mutex _access;
 };
-
-//typedef std::vector<JsonModelPtr> JsonModelList;
-//typedef VectorIterator<JsonModelList> JsonModelListIterator;
 
 }
 

@@ -2,8 +2,6 @@
 #define __FUGU_HANDLER_H__
 
 #include "prerequisites.h"
-#include <vector>
-#include <map>
 
 namespace fugu {
 
@@ -22,7 +20,6 @@ protected:
 	ReplyPtr Html(StringPtr html);
 	ReplyPtr PartialView(JsonModelPtr view);
 	ReplyPtr Json(const std::string& json);
-	ReplyPtr Json(const JsonObj& json);
 
 private:
 	RoutePtr _route;

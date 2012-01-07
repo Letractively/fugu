@@ -34,12 +34,6 @@ ReplyPtr Handler::Json(const std::string& json)
 	return reply;
 }
 
-ReplyPtr Handler::Json(const JsonObj& json)
-{
-	ReplyPtr reply(new JsonReply(json.jsonString(mongo::JsonStringFormat::JS)));
-	return reply;
-}
-
 ReplyPtr Handler::Error(std::exception& ex, bool critical)
 {
 	JsonReplyPtr reply(new JsonReply());

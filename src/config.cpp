@@ -1,5 +1,6 @@
 #include "config.h"
 #include "exception.h"
+#include "route.h"
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/foreach.hpp>
@@ -21,9 +22,9 @@ Config::~Config()
 {
 }
 
-std::string Config::Bind() const
+std::string Config::Host() const
 {
-	return _pt.get<std::string>("Service.Bind");
+	return _pt.get<std::string>("Service.Host");
 }
 
 std::string Config::Port() const
@@ -45,6 +46,21 @@ void Config::GetRoutes(Routes& routes)
 		routes.insert(std::make_pair<std::string, RoutePtr>(values.get<std::string>("route"), 
 			RoutePtr(new Route(values.get<std::string>("handler"), values.get<std::string>("viewname", "default")))));
 	}
+}
+
+std::string Config::PageTemplate() const
+{
+	return _pt.get<std::string>("Service.PageTemplate");
+}
+
+std::string Config::ViewsTable() const
+{
+	return _pt.get<std::string>("Service.DB.Tables.ViewsTable");
+}
+
+std::string Config::UsersTable() const
+{
+	return _pt.get<std::string>("Service.DB.Tables.UsersTable");
 }
 
 }

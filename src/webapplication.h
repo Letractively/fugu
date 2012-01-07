@@ -6,7 +6,6 @@
 #include "user.h"
 #include "handlerrouter.h"
 #include "registrator.h"
-#include "config.h"
 #include "connection.h"
 #include <boost/asio.hpp>
 #include <boost/pool/object_pool.hpp>
@@ -45,7 +44,7 @@ private:
 	// Connection pool
 	ConnectionPool _connectionPool;
 	// Fugu service configuration
-	Config _config;
+	ConfigPtr _config;
 	// The io_service used to handle asynchronous incoming connections, 
 	// and perform asynchronous operations(read/write socket, process requests, backend calls, etc)
 	boost::asio::io_service _service;
@@ -57,8 +56,8 @@ private:
 	UserManager _userMgr;
 	// The handler for all incoming requests.
 	HandlerRouter _router;
-	// Componets registratio
 	Registrator _registrator;
+	DatabasePtr _database;
 };
 
 }

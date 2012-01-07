@@ -27,68 +27,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\config.cpp" />
-    <ClCompile Include="..\..\src\connection.cpp" />
-    <ClCompile Include="..\..\src\database.cpp" />
-    <ClCompile Include="..\..\src\dbpool.cpp" />
-    <ClCompile Include="..\..\src\dbviewhandler.cpp" />
-    <ClCompile Include="..\..\src\entrypoint.cpp" />
-    <ClCompile Include="..\..\src\exception.cpp" />
-    <ClCompile Include="..\..\src\handler.cpp" />
-    <ClCompile Include="..\..\src\handlerrouter.cpp" />
-    <ClCompile Include="..\..\src\htmlreply.cpp" />
-    <ClCompile Include="..\..\src\httpparser.cpp" />
-    <ClCompile Include="..\..\src\http_parser\http_parser.c" />
-    <ClCompile Include="..\..\src\jsonmodel.cpp" />
-    <ClCompile Include="..\..\src\jsonreply.cpp" />
-    <ClCompile Include="..\..\src\logger.cpp" />
-    <ClCompile Include="..\..\src\nedmalloc\nedmalloc.c" />
-    <ClCompile Include="..\..\src\context.h" />
-    <ClCompile Include="..\..\src\pinghandler.cpp" />
-    <ClCompile Include="..\..\src\query.cpp" />
-    <ClCompile Include="..\..\src\registrator.cpp" />
-    <ClCompile Include="..\..\src\reply.cpp" />
-    <ClCompile Include="..\..\src\session.cpp" />
-    <ClCompile Include="..\..\src\user.cpp" />
-    <ClCompile Include="..\..\src\viewdata.cpp" />
-    <ClCompile Include="..\..\src\webapplication.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\src\config.h" />
-    <ClInclude Include="..\..\src\connection.h" />
-    <ClInclude Include="..\..\src\database.h" />
-    <ClInclude Include="..\..\src\dbpool.h" />
-    <ClInclude Include="..\..\src\dbviewhandler.h" />
-    <ClInclude Include="..\..\src\exception.h" />
-    <ClInclude Include="..\..\src\handler.h" />
-    <ClInclude Include="..\..\src\htmlreply.h" />
-    <ClInclude Include="..\..\src\jsonmodel.h" />
-    <ClInclude Include="..\..\src\jsonreply.h" />
-    <ClInclude Include="..\..\src\query.h" />
-    <ClInclude Include="..\..\src\route.h" />
-    <ClInclude Include="..\..\src\handlerrouter.h" />
-    <ClInclude Include="..\..\src\httpparser.h" />
-    <ClInclude Include="..\..\src\http_parser\http_parser.h" />
-    <ClInclude Include="..\..\src\iterators.h" />
-    <ClInclude Include="..\..\src\logger.h" />
-    <ClInclude Include="..\..\src\nedmalloc\nedmalloc.h" />
-    <ClInclude Include="..\..\src\pinghandler.h" />
-    <ClInclude Include="..\..\src\prerequisites.h" />
-    <ClInclude Include="..\..\src\registrator.h" />
-    <ClInclude Include="..\..\src\reply.h" />
-    <ClInclude Include="..\..\src\session.h" />
-    <ClInclude Include="..\..\src\stdheaders.h" />
-    <ClInclude Include="..\..\src\user.h" />
-    <ClInclude Include="..\..\src\viewdata.h" />
-    <ClInclude Include="..\..\src\webapplication.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\fugu.conf" />
+    <ClCompile Include="..\..\src\fugutests.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>fuguservice</ProjectName>
-    <ProjectGuid>{5074CE3E-05F5-31BA-BA79-1AD54C3416F7}</ProjectGuid>
-    <RootNamespace>fuguservice</RootNamespace>
+    <ProjectName>fugutests</ProjectName>
+    <ProjectGuid>{AADF6AF0-D55F-417B-A48F-9F579BA098BB}</ProjectGuid>
+    <RootNamespace>fugutests</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -157,17 +101,17 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='release_static_md|Win32'">bin\static_md\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='release_static_md|Win32'">obj\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='release_static_md|Win32'">false</LinkIncremental>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='debug_shared|Win32'">fuguserviced</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='debug_static_md|Win32'">fuguserviced</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='debug_static_mt|Win32'">fuguserviced</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='release_shared|Win32'">fuguservice</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='release_static_md|Win32'">fuguservice</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='release_static_mt|Win32'">fuguservice</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='debug_shared|Win32'">fugutestsd</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='debug_static_md|Win32'">fugutestsd</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='debug_static_mt|Win32'">fugutestsd</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='release_shared|Win32'">fugutests</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='release_static_md|Win32'">fugutests</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='release_static_mt|Win32'">fugutests</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug_shared|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(BOOST_HOME);$(MONGO_HOME)\client;$(MONGO_HOME);$(OPENSSL_HOME)\inc32;$(ProjectDir)/../../src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)/../../src;$(LIBUV_HOME)/include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WIN32_WINNT;BOOST_ALL_DYN_LINK;_WIN32_WINNT=0x0500</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -182,14 +126,15 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <CompileAs>Default</CompileAs>
       <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ws2_32.lib;mongoclientd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>bin\fuguserviced.exe</OutputFile>
-      <AdditionalLibraryDirectories>$(BOOST_HOME)\lib;$(MONGO_HOME)\lib;$(OPENSSL_HOME)\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>uv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>bin\fugutestsd.exe</OutputFile>
+      <AdditionalLibraryDirectories>$(LIBUV_HOME)\Release\lib</AdditionalLibraryDirectories>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>bin\fuguserviced.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>bin\fugutestsd.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
@@ -217,7 +162,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>ws2_32.lib;iphlpapi.lib;mongoclient.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>bin\fuguservice.exe</OutputFile>
+      <OutputFile>bin\fugutests.exe</OutputFile>
       <AdditionalLibraryDirectories>$(BOOST_HOME)\lib;$(MONGO_HOME)\lib;$(OPENSSL_HOME)\lib</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>

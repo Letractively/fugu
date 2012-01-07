@@ -5,9 +5,14 @@
 
 namespace fugu {
 
-JsonModel::JsonModel(const JsonObj& obj)
+JsonModel::JsonModel()
+	: BSONObj()
 {
-	_jsonObj = obj;
+}
+
+JsonModel::JsonModel(const JsonObj& obj)
+	: BSONObj(obj)
+{
 }
 
 JsonModel::~JsonModel()
@@ -16,36 +21,31 @@ JsonModel::~JsonModel()
 
 std::string JsonModel::JsonString() const
 {
-	return _jsonObj.jsonString(mongo::JsonStringFormat::JS);
+	return jsonString(mongo::JsonStringFormat::JS);
 }
 
-const JsonObj& JsonModel::JsonObject() const
-{
-	return _jsonObj;
-}
-
-JsonModelCache::JsonModelCache(const std::string& ns, const std::string& idFieldName)
+JsonModelStorage::JsonModelStorage(const std::string& ns, const std::string& idFieldName)
 	:_ns(ns)
 	,_idFieldName(idFieldName)
 {
 	LoadAll();
 }
 
-JsonModelCache::~JsonModelCache()
+JsonModelStorage::~JsonModelStorage()
 {
 }
 
-JsonModelPtr JsonModelCache::Create(const JsonObj& jsonObj)
+JsonModelPtr JsonModelStorage::Create(const JsonObj& jsonObj)
 {
 	return CreateImpl(jsonObj);
 }
 
-JsonModelPtr JsonModelCache::Create(const std::string& json)
+JsonModelPtr JsonModelStorage::Create(const std::string& json)
 {
 	return CreateImpl(mongo::fromjson(json));
 }
 
-JsonModelPtr JsonModelCache::GetById(const std::string& id) const
+JsonModelPtr JsonModelStorage::GetById(const std::string& id) const
 {
 	boost::shared_lock<boost::shared_mutex> lock(_access);
 	JsonModelMap::const_iterator iter = _models.find(id);
@@ -56,13 +56,13 @@ JsonModelPtr JsonModelCache::GetById(const std::string& id) const
 	return JsonModelPtr();
 }
 
-JsonModelMapIterator JsonModelCache::All()
+JsonModelMapIterator JsonModelStorage::All()
 {
 	LoadAll();
 	return JsonModelMapIterator(_models, _access);
 }
 
-StringPtr JsonModelCache::AllAsJson(const std::string& toReplace)
+StringPtr JsonModelStorage::AllAsJson(const std::string& toReplace)
 {
 	LoadAll();
 	bool has;
@@ -76,7 +76,7 @@ StringPtr JsonModelCache::AllAsJson(const std::string& toReplace)
 	return StringPtr();
 }
 
-JsonModelPtr JsonModelCache::CreateImpl(const JsonObj& json)
+JsonModelPtr JsonModelStorage::CreateImpl(const JsonObj& json)
 {
 	try
 	{
@@ -85,7 +85,7 @@ JsonModelPtr JsonModelCache::CreateImpl(const JsonObj& json)
 		const char* id = json.getStringField(_idFieldName.c_str());
 		if(id == NULL) {
 			//FUGU_THROW("json string doesn't have id fiels('" + id+"')", 
-						//"JsonModelCache::CreateImpl");
+						//"JsonModelStorage::CreateImpl");
 		}
 
 		DBConnectionPtr conn = DBPool::Get().Queue();
@@ -98,16 +98,16 @@ JsonModelPtr JsonModelCache::CreateImpl(const JsonObj& json)
 		JsonModelMap::const_iterator iter = _models.find(id);
 		if(iter == _models.end()) {
 			// Model doesn't exists, creating new
-			conn->insert(_ns, jmodel->JsonObject());
+			conn->insert(_ns, *jmodel);
 		}
 		else { // Model already exists, updating...
-			conn->update(_ns, QUERY(_idFieldName<<id), jmodel->JsonObject());
+			conn->update(_ns, QUERY(_idFieldName<<id), *jmodel);
 		}
 
 		// Get error result from the last operation on this connection. 
 		std::string error = conn->getLastError();
 		if(!error.empty()) {
-			FUGU_THROW(error, "JsonModelCache::CreateImpl");
+			FUGU_THROW(error, "JsonModelStorage::CreateImpl");
 		}
 
 		return jmodel;
@@ -118,15 +118,15 @@ JsonModelPtr JsonModelCache::CreateImpl(const JsonObj& json)
 	}
 	catch(mongo::DBException& ex)
 	{
-		FUGU_THROW(ex.toString(), "JsonModelCache::CreateImpl");
+		FUGU_THROW(ex.toString(), "JsonModelStorage::CreateImpl");
 	}
 	catch(std::exception& ex)
 	{
-		FUGU_THROW(ex.what(), "JsonModelCache::CreateImpl");
+		FUGU_THROW(ex.what(), "JsonModelStorage::CreateImpl");
 	}
 }
 
-void JsonModelCache::LoadAll()
+void JsonModelStorage::LoadAll()
 {
 	try
 	{
@@ -160,11 +160,11 @@ void JsonModelCache::LoadAll()
 	}
 	catch(mongo::DBException& ex)
 	{
-		FUGU_THROW(ex.toString(), "JsonModelCache::LoadAll");
+		FUGU_THROW(ex.toString(), "JsonModelStorage::LoadAll");
 	}
 	catch(std::exception& ex)
 	{
-		FUGU_THROW(ex.what(), "JsonModelCache::LoadAll");
+		FUGU_THROW(ex.what(), "JsonModelStorage::LoadAll");
 	}
 }
 

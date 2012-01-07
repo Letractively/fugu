@@ -10,9 +10,9 @@
 
 namespace fugu {
 
-HandlerRouter::HandlerRouter(Config& config)
+HandlerRouter::HandlerRouter(ConfigPtr config)
 {
-	config.GetRoutes(_routes);
+	config->GetRoutes(_routes);
 }
 
 HandlerRouter::~HandlerRouter()
@@ -37,10 +37,10 @@ ReplyPtr HandlerRouter::Route(ContextPtr ctx)
 {
 	try
 	{
-		Routes::const_iterator riter = _routes.find(ctx->Query()->Url());
+		Routes::const_iterator riter = _routes.find(ctx->Query()->Uri());
 
 		if(riter == _routes.end())
-			FUGU_THROW("Route for url '" + ctx->Query()->Url()+"' doesn't exists", "HandlerRouter::Route");
+			FUGU_THROW("Route for url '" + ctx->Query()->Uri()+"' doesn't exists", "HandlerRouter::Route");
 
 		HandlerFactories::iterator fiter = _factories.find(riter->second->HandlerName());
 

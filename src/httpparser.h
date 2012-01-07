@@ -26,8 +26,6 @@ public:
 	static int HeadersCompleted(http_parser *parser);
 	static int MessageCompleted(http_parser *parser);
 
-	static bool UrlDecode(const std::string& in, std::string& out);
-
 private:
 	QueryPtr _query;
 	char _headerName[100];

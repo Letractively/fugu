@@ -1,5 +1,6 @@
 #include "query.h"
 #include "exception.h"
+#include <string.h>
 
 namespace fugu {
 
@@ -9,57 +10,62 @@ Query::Query()
 Query::~Query()
 {
 }
-// Returns query type
-QueryType Query::Type() const
+
+QueryMethod Query::Type() const
 {
 	return _type;
 }
-// Returns request URL
-const std::string& Query::Url() const
+
+const std::string& Query::Uri() const
 {
-	return _url;
+	return _uri;
 }
-// Returns user hash
+
+const std::string& Query::ViewName() const
+{
+	return _viewName;
+}
+
 const std::string Query::UserHash() const
 {
 	return _userHash;
 }
-// Returns session hash
+
 const std::string Query::SessionHash() const
 {
 	return _sessionHash;
 }
-// Sets query type
-void  Query::SetType(QueryType type)
+
+void  Query::SetType(QueryMethod type)
 {
 	_type = type;
 }
-// Sets query url
-void  Query::SetUrl(const char* buf, size_t len)
+
+void  Query::SetUri(const char* url, size_t len)
 {
-	_url.assign(buf, 0, len);
+	_uri.assign(url, 0, len);
 }
 
-void Query::SetUrl(const std::string& url)
+void Query::SetViewName(const char* viewName, size_t len)
 {
-	_url = url;
+	_viewName.assign(viewName, 0, len);
 }
-// Sets user hash
+
 void  Query::SetUserHash(const char* buf, size_t len)
 {
 	_userHash.assign(buf, 0, len);
 }
-// Sets session hash
+
 void  Query::SetSessionHash(const char* buf, size_t len)
 {
 	_sessionHash.assign(buf, 0, len);
 }
-// Returns query content
+
 const JsonObj& Query::Content() const
 {
 	return _content;
 }
-// Sets json content
+
 void Query::SetContent(const char* buf, size_t len)
 {
 	try
