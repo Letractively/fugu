@@ -1,4 +1,4 @@
-self.importScripts('box2d.js', 'inheritance.js');
+self.importScripts('box2d.js', 'common.js');
 
 //Box2d aliases
 var b2Vec2 = Box2D.Common.Math.b2Vec2;

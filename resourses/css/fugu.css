@@ -7,6 +7,8 @@ background: url(../images/logo_fugu_large.png) no-repeat center center;
 overflow: hidden ;
 }
 
+
+
 #container {
 display: block;
 position:absolute;
@@ -31,6 +33,19 @@ opacity: 0.9;
 border-radius:10px 10px 10px 10px;
 }
 
+.contain table { 
+margin: 1em 0;
+border-collapse: collapse;
+width: 100%; 
+}
+
+.contain table td, .contain table th {
+border-color: black;
+border: 1px solid black;
+padding: .6em 10px;
+text-align: left;
+}
+		
 #canvas {
 border-radius:10px 10px 10px 10px;
 background-color:#3f7380;
