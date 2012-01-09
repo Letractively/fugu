@@ -19,7 +19,7 @@ public:
 protected:
 	ReplyPtr Html(StringPtr html);
 	ReplyPtr PartialView(JsonModelPtr view);
-	ReplyPtr Json(const std::string& json);
+	ReplyPtr Json(StringPtr json);
 
 private:
 	RoutePtr _route;

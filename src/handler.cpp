@@ -24,11 +24,11 @@ ReplyPtr Handler::Html(StringPtr html)
 
 ReplyPtr Handler::PartialView(JsonModelPtr view)
 {
-	ReplyPtr reply(new JsonReply((view->JsonString())));
+	ReplyPtr reply(new JsonReply(view->JsonStringPtr()));
 	return reply;
 }
 
-ReplyPtr Handler::Json(const std::string& json)
+ReplyPtr Handler::Json(StringPtr json)
 {
 	ReplyPtr reply(new JsonReply(json));
 	return reply;

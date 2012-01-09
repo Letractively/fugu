@@ -62,7 +62,7 @@ void WebApplication::HandleAccept(const boost::system::error_code& e, Connection
 {
 	if (!e) {
 		Log("Accepted:" + conn->Address());
-		conn->DoRun();
+		conn->Dispatch();
 	}
 
 	DoAccept();
@@ -79,12 +79,12 @@ void WebApplication::ProcessRequest(QueryPtr query, ConnectionPtr conn)
 	{
 		SessionPtr session = _sessionMgr.GetSession(query->SessionHash());
 
-		if(!session) {
-			UserPtr user = _userMgr.GetUser(query->UserHash());
-			session = _sessionMgr.CreateSession(user);
-		}
+		//if(!session) {
+			//UserPtr user = _userMgr.GetUser(query->UserHash());
+			//session = _sessionMgr.CreateSession(user);
+		//}
 
-		ContextPtr ctx(new Context(session, conn, query, _config, _database));
+		ContextPtr ctx(new Context(SessionPtr(), conn, query, _config, _database));
 		ReplyPtr reply = _router.Route(ctx);
 
 		if(reply == NULL) 

@@ -14,6 +14,12 @@
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
+
+//TODO: fast allocation
+//#include <boost/pool/object_pool.hpp>
+//#include <boost/pool/pool_alloc.hpp>
+//typedef std::basic_string<char, std::char_traits<char>, boost::fast_pool_allocator<char> > String; 
+//typedef boost::shared_ptr<fugu::String> StringPtr;
 namespace mongo {
 
 class DBClientConnection;

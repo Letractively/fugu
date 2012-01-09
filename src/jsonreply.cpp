@@ -35,7 +35,7 @@ JsonReply::JsonReply()
 {
 }
 
-JsonReply::JsonReply(const std::string json)
+JsonReply::JsonReply(StringPtr json)
 	:_stream(&_streambuf)
 	,_json(json)
 {
@@ -51,7 +51,7 @@ void JsonReply::SetJS(const std::string& id, const std::string& js)
 	_jsCode = js;
 }
 
-void JsonReply::SetJson(const std::string& json)
+void JsonReply::SetJson(StringPtr json)
 {
 	_json = json;
 }
@@ -96,9 +96,9 @@ static std::string FALSE_JSON_VALUE = "\"false\"";
 	if(!_htmlRegion.empty() && !_htmlContent.empty())
 		_stream	<< ", \"Html\": {\"Region\": " << _htmlRegion << "\" \"Content\": \"" << _htmlContent << "\" }";
 
-	if(!_json.empty()) {
+	if(_json && !_json->empty()) {
 		// TODO: check for {}
-		_stream << ", \"Json\":" << _json;
+		_stream << ", \"Json\":" << *_json;
 	}
 
 	if(!_jsId.empty() && !_jsCode.empty())

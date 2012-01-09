@@ -37,10 +37,10 @@ class JsonReply : public BaseJsonReply,  private boost::noncopyable
 {
 public:
 	JsonReply();
-	JsonReply(const std::string json);
+	JsonReply(StringPtr json);
 	virtual ~JsonReply();
 	void SetJS(const std::string& id, const std::string& js);
-	void SetJson(const std::string& json);
+	void SetJson(StringPtr json);
 	void SetHtml(const std::string& region, const std::string& html);
 	bool Streamed() const;
 	boost::asio::streambuf& ResponseStream() const;
@@ -50,7 +50,7 @@ protected:
 	std::string _jsCode;
 	std::string _htmlRegion;
 	std::string _htmlContent;
-	std::string _json;
+	StringPtr _json;
 	mutable boost::asio::streambuf _streambuf;
 	mutable std::ostream _stream;
 };

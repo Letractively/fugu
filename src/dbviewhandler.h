@@ -11,10 +11,10 @@ public:
 	ReplyPtr Process(ContextPtr ctx);
 
 private:
-	ReplyPtr GetPage(ContextPtr ctx);
 	ReplyPtr GetAllViews(ContextPtr ctx);
 	ReplyPtr GetView(ContextPtr ctx);
 	ReplyPtr UpdateView(ContextPtr ctx);
+	ReplyPtr DeleteView(ContextPtr ctx);
 };
 
 class DBViewHandlerFactory : public HandlerFactory

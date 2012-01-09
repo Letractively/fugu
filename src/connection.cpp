@@ -39,7 +39,7 @@ void Connection::Close()
 	_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ignored_ec);
 }
 
-void Connection::DoRun()
+void Connection::Dispatch()
 {
 	DoRecive();
 }

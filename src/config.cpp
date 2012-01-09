@@ -48,19 +48,24 @@ void Config::GetRoutes(Routes& routes)
 	}
 }
 
-std::string Config::PageTemplate() const
+std::string Config::Version() const
 {
-	return _pt.get<std::string>("Service.PageTemplate");
+	return _pt.get<std::string>("Service.Version");
 }
 
 std::string Config::ViewsTable() const
 {
-	return _pt.get<std::string>("Service.DB.Tables.ViewsTable");
+	return _pt.get<std::string>("DB.Tables.ViewsTable");
 }
 
 std::string Config::UsersTable() const
 {
-	return _pt.get<std::string>("Service.DB.Tables.UsersTable");
+	return _pt.get<std::string>("DB.Tables.UsersTable");
+}
+
+std::string Config::PageTemplate() const
+{
+	return _pt.get<std::string>("UI.PageTemplate");
 }
 
 }

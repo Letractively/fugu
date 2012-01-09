@@ -41,12 +41,12 @@ public:
 	void Send(ReplyPtr reply);
 	// Close connection
 	void Close();
+	// Start the first asynchronous operation for the connection.
+	void Dispatch();
 
 private:
 	// Get the socket associated with the connection.
 	boost::asio::ip::tcp::socket& Socket() { return _socket; }
-	// Start the first asynchronous operation for the connection.
-	void DoRun();
 	// Read data from the socket
 	void DoRecive();
 	// Handle completion of a read operation.

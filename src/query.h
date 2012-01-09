@@ -30,13 +30,16 @@ public:
 	const std::string& Uri() const;
 	// Returns request view name
 	const std::string& ViewName() const;
+	bool HasView() const;
 	// Returns user hash
 	const std::string UserHash() const;
 	// Returns session hash
 	const std::string SessionHash() const;
 	// Returns query content
 	const JsonObj& Content() const;
-private:
+	bool ClearCache() const;
+
+private: 
 	// Sets query type
 	void SetType(QueryMethod type);
 	// Sets query url
@@ -49,6 +52,7 @@ private:
 	void SetSessionHash(const char* buf, size_t len);
 	// Sets json content
 	void SetContent(const char* buf, size_t len);
+	void ClearCache(bool clear = true);
 
 private:
 	QueryMethod _type;
@@ -57,6 +61,7 @@ private:
 	std::string _userHash;
 	std::string _sessionHash;
 	JsonObj _content;
+	bool _clearCache;
 };
 
 }

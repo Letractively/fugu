@@ -16,6 +16,7 @@ public:
 	explicit JsonModel(const JsonObj& obj);
 	virtual ~JsonModel();
 	std::string JsonString() const;
+	StringPtr JsonStringPtr() const;
 
 	template<typename T>
 	T* As()
@@ -41,11 +42,12 @@ public:
 	JsonModelPtr Create(const std::string& json);
 	// Gets model by id
 	JsonModelPtr GetById(const std::string& id) const;
+	void Delete(const std::string& id);
 	// Gets all models
 	JsonModelMapIterator All();
 	// Gets all models in json format
 	// toReplace - data should be replaced, as example: passwords before sending to client
-	StringPtr AllAsJson(const std::string& toReplace="");
+	StringPtr AllAsJson();
 
 protected:
 	virtual JsonModelPtr CreateImpl(const JsonObj& json);

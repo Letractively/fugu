@@ -36,9 +36,10 @@ DBPoolImpl::DBPoolImpl()
 
 DBConnectionPtr DBPoolImpl::Queue()
 {
+	DBConnectionPtr conn(new mongo::DBClientConnection);
 	// reconect to database
-	_connection->connect("localhost");
-	return _connection;
+	conn->connect("localhost");
+	return conn;
 }
 
 DBPoolImpl* DBPoolImpl::Instance()

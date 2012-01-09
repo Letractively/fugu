@@ -5,7 +5,7 @@
 
 namespace fugu {
 
-class ViewData : public JsonModel, private boost::noncopyable
+class ViewData : public JsonModel
 {
 public:
 	virtual ~ViewData();

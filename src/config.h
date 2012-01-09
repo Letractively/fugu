@@ -20,7 +20,8 @@ public:
 	std::string PageTemplate() const;
 	std::string ViewsTable() const;
 	std::string UsersTable() const;
-	
+	std::string Version() const;
+
 private:
 	// property tree object
 	boost::property_tree::ptree _pt;

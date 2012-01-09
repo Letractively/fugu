@@ -5,9 +5,6 @@
     <ClCompile Include="..\..\src\connection.cpp">
       <Filter>net</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\session.cpp">
-      <Filter>engine</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\logger.cpp">
       <Filter>common</Filter>
     </ClCompile>
@@ -17,17 +14,11 @@
     <ClCompile Include="..\..\src\nedmalloc\nedmalloc.c">
       <Filter>common\allocator</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\http_parser\http_parser.c">
-      <Filter>net\query</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\httpparser.cpp">
       <Filter>net\query</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\config.cpp">
       <Filter>common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\context.h">
-      <Filter>engine</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\reply.cpp">
       <Filter>net\reply</Filter>
@@ -70,7 +61,18 @@
       <Filter>db\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\dbviewhandler.cpp">
-      <Filter>handlers\views</Filter>
+      <Filter>handlers\viewhandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\templatepagehandler.cpp">
+      <Filter>handlers\viewhandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\context.h" />
+    <ClCompile Include="..\..\src\session.cpp" />
+    <ClCompile Include="..\..\src\http_parser\http_parser.c">
+      <Filter>net\query\dependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stringutils.cpp">
+      <Filter>common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,9 +81,6 @@
     </Filter>
     <Filter Include="common">
       <UniqueIdentifier>{c7857e05-3c83-47ac-991e-deee42a3672b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="engine">
-      <UniqueIdentifier>{30472b92-2643-4212-b238-ad06cbc514fc}</UniqueIdentifier>
     </Filter>
     <Filter Include="common\allocator">
       <UniqueIdentifier>{6c957a8d-8312-4a6f-8b94-c3547fd05e03}</UniqueIdentifier>
@@ -104,8 +103,11 @@
     <Filter Include="db\core">
       <UniqueIdentifier>{4c9ba150-3c87-48e1-af82-8e7ff6781a19}</UniqueIdentifier>
     </Filter>
-    <Filter Include="handlers\views">
+    <Filter Include="handlers\viewhandlers">
       <UniqueIdentifier>{cffcea11-13b6-4bd4-89a3-9c0752b1de78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\query\dependencies">
+      <UniqueIdentifier>{7d3335df-c33c-4445-bfcf-e43fcd8b4fb4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -118,9 +120,6 @@
     <ClInclude Include="..\..\src\prerequisites.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\session.h">
-      <Filter>engine</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\logger.h">
       <Filter>common</Filter>
     </ClInclude>
@@ -129,9 +128,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\nedmalloc\nedmalloc.h">
       <Filter>common\allocator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\http_parser\http_parser.h">
-      <Filter>net\query</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\httpparser.h">
       <Filter>net\query</Filter>
@@ -186,7 +182,17 @@
       <Filter>db\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\dbviewhandler.h">
-      <Filter>handlers\views</Filter>
+      <Filter>handlers\viewhandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\templatepagehandler.h">
+      <Filter>handlers\viewhandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\session.h" />
+    <ClInclude Include="..\..\src\http_parser\http_parser.h">
+      <Filter>net\query\dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\stringutils.h">
+      <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

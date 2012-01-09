@@ -26,6 +26,12 @@ const std::string& Query::ViewName() const
 	return _viewName;
 }
 
+bool Query::HasView() const
+{
+	return !_viewName.empty();
+}
+
+
 const std::string Query::UserHash() const
 {
 	return _userHash;
@@ -66,6 +72,11 @@ const JsonObj& Query::Content() const
 	return _content;
 }
 
+bool Query::ClearCache() const
+{
+	return _clearCache;
+}
+
 void Query::SetContent(const char* buf, size_t len)
 {
 	try
@@ -80,6 +91,11 @@ void Query::SetContent(const char* buf, size_t len)
 	{
 		FUGU_THROW(ex.what() ,"Query::SetContent");
 	}
+}
+
+void Query::ClearCache(bool clear)
+{
+	_clearCache = clear;
 }
 
 }

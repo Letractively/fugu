@@ -1,5 +1,6 @@
 #include "jsonmodel.h"
 #include "dbpool.h"
+#include "stringutils.h"
 #include "exception.h"
 #include <boost/thread/locks.hpp>
 
@@ -22,6 +23,11 @@ JsonModel::~JsonModel()
 std::string JsonModel::JsonString() const
 {
 	return jsonString(mongo::JsonStringFormat::JS);
+}
+
+StringPtr JsonModel::JsonStringPtr() const
+{
+	return SPtr(jsonString(mongo::JsonStringFormat::JS));
 }
 
 JsonModelStorage::JsonModelStorage(const std::string& ns, const std::string& idFieldName)
@@ -56,24 +62,44 @@ JsonModelPtr JsonModelStorage::GetById(const std::string& id) const
 	return JsonModelPtr();
 }
 
+void JsonModelStorage::Delete(const std::string& id)
+{
+	DBConnectionPtr conn = DBPool::Get().Queue();
+	conn->remove(_ns, QUERY(_idFieldName << id));
+
+	// Get upgradable access
+	boost::upgrade_lock<boost::shared_mutex> lock(_access);
+	// Get exclusive access
+	boost::upgrade_to_unique_lock<boost::shared_mutex> uniqueLock(lock);
+	_models.erase(id);
+}
+
 JsonModelMapIterator JsonModelStorage::All()
 {
 	LoadAll();
 	return JsonModelMapIterator(_models, _access);
 }
 
-StringPtr JsonModelStorage::AllAsJson(const std::string& toReplace)
+StringPtr JsonModelStorage::AllAsJson()
 {
 	LoadAll();
-	bool has;
+
+	boost::shared_lock<boost::shared_mutex> lock(_access);
+
 	JsonModelMapIterator iter(_models);
+	std::string json = "[";
+	bool has = false;
 	while(iter.HasMore()) {
 		has = true;
-		JsonModelPtr view = iter.PeekNextValue();
+		JsonModelPtr model = iter.PeekNextValue();
+		json.append(model->JsonString() + ",");
 		iter.MoveNext();
 	}
 
-	return StringPtr();
+	if(has) json.erase(json.length()-1);
+	json.append("]");
+
+	return SPtr(json);
 }
 
 JsonModelPtr JsonModelStorage::CreateImpl(const JsonObj& json)

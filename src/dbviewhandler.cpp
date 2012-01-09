@@ -14,50 +14,28 @@ ReplyPtr DBViewHandler::Process(ContextPtr ctx)
 {
 	const std::string& url = ctx->Query()->Uri();
 
-	if(url.compare("/") == 0 || url.empty())
-		return GetPage(ctx);
-
 	if(url.compare("/getview") == 0)
 		return GetView(ctx);
 
 	if(url.compare("/getallviews") == 0)
 		return GetAllViews(ctx);
 
-	if(url.compare("/saveview") == 0) {
+	if(url.compare("/saveview") == 0)
 		return UpdateView(ctx);
-	}
+
+	if(url.compare("/deleteview") == 0)
+		return DeleteView(ctx);
 
 	FUGU_THROW("Unknown url:'" + url + "'", "DBViewHandler::Process");
 }
 
-ReplyPtr DBViewHandler::GetPage(ContextPtr ctx)
-{
-	JsonModelPtr view = ctx->Db()->Views()->GetById(ctx->Cfg()->PageTemplate());
-	StringPtr page(new std::string(view->getStringField("Content")));
-	return Html(page);
-}
 
 ReplyPtr DBViewHandler::GetAllViews(ContextPtr ctx)
 {
 	try
 	{
 		JsonReplyPtr reply(new JsonReply());
-
-
-		JsonModelMapIterator viewsIter = ctx->Db()->Views()->All();
-		std::string json = "[";
-		bool has = false;
-		while(viewsIter.HasMore()) {
-			has = true;
-			JsonModelPtr view = viewsIter.PeekNextValue();
-			json.append(view->JsonString() + ",");
-			viewsIter.MoveNext();
-		}
-
-		if(has) json.erase(json.length()-1);
-		json.append("]");
-		reply->SetJson(json);
-
+		reply->SetJson(ctx->Db()->Views()->AllAsJson());
 		return reply;
 	}
 	catch(Exception& fe)
@@ -117,6 +95,24 @@ ReplyPtr DBViewHandler::UpdateView(ContextPtr ctx)
 	}
 	
 	return GetAllViews(ctx);
+}
+
+ReplyPtr DBViewHandler::DeleteView(ContextPtr ctx)
+{
+	try
+	{
+		std::string viewName = ctx->Query()->Content().getStringField("ViewName");
+		ctx->Db()->Views()->Delete(viewName);
+		return GetAllViews(ctx);
+	}
+	catch(Exception& fe)
+	{
+		return Handler::Error(fe, true);
+	}
+	catch(std::exception& e)
+	{
+		return Handler::Error(FUGU_EXCEPT(e.what() ,"DBViewHandler::GetView"), true);
+	}
 }
 
 Handler* DBViewHandlerFactory::CreateImpl()

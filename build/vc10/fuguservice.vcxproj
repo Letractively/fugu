@@ -49,6 +49,8 @@
     <ClCompile Include="..\..\src\registrator.cpp" />
     <ClCompile Include="..\..\src\reply.cpp" />
     <ClCompile Include="..\..\src\session.cpp" />
+    <ClCompile Include="..\..\src\stringutils.cpp" />
+    <ClCompile Include="..\..\src\templatepagehandler.cpp" />
     <ClCompile Include="..\..\src\user.cpp" />
     <ClCompile Include="..\..\src\viewdata.cpp" />
     <ClCompile Include="..\..\src\webapplication.cpp" />
@@ -62,13 +64,13 @@
     <ClInclude Include="..\..\src\exception.h" />
     <ClInclude Include="..\..\src\handler.h" />
     <ClInclude Include="..\..\src\htmlreply.h" />
+    <ClInclude Include="..\..\src\http_parser\http_parser.h" />
     <ClInclude Include="..\..\src\jsonmodel.h" />
     <ClInclude Include="..\..\src\jsonreply.h" />
     <ClInclude Include="..\..\src\query.h" />
     <ClInclude Include="..\..\src\route.h" />
     <ClInclude Include="..\..\src\handlerrouter.h" />
     <ClInclude Include="..\..\src\httpparser.h" />
-    <ClInclude Include="..\..\src\http_parser\http_parser.h" />
     <ClInclude Include="..\..\src\iterators.h" />
     <ClInclude Include="..\..\src\logger.h" />
     <ClInclude Include="..\..\src\nedmalloc\nedmalloc.h" />
@@ -78,6 +80,8 @@
     <ClInclude Include="..\..\src\reply.h" />
     <ClInclude Include="..\..\src\session.h" />
     <ClInclude Include="..\..\src\stdheaders.h" />
+    <ClInclude Include="..\..\src\stringutils.h" />
+    <ClInclude Include="..\..\src\templatepagehandler.h" />
     <ClInclude Include="..\..\src\user.h" />
     <ClInclude Include="..\..\src\viewdata.h" />
     <ClInclude Include="..\..\src\webapplication.h" />
