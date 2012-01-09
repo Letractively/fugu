@@ -72,9 +72,10 @@ if (!Function.prototype.Bind) { // check if native implementation available
   };
 })();
 
-function BlockPanel(panel) {
-	$(panel).css('overflow', 'hidden');
-	$(panel).block({ css: {
+function BlockUI(panel) {
+	var el = panel ? panel : document.body;
+	$(el).css('overflow', 'hidden');
+	$(el).block({ css: {
 		border: 'none'
 		,backgroundColor: '#000'
 		,'border-radius': '10px 10px 10px 10px'
@@ -85,9 +86,10 @@ function BlockPanel(panel) {
 	} }); 
 }
 
-function UnblockPanel(panel) {
-	$(panel).unblock(); 
-	$(panel).css('overflow', 'auto');
+function UnblockUI(panel) {
+	var el = panel ? panel : document.body;
+	$(el).unblock(); 
+	$(el).css('overflow', 'auto');
 }
 
 function DynamicScript(id, script) {
@@ -124,4 +126,24 @@ function GetCookie(name) {
 
 function EraseCookie(name) {
 	SetCookie(name,"",-1);
+}
+
+// return true - yes, false - no
+function Confrim(text, callback) {
+	var dialog = $("#CommonConfrimDialog");
+	dialog.html(text? text : "Are you sure?");
+	
+	dialog = $(dialog).dialog({
+		title:"Confrimation", modal: true, width: '300px', height: 'auto', resizable: false, position: 'center',
+		buttons: {
+			"Yes": function() {
+				$(dialog).dialog("close");
+				callback(true);
+			}, 
+			"Cancel": function() {
+				$(dialog).dialog("close");
+				callback(false);
+			}
+		}
+	});
 }

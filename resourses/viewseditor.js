@@ -8,7 +8,7 @@ var ViewsEditorTab = ContentTab.extend({
 	},
 	
 	Select: function() {
-		BlockPanel(this._panel);
+		BlockUI(this._panel);
 		this._base();
 		$.ajax({
 		  type: 'POST',
@@ -21,7 +21,7 @@ var ViewsEditorTab = ContentTab.extend({
 			
 		}.Bind(this))
 		.error(function(err) { alert("Error: " + err); })
-		.complete(function() { UnblockPanel(this._panel); }.Bind(this));
+		.complete(function() { UnblockUI(this._panel); }.Bind(this));
 	},
 	
 	Leave: function() { return true; },
@@ -61,12 +61,29 @@ var ViewsEditorTab = ContentTab.extend({
 	_CreateButtons: function() {
 		var self = this;
 		$("input:button[value='D']", this._viewsTable).button().click(function() {
-			self._views.splice(parseInt(this.id), 1);
-			self.Refresh(self._views);
+			var view = self._views[this.id];
+			Confrim(null, function(yes) {
+				if(yes) {
+						BlockUI();
+						var data = '{ViewName: "'+ view.Name + '"}';
+						$.ajax({
+						  type: 'POST',
+						  url: "/deleteview",
+						  data: data,
+						  dataType: "json"
+						})
+						.success(function(data) {
+							self.Refresh(data.Json);
+							
+						}.Bind(this))
+						.error(function(err) { alert("Error: " + err); })
+						.complete(function() { UnblockUI(); }.Bind(this));
+		
+				}
+			});
 		});
 		$("input:button[value='E']", this._viewsTable).button().click(function() { self._OpenViewDialog(this.id); });
 		$("<button>Create new view</button>").button().appendTo(this._element).click(function() { self._OpenViewDialog(-1); });
-		$("<button>Save changes</button>").button().appendTo(this._element).click(function() { alert(); }.Bind(this));
 	},
 	
 	_OpenViewDialog: function (viewId) {
@@ -93,7 +110,7 @@ var ViewsEditorTab = ContentTab.extend({
 			resizable: false,
 			position: 'center',
 			buttons: {
-				"Ok": function() {
+				"Save": function() {
 				
 					if((!view) && this._HasView(name.val())) {
 						alert("View already exists");
@@ -126,12 +143,11 @@ var ViewsEditorTab = ContentTab.extend({
 		for(var i=0; i< this._views.length; i++) {
 			if(this._views[i].Name == name) return true;
 		}
-		
 		return false;
 	},
 	
    SaveView: function(view) {
-   
+		BlockUI();
 		var json_text = JSON.stringify(view);
 		$.ajax({
 		  type: 'POST',
@@ -141,6 +157,6 @@ var ViewsEditorTab = ContentTab.extend({
 		})
 		.success(function(data) {})
 		.error(function(error) { alert("Error:" + error);})
-		.complete(function() { })
+		.complete(function() { UnblockUI();})
    }
 });
