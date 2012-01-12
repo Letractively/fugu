@@ -32,9 +32,8 @@ StringPtr JsonModel::JsonStringPtr() const
 
 JsonModelStorage::JsonModelStorage(const std::string& ns, const std::string& idFieldName)
 	:_ns(ns)
-	,_idFieldName(idFieldName)
+	,_fieldId(idFieldName)
 {
-	LoadAll();
 }
 
 JsonModelStorage::~JsonModelStorage()
@@ -65,7 +64,7 @@ JsonModelPtr JsonModelStorage::GetById(const std::string& id) const
 void JsonModelStorage::Delete(const std::string& id)
 {
 	DBConnectionPtr conn = DBPool::Get().Queue();
-	conn->remove(_ns, QUERY(_idFieldName << id));
+	conn->remove(_ns, QUERY(_fieldId << id));
 
 	// Get upgradable access
 	boost::upgrade_lock<boost::shared_mutex> lock(_access);
@@ -76,14 +75,11 @@ void JsonModelStorage::Delete(const std::string& id)
 
 JsonModelMapIterator JsonModelStorage::All()
 {
-	LoadAll();
 	return JsonModelMapIterator(_models, _access);
 }
 
 StringPtr JsonModelStorage::AllAsJson()
 {
-	LoadAll();
-
 	boost::shared_lock<boost::shared_mutex> lock(_access);
 
 	JsonModelMapIterator iter(_models);
@@ -102,32 +98,47 @@ StringPtr JsonModelStorage::AllAsJson()
 	return SPtr(json);
 }
 
+void JsonModelStorage::LoadAll()
+{
+	LoadAllImpl();
+}
+
 JsonModelPtr JsonModelStorage::CreateImpl(const JsonObj& json)
 {
 	try
 	{
 		JsonModelPtr jmodel(new JsonModel(json));
 
-		const char* id = json.getStringField(_idFieldName.c_str());
+		const char* id = json.getStringField(_fieldId.c_str());
 		if(id == NULL) {
-			//FUGU_THROW("json string doesn't have id fiels('" + id+"')", 
-						//"JsonModelStorage::CreateImpl");
+			FUGU_THROW(std::string("json string doesn't have id field('") + id+"')", 
+						"JsonModelStorage::CreateImpl");
 		}
 
 		DBConnectionPtr conn = DBPool::Get().Queue();
 
-		// Get upgradable access
-		boost::upgrade_lock<boost::shared_mutex> lock(_access);
-		// Get exclusive access
-		boost::upgrade_to_unique_lock<boost::shared_mutex> uniqueLock(lock);
-		// Now we have exclusive access
-		JsonModelMap::const_iterator iter = _models.find(id);
+		JsonModelMap::const_iterator iter;
+		{
+			boost::shared_lock<boost::shared_mutex> lock(_access);
+			iter = _models.find(id);
+		}
+
 		if(iter == _models.end()) {
 			// Model doesn't exists, creating new
 			conn->insert(_ns, *jmodel);
 		}
 		else { // Model already exists, updating...
-			conn->update(_ns, QUERY(_idFieldName<<id), *jmodel);
+			conn->update(_ns, QUERY(_fieldId<<id), *jmodel);
+		}
+
+		{
+			// Get upgradable access
+			boost::upgrade_lock<boost::shared_mutex> lock(_access);
+			// Get exclusive access
+			boost::upgrade_to_unique_lock<boost::shared_mutex> uniqueLock(lock);
+			// Now we have exclusive access
+
+			_models.insert(std::make_pair<std::string, JsonModelPtr>(id, jmodel));
 		}
 
 		// Get error result from the last operation on this connection. 
@@ -152,18 +163,17 @@ JsonModelPtr JsonModelStorage::CreateImpl(const JsonObj& json)
 	}
 }
 
-void JsonModelStorage::LoadAll()
+void JsonModelStorage::LoadAllImpl(mongo::Query query)
 {
 	try
 	{
 		JsonModelMap fromdb;
-		std::auto_ptr<mongo::DBClientCursor> cursor =  
-			DBPool::Get().Queue()->query(_ns, mongo::Query());
+		std::auto_ptr<mongo::DBClientCursor> cursor = DBPool::Get().Queue()->query(_ns, query);
 
 		//getLastError();
 		while(cursor->more()) {
 			JsonObj json = cursor->next();
-			const char* id = json.getStringField(_idFieldName.c_str());
+			const char* id = json.getStringField(_fieldId.c_str());
 
 			if(id != NULL) {
 				JsonModelPtr model(new JsonModel(json.copy()));

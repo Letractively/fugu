@@ -109,7 +109,7 @@ static std::string FALSE_JSON_VALUE = "\"false\"";
 	size_t contentSize = _streambuf.size();
 	_stream.seekp(0);
 
-	_stream << "HTTP/1.0 200 OK\r\nContent-Type: json\r\nContent-Length: "
+	_stream << "HTTP/1.1 200 OK\r\nContent-Type: json\r\nContent-Length: "
 			<< contentSize << "\r\n";
 
 	StringPtr headers = Reply::Headers();

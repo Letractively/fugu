@@ -28,11 +28,15 @@ public:
 typedef std::map<std::string, JsonModelPtr> JsonModelMap;
 typedef ConstMapIterator<JsonModelMap> JsonModelMapIterator;
 
+class IJsonModelStorage
+{
+};
+
 // In memory sorage
 class JsonModelStorage
 {
 public:
-	// ns - db table name
+	// ns - db table name space
 	JsonModelStorage(const std::string& ns, const std::string& idFieldName);
 	virtual ~JsonModelStorage();
 
@@ -48,14 +52,15 @@ public:
 	// Gets all models in json format
 	// toReplace - data should be replaced, as example: passwords before sending to client
 	StringPtr AllAsJson();
+	void LoadAll();
 
 protected:
 	virtual JsonModelPtr CreateImpl(const JsonObj& json);
-	virtual void LoadAll();
+	virtual void LoadAllImpl(mongo::Query query = mongo::Query());
 
 protected:
 	std::string _ns;
-	std::string _idFieldName;
+	std::string _fieldId;
 	JsonModelMap _models;
 	mutable boost::shared_mutex _access;
 };

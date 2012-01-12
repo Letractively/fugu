@@ -39,10 +39,10 @@ public:
 	bool IsWebSockets() const { return _webSocketsConnection; }
 	// Put the data in the queue for sending
 	void Send(ReplyPtr reply);
-	// Close connection
-	void Close();
 	// Start the first asynchronous operation for the connection.
 	void Dispatch();
+	// Close connection
+	void Close();
 
 private:
 	// Get the socket associated with the connection.

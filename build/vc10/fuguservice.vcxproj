@@ -67,6 +67,7 @@
     <ClInclude Include="..\..\src\http_parser\http_parser.h" />
     <ClInclude Include="..\..\src\jsonmodel.h" />
     <ClInclude Include="..\..\src\jsonreply.h" />
+    <ClInclude Include="..\..\src\nedmalloc\malloc.c.h" />
     <ClInclude Include="..\..\src\query.h" />
     <ClInclude Include="..\..\src\route.h" />
     <ClInclude Include="..\..\src\handlerrouter.h" />
@@ -172,7 +173,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(BOOST_HOME);$(MONGO_HOME)\client;$(MONGO_HOME);$(OPENSSL_HOME)\inc32;$(ProjectDir)/../../src</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WIN32_WINNT;BOOST_ALL_DYN_LINK;_WIN32_WINNT=0x0500</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINNT;BOOST_ALL_DYN_LINK;_WIN32_WINNT=0x0500;REPLACE_SYSTEM_ALLOCATOR</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>

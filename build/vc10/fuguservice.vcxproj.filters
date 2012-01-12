@@ -43,22 +43,22 @@
     </ClCompile>
     <ClCompile Include="..\..\src\webapplication.cpp" />
     <ClCompile Include="..\..\src\dbpool.cpp">
-      <Filter>db\core</Filter>
+      <Filter>datalayer\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\user.cpp">
-      <Filter>db</Filter>
+      <Filter>datalayer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\viewdata.cpp">
-      <Filter>db</Filter>
+      <Filter>datalayer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\jsonmodel.cpp">
-      <Filter>db\core</Filter>
+      <Filter>datalayer\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\registrator.cpp">
       <Filter>common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\database.cpp">
-      <Filter>db\core</Filter>
+      <Filter>datalayer\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\dbviewhandler.cpp">
       <Filter>handlers\viewhandlers</Filter>
@@ -97,17 +97,17 @@
     <Filter Include="net\query">
       <UniqueIdentifier>{ae30d91e-e86b-4ee3-bdc1-6d374ef3ddbd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="db">
-      <UniqueIdentifier>{d4a5ba95-f4a4-44f0-9d50-9e8fe80bd61f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="db\core">
-      <UniqueIdentifier>{4c9ba150-3c87-48e1-af82-8e7ff6781a19}</UniqueIdentifier>
-    </Filter>
     <Filter Include="handlers\viewhandlers">
       <UniqueIdentifier>{cffcea11-13b6-4bd4-89a3-9c0752b1de78}</UniqueIdentifier>
     </Filter>
     <Filter Include="net\query\dependencies">
       <UniqueIdentifier>{7d3335df-c33c-4445-bfcf-e43fcd8b4fb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="datalayer">
+      <UniqueIdentifier>{d4a5ba95-f4a4-44f0-9d50-9e8fe80bd61f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="datalayer\core">
+      <UniqueIdentifier>{4c9ba150-3c87-48e1-af82-8e7ff6781a19}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -167,19 +167,19 @@
     </ClInclude>
     <ClInclude Include="..\..\src\webapplication.h" />
     <ClInclude Include="..\..\src\dbpool.h">
-      <Filter>db\core</Filter>
+      <Filter>datalayer\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\user.h">
-      <Filter>db</Filter>
+      <Filter>datalayer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\jsonmodel.h">
-      <Filter>db\core</Filter>
+      <Filter>datalayer\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\viewdata.h">
-      <Filter>db</Filter>
+      <Filter>datalayer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\database.h">
-      <Filter>db\core</Filter>
+      <Filter>datalayer\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\dbviewhandler.h">
       <Filter>handlers\viewhandlers</Filter>
@@ -193,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\stringutils.h">
       <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\nedmalloc\malloc.c.h">
+      <Filter>common\allocator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

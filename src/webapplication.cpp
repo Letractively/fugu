@@ -15,7 +15,7 @@ WebApplication::WebApplication(const std::string& configPath)
 	,_router(_config)
 	,_acceptor(_service)
 	,_registrator(_router)
-	,_database(new Database(_config))
+	,_database(new Database(_service, _config))
 {
 	// Open the acceptor with the option to reuse the address (i.e. SO_REUSEADDR).
 	boost::asio::ip::tcp::resolver resolver(_service);

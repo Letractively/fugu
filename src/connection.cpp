@@ -33,17 +33,16 @@ void Connection::Send(ReplyPtr reply)
 	DoSend(reply);
 }
 
-void Connection::Close()
-{
-	boost::system::error_code ignored_ec;
-	_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ignored_ec);
-}
-
 void Connection::Dispatch()
 {
 	DoRecive();
 }
 
+void Connection::Close()
+{
+	boost::system::error_code ignored_ec;
+	_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ignored_ec);
+}
 
 void Connection::DoRecive()
 {
