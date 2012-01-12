@@ -19,6 +19,7 @@ public:
 private:
 	void UpdateCache();
 	void CacheExpired(const boost::system::error_code& e);
+	DBConnectionPtr QueueConnections();
 
 private:
 	unsigned int expireSeconds;

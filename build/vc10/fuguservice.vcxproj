@@ -30,7 +30,6 @@
     <ClCompile Include="..\..\src\config.cpp" />
     <ClCompile Include="..\..\src\connection.cpp" />
     <ClCompile Include="..\..\src\database.cpp" />
-    <ClCompile Include="..\..\src\dbpool.cpp" />
     <ClCompile Include="..\..\src\dbviewhandler.cpp" />
     <ClCompile Include="..\..\src\entrypoint.cpp" />
     <ClCompile Include="..\..\src\exception.cpp" />
@@ -59,7 +58,6 @@
     <ClInclude Include="..\..\src\config.h" />
     <ClInclude Include="..\..\src\connection.h" />
     <ClInclude Include="..\..\src\database.h" />
-    <ClInclude Include="..\..\src\dbpool.h" />
     <ClInclude Include="..\..\src\dbviewhandler.h" />
     <ClInclude Include="..\..\src\exception.h" />
     <ClInclude Include="..\..\src\handler.h" />

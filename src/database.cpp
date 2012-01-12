@@ -1,6 +1,7 @@
 #include "database.h"
 #include "config.h"
 #include "jsonmodel.h"
+#include <dbclient.h>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -10,7 +11,7 @@ namespace fugu {
 Database::Database(boost::asio::io_service& ioservice, ConfigPtr config)
 	:expireSeconds(10)
 	,_timer(ioservice, boost::posix_time::seconds(expireSeconds))
-	,_views(new JsonModelStorage(config->ViewsTable(), "Name"))
+	,_views(new JsonModelStorage(config->ViewsTable(), "Name", boost::bind(&Database::QueueConnections, this) ))
 {
 	UpdateCache();
 
@@ -38,6 +39,13 @@ void Database::CacheExpired(const boost::system::error_code& e)
 	_timer.async_wait(boost::bind(&Database::CacheExpired 
 					,this
 					,boost::asio::placeholders::error));
+}
+
+DBConnectionPtr Database::QueueConnections()
+{
+	DBConnectionPtr conn(new mongo::DBClientConnection);
+	conn->connect("localhost");
+	return conn;
 }
 
 }

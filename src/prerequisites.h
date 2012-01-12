@@ -31,6 +31,8 @@ class Query;
 namespace fugu {
 
 typedef mongo::BSONObj JsonObj;
+typedef boost::shared_ptr<mongo::DBClientConnection> DBConnectionPtr;
+
 typedef boost::shared_ptr<std::string> StringPtr;
 
 class User;

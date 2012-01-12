@@ -1,7 +1,5 @@
 #include "viewdata.h"
-#include "dbpool.h"
 #include "exception.h"
-#include <dbclient.h>
 
 namespace fugu {
 

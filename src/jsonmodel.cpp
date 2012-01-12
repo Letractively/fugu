@@ -1,5 +1,4 @@
 #include "jsonmodel.h"
-#include "dbpool.h"
 #include "stringutils.h"
 #include "exception.h"
 #include <boost/thread/locks.hpp>
@@ -30,8 +29,9 @@ StringPtr JsonModel::JsonStringPtr() const
 	return SPtr(jsonString(mongo::JsonStringFormat::JS));
 }
 
-JsonModelStorage::JsonModelStorage(const std::string& ns, const std::string& idFieldName)
-	:_ns(ns)
+JsonModelStorage::JsonModelStorage(const std::string& ns, const std::string& idFieldName, GetConnectionHandler getconn)
+	:GetConnection(getconn)
+	,_ns(ns)
 	,_fieldId(idFieldName)
 {
 }
@@ -63,7 +63,7 @@ JsonModelPtr JsonModelStorage::GetById(const std::string& id) const
 
 void JsonModelStorage::Delete(const std::string& id)
 {
-	DBConnectionPtr conn = DBPool::Get().Queue();
+	DBConnectionPtr conn = GetConnection();
 	conn->remove(_ns, QUERY(_fieldId << id));
 
 	// Get upgradable access
@@ -115,7 +115,7 @@ JsonModelPtr JsonModelStorage::CreateImpl(const JsonObj& json)
 						"JsonModelStorage::CreateImpl");
 		}
 
-		DBConnectionPtr conn = DBPool::Get().Queue();
+		DBConnectionPtr conn = GetConnection();
 
 		JsonModelMap::const_iterator iter;
 		{
@@ -168,7 +168,7 @@ void JsonModelStorage::LoadAllImpl(mongo::Query query)
 	try
 	{
 		JsonModelMap fromdb;
-		std::auto_ptr<mongo::DBClientCursor> cursor = DBPool::Get().Queue()->query(_ns, query);
+		std::auto_ptr<mongo::DBClientCursor> cursor = GetConnection()->query(_ns, query);
 
 		//getLastError();
 		while(cursor->more()) {

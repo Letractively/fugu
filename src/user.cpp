@@ -1,5 +1,4 @@
 #include "user.h"
-#include "dbpool.h"
 #include <iostream>
 #include <boost/thread/locks.hpp>
 #include <dbclient.h>
@@ -79,7 +78,7 @@ UserPtr UserManager::CreateUser(const mongo::BSONObj& obj)
 			_users.insert(std::make_pair<std::string, UserPtr>(user->Login(), user));
 		}
 
-		DBPool::Get().Queue()->insert("test.fugu.users", obj);
+		//DBPool::Get().Queue()->insert("test.fugu.users", obj);
 
 	}
 	return user;
@@ -87,8 +86,8 @@ UserPtr UserManager::CreateUser(const mongo::BSONObj& obj)
 
 void UserManager::DeleteUser(const std::string& login)
 {
-	DBPool::Get().Queue()->remove("test.fugu.users", QUERY("Login"<<login));
-	_users.erase(login);
+	//DBPool::Get().Queue()->remove("test.fugu.users", QUERY("Login"<<login));
+	//_users.erase(login);
 }
 
 UserPtr UserManager::GetUser(const std::string& login)
@@ -109,12 +108,12 @@ UserPtr UserManager::GetUser(const std::string& login)
 	}
 	else {
 
-		if(!dbreloaded) {
-			std::auto_ptr<mongo::DBClientCursor> cursor =  
-				DBPool::Get().Queue()->query("test.fugu.users", QUERY("Login"<<login));
-			if(cursor->more())
-				return UserPtr(new User(cursor->next()));
-		}
+		//if(!dbreloaded) {
+		//	std::auto_ptr<mongo::DBClientCursor> cursor =  
+		//		DBPool::Get().Queue()->query("test.fugu.users", QUERY("Login"<<login));
+		//	if(cursor->more())
+		//		return UserPtr(new User(cursor->next()));
+		//}
 	}
 
 	return UserPtr();
@@ -130,13 +129,13 @@ UsersIterator UserManager::GetUsers()
 
 long UserManager::LoadUsers(long count)
 {
-	std::auto_ptr<mongo::DBClientCursor> cursor =  
-		DBPool::Get().Queue()->query("test.fugu.users", mongo::Query());
+	//std::auto_ptr<mongo::DBClientCursor> cursor =  
+	//	DBPool::Get().Queue()->query("test.fugu.users", mongo::Query());
 
-	while(cursor->more()) {
-		UserPtr user(new User(cursor->next()));
-		_users.insert(std::make_pair<std::string, UserPtr>(user->Login(), user));
-	}
+	//while(cursor->more()) {
+	//	UserPtr user(new User(cursor->next()));
+	//	_users.insert(std::make_pair<std::string, UserPtr>(user->Login(), user));
+	//}
 		
 	return _users.size();
 }

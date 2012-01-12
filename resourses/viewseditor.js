@@ -160,10 +160,12 @@ var ViewsEditorTab = ContentTab.extend({
 		  data: json_text,
 		  dataType: "json"
 		})
-		.success(function(data) {})
+		.success(function(data) {
+			this.Refresh(data.Json);
+		}.Bind(this))
 		.error(function(jqx, err, ex) { 
 			alert(ex);
 		})
-		.complete(function() { UnblockUI(); this._loading = false;})
+		.complete(function() { UnblockUI(); this._loading = false;}.Bind(this))
    }
 });

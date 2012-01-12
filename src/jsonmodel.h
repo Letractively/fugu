@@ -36,8 +36,10 @@ class IJsonModelStorage
 class JsonModelStorage
 {
 public:
+	typedef boost::function< DBConnectionPtr()> GetConnectionHandler;
+
 	// ns - db table name space
-	JsonModelStorage(const std::string& ns, const std::string& idFieldName);
+	JsonModelStorage(const std::string& ns, const std::string& idFieldName, GetConnectionHandler getconn);
 	virtual ~JsonModelStorage();
 
 	// Creates new model by json object, and add it to the database, or update existing
@@ -63,6 +65,7 @@ protected:
 	std::string _fieldId;
 	JsonModelMap _models;
 	mutable boost::shared_mutex _access;
+	GetConnectionHandler GetConnection;
 };
 
 }

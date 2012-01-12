@@ -42,9 +42,6 @@
       <Filter>handlers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\webapplication.cpp" />
-    <ClCompile Include="..\..\src\dbpool.cpp">
-      <Filter>datalayer\core</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\user.cpp">
       <Filter>datalayer</Filter>
     </ClCompile>
@@ -166,9 +163,6 @@
       <Filter>handlers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\webapplication.h" />
-    <ClInclude Include="..\..\src\dbpool.h">
-      <Filter>datalayer\core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\user.h">
       <Filter>datalayer</Filter>
     </ClInclude>
