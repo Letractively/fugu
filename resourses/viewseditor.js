@@ -8,20 +8,23 @@ var ViewsEditorTab = ContentTab.extend({
 	},
 	
 	Select: function() {
-		BlockUI(this._panel);
-		this._base();
-		$.ajax({
-		  type: 'POST',
-		  url: "/getallviews",
-		  data: "",
-		  dataType: "json"
-		})
-		.success(function(data) {
-			this.Refresh(data.Json);
-			
-		}.Bind(this))
-		.error(function(err) { alert("Error: " + err); })
-		.complete(function() { UnblockUI(this._panel); }.Bind(this));
+		if(this._loading == false) {
+			this._loading = true;
+			BlockUI(this._panel);
+			this._base();
+			$.ajax({
+			  type: 'POST',
+			  url: "/getallviews",
+			  data: "",
+			  dataType: "json"
+			})
+			.success(function(data) {
+				this.Refresh(data.Json);
+				
+			}.Bind(this))
+			.error(function(jqx, err, ex) { alert(ex); })
+			.complete(function() { UnblockUI(this._panel); this._loading = false }.Bind(this));
+		}
 	},
 	
 	Leave: function() { return true; },
@@ -64,6 +67,7 @@ var ViewsEditorTab = ContentTab.extend({
 			var view = self._views[this.id];
 			Confrim(null, function(yes) {
 				if(yes) {
+						this._loading = true;
 						BlockUI();
 						var data = '{ViewName: "'+ view.Name + '"}';
 						$.ajax({
@@ -76,8 +80,8 @@ var ViewsEditorTab = ContentTab.extend({
 							self.Refresh(data.Json);
 							
 						}.Bind(this))
-						.error(function(err) { alert("Error: " + err); })
-						.complete(function() { UnblockUI(); }.Bind(this));
+						.error(function(jqx, err, ex) { alert(ex); })
+						.complete(function() { UnblockUI(); this._loading = false }.Bind(this));
 		
 				}
 			});
@@ -147,6 +151,7 @@ var ViewsEditorTab = ContentTab.extend({
 	},
 	
    SaveView: function(view) {
+		this._loading = true;
 		BlockUI();
 		var json_text = JSON.stringify(view);
 		$.ajax({
@@ -156,7 +161,9 @@ var ViewsEditorTab = ContentTab.extend({
 		  dataType: "json"
 		})
 		.success(function(data) {})
-		.error(function(error) { alert("Error:" + error);})
-		.complete(function() { UnblockUI();})
+		.error(function(jqx, err, ex) { 
+			alert(ex);
+		})
+		.complete(function() { UnblockUI(); this._loading = false;})
    }
 });

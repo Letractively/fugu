@@ -3,7 +3,10 @@ var ContentTab = Class.extend({
 	{
 		this._panel = panel;
 		this._element = $("<div></div>").appendTo(panel);
+		this._loading = false;
 	},
+	
+	Loading: function() { return this._loading; },
 	Select: function() {},
 	Leave: function() { return true; }
 });
@@ -25,8 +28,10 @@ var ContentManager = Class.extend({
 	},
 	
 	_CreateViews: function(views) {
-		for(var i =0; i < views.length; i++)
+		for(var i =0; i < views.length; i++) {
+			this._tabsDiv.tabs('add',"#"+ views[i].Name, views[i].Name);
 			$("#"+ views[i].Name).html(views[i].Content);
+		}
 	},
 	
 	_ChangeContent: function(event, ui) {
