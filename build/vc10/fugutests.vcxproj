@@ -28,6 +28,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\fugutests.cpp" />
+    <ClCompile Include="..\..\src\hiredis\async.c" />
+    <ClCompile Include="..\..\src\hiredis\dict.c" />
+    <ClCompile Include="..\..\src\hiredis\hiredis.c" />
+    <ClCompile Include="..\..\src\hiredis\net.c" />
+    <ClCompile Include="..\..\src\hiredis\sds.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\hiredis\adapters\libuv.h" />
+    <ClInclude Include="..\..\src\hiredis\async.h" />
+    <ClInclude Include="..\..\src\hiredis\dict.h" />
+    <ClInclude Include="..\..\src\hiredis\fmacros.h" />
+    <ClInclude Include="..\..\src\hiredis\hiredis.h" />
+    <ClInclude Include="..\..\src\hiredis\net.h" />
+    <ClInclude Include="..\..\src\hiredis\sds.h" />
+    <ClInclude Include="..\..\src\hiredis\util.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>fugutests</ProjectName>
@@ -111,8 +126,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug_shared|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)/../../src;$(LIBUV_HOME)/include;$(BOOST_HOME)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WIN32_WINNT;BOOST_ALL_DYN_LINK;_WIN32_WINNT=0x0500;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;DEBUG;_DEBUG</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)/../../src;$(ProjectDir)/../../src/hiredis;$(LIBUV_HOME)\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;HAVE_CONFIG_H;_WIN32_WINNT=0x0502;EIO_STACKSIZE=262144;_GNU_SOURCE;DEBUG;_DEBUG</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -129,14 +144,15 @@
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>uv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;psapi.lib;iphlpapi.lib;uv.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>bin\fugutestsd.exe</OutputFile>
-      <AdditionalLibraryDirectories>$(LIBUV_HOME)\Release\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(LIBUV_HOME)\Debug\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>bin\fugutestsd.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <IgnoreSpecificDefaultLibraries>libcmtd.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release_shared|Win32'">

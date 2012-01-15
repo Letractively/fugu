@@ -2,6 +2,8 @@
 #include "webapplication.h"
 #include "user.h"
 #include "exception.h"
+#include "uv.h"
+
 //#include "nedmalloc/malloc.c.h"
 
 int main(int argc, char* argv[]) 
@@ -17,6 +19,8 @@ int main(int argc, char* argv[])
 		}
 		// Initialise server.
 		fugu::WebApplication app(argv[1]);
+
+		//uv_listen(NULL, 0, NULL);
 
 		// Run the server until stopped.
 		app.Run();

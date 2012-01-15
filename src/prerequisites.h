@@ -1,10 +1,12 @@
 #ifndef __FUGU_PREREQUISITES__
 #define __FUGU_PREREQUISITES__
 
+/*
 #define _WIN32_WINNT 0x0500
 #define BOOST_ALL_DYN_LINK
 #define BOOST_WINDOWS
 #define _UNICODE
+*/
 
 #define FUGU_MULTI_THREADING
 

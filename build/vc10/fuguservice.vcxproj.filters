@@ -11,9 +11,6 @@
     <ClCompile Include="..\..\src\exception.cpp">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\nedmalloc\nedmalloc.c">
-      <Filter>common\allocator</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\httpparser.cpp">
       <Filter>net\query</Filter>
     </ClCompile>
@@ -123,9 +120,6 @@
     <ClInclude Include="..\..\src\exception.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\nedmalloc\nedmalloc.h">
-      <Filter>common\allocator</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\httpparser.h">
       <Filter>net\query</Filter>
     </ClInclude>
@@ -187,9 +181,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\stringutils.h">
       <Filter>common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\nedmalloc\malloc.c.h">
-      <Filter>common\allocator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

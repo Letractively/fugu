@@ -2,5 +2,54 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\..\src\fugutests.cpp" />
+    <ClCompile Include="..\..\src\hiredis\hiredis.c">
+      <Filter>hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hiredis\net.c">
+      <Filter>hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hiredis\sds.c">
+      <Filter>hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hiredis\async.c">
+      <Filter>hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hiredis\dict.c">
+      <Filter>hiredis</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="hiredis">
+      <UniqueIdentifier>{9014d135-a5b1-4964-966f-de25a44f8243}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hiredis\adapters">
+      <UniqueIdentifier>{7b8bfb0f-33b5-4649-b98c-0c47245030a5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\hiredis\async.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hiredis\dict.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hiredis\hiredis.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hiredis\net.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hiredis\sds.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hiredis\fmacros.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hiredis\util.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\hiredis\adapters\libuv.h">
+      <Filter>hiredis\adapters</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

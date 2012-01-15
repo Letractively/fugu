@@ -41,7 +41,6 @@
     <ClCompile Include="..\..\src\jsonmodel.cpp" />
     <ClCompile Include="..\..\src\jsonreply.cpp" />
     <ClCompile Include="..\..\src\logger.cpp" />
-    <ClCompile Include="..\..\src\nedmalloc\nedmalloc.c" />
     <ClCompile Include="..\..\src\context.h" />
     <ClCompile Include="..\..\src\pinghandler.cpp" />
     <ClCompile Include="..\..\src\query.cpp" />
@@ -65,14 +64,12 @@
     <ClInclude Include="..\..\src\http_parser\http_parser.h" />
     <ClInclude Include="..\..\src\jsonmodel.h" />
     <ClInclude Include="..\..\src\jsonreply.h" />
-    <ClInclude Include="..\..\src\nedmalloc\malloc.c.h" />
     <ClInclude Include="..\..\src\query.h" />
     <ClInclude Include="..\..\src\route.h" />
     <ClInclude Include="..\..\src\handlerrouter.h" />
     <ClInclude Include="..\..\src\httpparser.h" />
     <ClInclude Include="..\..\src\iterators.h" />
     <ClInclude Include="..\..\src\logger.h" />
-    <ClInclude Include="..\..\src\nedmalloc\nedmalloc.h" />
     <ClInclude Include="..\..\src\pinghandler.h" />
     <ClInclude Include="..\..\src\prerequisites.h" />
     <ClInclude Include="..\..\src\registrator.h" />
@@ -170,8 +167,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug_shared|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(BOOST_HOME);$(MONGO_HOME)\client;$(MONGO_HOME);$(OPENSSL_HOME)\inc32;$(ProjectDir)/../../src</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WIN32_WINNT;BOOST_ALL_DYN_LINK;_WIN32_WINNT=0x0500;REPLACE_SYSTEM_ALLOCATOR</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(BOOST_HOME);$(MONGO_HOME)\client;$(MONGO_HOME);$(OPENSSL_HOME)\inc32;$(ProjectDir)/../../src;$(ProjectDir)/../../deps/libuv/include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;LIBUV;BOOST_ALL_DYN_LINK</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -187,9 +184,9 @@
       <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ws2_32.lib;mongoclientd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;uv.lib;mongoclientd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>bin\fuguserviced.exe</OutputFile>
-      <AdditionalLibraryDirectories>$(BOOST_HOME)\lib;$(MONGO_HOME)\lib;$(OPENSSL_HOME)\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(BOOST_HOME)\lib;$(MONGO_HOME)\lib;$(OPENSSL_HOME)\lib;$(LIBUV_HOME)\Debug\lib</AdditionalLibraryDirectories>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>bin\fuguserviced.pdb</ProgramDatabaseFile>
@@ -204,7 +201,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>$(BOOST_HOME);$(MONGO_HOME)\client;$(MONGO_HOME);$(OPENSSL_HOME)\inc32;$(ProjectDir)/../../src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BOOST_HOME);$(MONGO_HOME)\client;$(MONGO_HOME);$(OPENSSL_HOME)\inc32;$(ProjectDir)/../../src;$(LIBUV_HOME)/include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WIN32_WINNT;BOOST_ALL_DYN_LINK;_WIN32_WINNT=0x0500</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -221,7 +218,7 @@
     <Link>
       <AdditionalDependencies>ws2_32.lib;iphlpapi.lib;mongoclient.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>bin\fuguservice.exe</OutputFile>
-      <AdditionalLibraryDirectories>$(BOOST_HOME)\lib;$(MONGO_HOME)\lib;$(OPENSSL_HOME)\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(BOOST_HOME)\lib;$(MONGO_HOME)\lib;$(OPENSSL_HOME)\lib;$(LIBUV_HOME)\$(Configuration)\lib</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
