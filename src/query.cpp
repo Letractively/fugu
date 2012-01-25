@@ -79,6 +79,7 @@ bool Query::ClearCache() const
 
 void Query::SetContent(const char* buf, size_t len)
 {
+    /*
 	try
 	{
 		_content = mongo::fromjson(buf, (int*)&len);
@@ -91,6 +92,7 @@ void Query::SetContent(const char* buf, size_t len)
 	{
 		FUGU_THROW(ex.what() ,"Query::SetContent");
 	}
+     */ 
 }
 
 void Query::ClearCache(bool clear)

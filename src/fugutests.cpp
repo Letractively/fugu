@@ -2,9 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "hiredis.h"
-#include "async.h"
-#include "adapters/libuv.h"
+#include "hiredis/adapters/libuv.h"
 
 #ifdef _WIN32
 #include <winsock2.h>
@@ -13,7 +11,7 @@
 #endif
 
 void getCallback(redisAsyncContext *c, void *r, void *privdata) {
-    redisReply *reply = r;
+    redisReply *reply = (redisReply *)r;
     if (reply == NULL) return;
     printf("argv[%s]: %s\n", (char*)privdata, reply->str);
 
@@ -36,7 +34,7 @@ void disconnectCallback(const redisAsyncContext *c, int status) {
 
 int main(void) {
 
-	redisContext *ctx = NULL;
+	redisAsyncContext *ctx = NULL;
 	redisReply *reply;
 
 #ifdef _WIN32  
@@ -52,12 +50,12 @@ int main(void) {
     atexit((void(*)(void)) WSACleanup);
 #endif    
 
-	ctx = redisAsyncConnect("127.0.0.1", 6379);
-	redisLibuvAttach(uv_default_loop(), ctx);
-    redisAsyncSetConnectCallback(ctx, connectCallback);
-    redisAsyncSetDisconnectCallback(ctx, disconnectCallback);
-    redisAsyncCommand(ctx, NULL, NULL, "SET key %b", "test", strlen("test"));
-    redisAsyncCommand(ctx, getCallback, (char*)"end-1", "GET key");
+        ctx = redisAsyncConnect("127.0.0.1", 6379);
+        redisLibuvAttach(uv_default_loop(), ctx);
+        redisAsyncSetConnectCallback(ctx, connectCallback);
+        redisAsyncSetDisconnectCallback(ctx, disconnectCallback);
+        redisAsyncCommand(ctx, NULL, NULL, "SET key %b", "test", strlen("test"));
+        redisAsyncCommand(ctx, getCallback, (char*)"end-1", "GET key");
 
 	uv_run(uv_default_loop());
 

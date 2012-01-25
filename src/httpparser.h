@@ -3,9 +3,7 @@
 
 #include <iostream>
 #include "prerequisites.h"
-
-struct http_parser;
-enum http_method;
+#include "http_parser/http_parser.h"
 
 namespace fugu {
 

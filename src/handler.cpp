@@ -2,9 +2,8 @@
 #include "htmlreply.h"
 #include "jsonreply.h"
 #include "route.h"
-#include "jsonmodel.h"
-#include <exception.h>
-#include <dbclient.h>
+//#include "jsonmodel.h"
+#include "exception.h"
 
 namespace fugu {
 
@@ -24,8 +23,9 @@ ReplyPtr Handler::Html(StringPtr html)
 
 ReplyPtr Handler::PartialView(JsonModelPtr view)
 {
-	ReplyPtr reply(new JsonReply(view->JsonStringPtr()));
-	return reply;
+	//ReplyPtr reply(new JsonReply(view->JsonStringPtr()));
+	//return reply;
+        return ReplyPtr();
 }
 
 ReplyPtr Handler::Json(StringPtr json)

@@ -8,24 +8,24 @@
 
 typedef struct redisLibuvEvents {
     redisAsyncContext *context;
-    struct uv_loop_t *loop;
+    uv_loop_t *loop;
     int reading, writing;
-	uv_prepare_t read_handle, write_handle;
+        uv_idle_t read_handle, write_handle;
 } redisLibuvEvents;
 
 uv_buf_t onAlloc(uv_handle_t* client, size_t suggested_size) {
   uv_buf_t buf;
-  buf.base = malloc(suggested_size);
+  buf.base = (char*)malloc(suggested_size);
   buf.len = suggested_size;
   return buf;
 }
 
-void redisLibuvReadEvent(uv_prepare_t* handle, int status) {
+void redisLibuvReadEvent(uv_idle_t* handle, int status) {
     redisLibuvEvents *e = (redisLibuvEvents*)handle->data;
     redisAsyncHandleRead(e->context);
 }
 
-void redisLibuvWriteEvent(uv_prepare_t* handle, int status) 
+void redisLibuvWriteEvent(uv_idle_t* handle, int status) 
 {
     redisLibuvEvents *e = (redisLibuvEvents*)handle->data;
     redisAsyncHandleWrite(e->context);
@@ -34,17 +34,17 @@ void redisLibuvWriteEvent(uv_prepare_t* handle, int status)
 void redisLibuvAddRead(void *privdata) 
 {
     redisLibuvEvents *e = (redisLibuvEvents*)privdata;
-    struct uv_loop *loop = e->loop;
+    uv_loop_t *loop = e->loop;
     if (!e->reading) {
         e->reading = 1;
-		uv_idle_start(&e->read_handle, redisLibuvReadEvent);
+	uv_idle_start(&e->read_handle, redisLibuvReadEvent);
     }
 }
 
 void redisLibuvDelRead(void *privdata)
 {
     redisLibuvEvents *e = (redisLibuvEvents*)privdata;
-    struct uv_loop *loop = e->loop;
+    uv_loop_t *loop = e->loop;
     ((void)loop);
     if (e->reading) {
         e->reading = 0;
@@ -54,7 +54,7 @@ void redisLibuvDelRead(void *privdata)
 
 void redisLibuvAddWrite(void *privdata) {
     redisLibuvEvents *e = (redisLibuvEvents*)privdata;
-    struct ev_loop *loop = e->loop;
+    uv_loop_t *loop = e->loop;
     ((void)loop);
     if (!e->writing) {
         e->writing = 1;
@@ -65,7 +65,7 @@ void redisLibuvAddWrite(void *privdata) {
 void redisLibuvDelWrite(void *privdata)
 {
     redisLibuvEvents *e = (redisLibuvEvents*)privdata;
-    struct uv_loop *loop = e->loop;
+    uv_loop_t *loop = e->loop;
     ((void)loop);
     if (e->writing) {
         e->writing = 0;
@@ -100,11 +100,11 @@ int redisLibuvAttach(uv_loop_t *loop, redisAsyncContext *ac)
     ac->ev.addWrite = redisLibuvAddWrite;
     ac->ev.delWrite = redisLibuvDelWrite;
     ac->ev.cleanup = redisLibuvCleanup;
-	ac->ev.data = e;
+        ac->ev.data = e;
 
-	// Initialize read/write events
-	uv_idle_init(e->loop, &e->read_handle);
-	uv_idle_init(e->loop, &e->write_handle);
+    // Initialize read/write events
+    uv_idle_init(e->loop, &e->read_handle);
+    uv_idle_init(e->loop, &e->write_handle);
 
     e->reading = e->writing = 0;
     e->read_handle.data = e;

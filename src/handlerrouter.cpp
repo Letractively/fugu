@@ -59,7 +59,8 @@ ReplyPtr HandlerRouter::Route(ContextPtr ctx)
 	}
 	catch(std::exception& e)
 	{
-		return Handler::Error(FUGU_EXCEPT(e.what() ,"HandlerRouter::Route"), true);
+            return ReplyPtr();
+		//return Handler::Error(FUGU_EXCEPT(e.what() ,"HandlerRouter::Route"), true);
 	}
 }
 

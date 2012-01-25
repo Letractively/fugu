@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="80">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="f1" displayName="common" projectFiles="true" kind="ROOT">
+      <itemPath>../../src/config.cpp</itemPath>
+      <itemPath>../../src/config.h</itemPath>
+      <itemPath>../../src/exception.cpp</itemPath>
+      <itemPath>../../src/exception.h</itemPath>
+      <itemPath>../../src/iterators.h</itemPath>
+      <itemPath>../../src/logger.cpp</itemPath>
+      <itemPath>../../src/logger.h</itemPath>
+      <itemPath>../../src/prerequisites.h</itemPath>
+      <itemPath>../../src/registrator.cpp</itemPath>
+      <itemPath>../../src/registrator.h</itemPath>
+      <itemPath>../../src/stdheaders.h</itemPath>
+      <itemPath>../../src/stringutils.cpp</itemPath>
+      <itemPath>../../src/stringutils.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f2" displayName="db" projectFiles="true" kind="ROOT">
+      <logicalFolder name="f1" displayName="hiredis" projectFiles="true" kind="ROOT">
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="f3" displayName="handlers" projectFiles="true" kind="ROOT">
+      <itemPath>../../src/handler.cpp</itemPath>
+      <itemPath>../../src/handler.h</itemPath>
+      <itemPath>../../src/handlerrouter.cpp</itemPath>
+      <itemPath>../../src/handlerrouter.h</itemPath>
+      <itemPath>../../src/pinghandler.cpp</itemPath>
+      <itemPath>../../src/pinghandler.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f4" displayName="net" projectFiles="true" kind="ROOT">
+      <itemPath>../../src/bytebuffer.cpp</itemPath>
+      <itemPath>../../src/bytebuffer.h</itemPath>
+      <itemPath>../../src/connection.cpp</itemPath>
+      <itemPath>../../src/connection.h</itemPath>
+      <itemPath>../../src/context.h</itemPath>
+      <itemPath>../../src/htmlreply.cpp</itemPath>
+      <itemPath>../../src/htmlreply.h</itemPath>
+      <itemPath>../../src/http_parser/http_parser.c</itemPath>
+      <itemPath>../../src/httpparser.cpp</itemPath>
+      <itemPath>../../src/jsonmodel.cpp</itemPath>
+      <itemPath>../../src/jsonmodel.h</itemPath>
+      <itemPath>../../src/jsonreply.cpp</itemPath>
+      <itemPath>../../src/jsonreply.h</itemPath>
+      <itemPath>../../src/libuvconnection.cpp</itemPath>
+      <itemPath>../../src/libuvconnection.h</itemPath>
+      <itemPath>../../src/query.cpp</itemPath>
+      <itemPath>../../src/query.h</itemPath>
+      <itemPath>../../src/reply.cpp</itemPath>
+      <itemPath>../../src/reply.h</itemPath>
+      <itemPath>../../src/route.h</itemPath>
+      <itemPath>../../src/session.cpp</itemPath>
+      <itemPath>../../src/session.h</itemPath>
+      <itemPath>../../src/webapplication.cpp</itemPath>
+      <itemPath>../../src/webapplication.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+    <itemPath>../../src/entrypoint.cpp</itemPath>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>default</compilerSet>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <stripSymbols>true</stripSymbols>
+          <incDir>
+            <pElem>../../../../libuv/include</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fuguservice</output>
+          <linkerLibItems>
+            <linkerLibStdlibItem>PosixThreads</linkerLibStdlibItem>
+            <linkerOptionItem> -lboost_system</linkerOptionItem>
+            <linkerOptionItem>-lpthread</linkerOptionItem>
+            <linkerOptionItem>-lboost_thread</linkerOptionItem>
+            <linkerLibFileItem>../../../../libuv/uv.a</linkerLibFileItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>default</compilerSet>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+    </conf>
+  </confs>
+</configurationDescriptor>

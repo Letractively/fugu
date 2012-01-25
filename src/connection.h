@@ -6,11 +6,11 @@
 #include "query.h"
 #include <boost/asio.hpp>
 #include <boost/array.hpp>
-#include <boost/atomic.hpp>
 #include <boost/bind.hpp>
-#include <boost/lockfree/fifo.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/function.hpp>
+//#include <boost/lockfree/fifo.hpp>
+//#include <boost/atomic.hpp>
 
 namespace fugu {
 

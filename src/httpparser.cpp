@@ -1,4 +1,3 @@
-#include "http_parser/http_parser.h"
 #include "httpparser.h"
 #include "query.h"
 #include <fstream>
@@ -152,24 +151,24 @@ int HttpParser::OnCountBody(http_parser *parser, const char *buf, size_t len)
 QueryMethod GetQueryMethod(http_parser* parser)
 {
 	if(parser->upgrade)
-		return QueryMethod::QUERY_WEBSOCKET;
+		return QUERY_WEBSOCKET;
 
 	switch(parser->method)
 	{
-		case http_method::HTTP_DELETE:
-			return QueryMethod::QUERY_DELETE;
+		case HTTP_DELETE:
+			return QUERY_DELETE;
 			break;
-		case http_method::HTTP_GET:
-			return QueryMethod::QUERY_GET;
+		case HTTP_GET:
+			return QUERY_GET;
 			break;
-		case http_method::HTTP_POST:
-			return QueryMethod::QUERY_POST;
+		case HTTP_POST:
+			return QUERY_POST;
 			break;
-		case http_method::HTTP_PUT:
-			return QueryMethod::QUERY_PUT;
+		case HTTP_PUT:
+			return QUERY_PUT;
 			break;
 		default:
-			return QueryMethod::NOT_SUPPORTED;
+			return NOT_SUPPORTED;
 			break;
 	}
 }

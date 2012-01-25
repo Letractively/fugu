@@ -8,12 +8,12 @@ namespace fugu {
 class Context : private boost::noncopyable
 {
 public:
-	Context(SessionPtr session, ConnectionPtr connection, QueryPtr query, ConfigPtr config, DatabasePtr database)
+	Context(SessionPtr session, ConnectionPtr connection, QueryPtr query, ConfigPtr config)//, DatabasePtr database)
 		:_session(session)
 		,_connection(connection)
 		,_query(query)
 		,_config(config)
-		,_database(database)
+		//,_database(database)
 	{}
 
 	virtual ~Context(){}
@@ -22,7 +22,7 @@ public:
 	ConnectionPtr Connection() const { return _connection; }
 	QueryPtr Query() const { return _query; }
 	ConfigPtr Cfg() const { return _config; }
-	DatabasePtr Db() const { return _database; }
+	//DatabasePtr Db() const { return _database; }
 
 private:
 	// User session
@@ -34,7 +34,7 @@ private:
 	// Configuration
 	ConfigPtr _config;
 	// Database
-	DatabasePtr _database;
+	//DatabasePtr _database;
 };
 
 }

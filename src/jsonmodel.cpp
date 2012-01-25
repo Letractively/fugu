@@ -6,14 +6,9 @@
 namespace fugu {
 
 JsonModel::JsonModel()
-	: BSONObj()
 {
 }
 
-JsonModel::JsonModel(const JsonObj& obj)
-	: BSONObj(obj)
-{
-}
 
 JsonModel::~JsonModel()
 {
@@ -21,12 +16,12 @@ JsonModel::~JsonModel()
 
 std::string JsonModel::JsonString() const
 {
-	return jsonString(mongo::JsonStringFormat::JS);
+	return "";//jsonString(mongo::JsonStringFormat::JS);
 }
 
 StringPtr JsonModel::JsonStringPtr() const
 {
-	return SPtr(jsonString(mongo::JsonStringFormat::JS));
+	return SPtr("");//return SPtr(jsonString(mongo::JsonStringFormat::JS));
 }
 
 JsonModelStorage::JsonModelStorage(const std::string& ns, const std::string& idFieldName, GetConnectionHandler getconn)
@@ -40,42 +35,38 @@ JsonModelStorage::~JsonModelStorage()
 {
 }
 
-JsonModelPtr JsonModelStorage::Create(const JsonObj& jsonObj)
-{
-	return CreateImpl(jsonObj);
-}
 
 JsonModelPtr JsonModelStorage::Create(const std::string& json)
 {
-	return CreateImpl(mongo::fromjson(json));
+	return JsonModelPtr();//return CreateImpl(mongo::fromjson(json));
 }
 
 JsonModelPtr JsonModelStorage::GetById(const std::string& id) const
 {
-	boost::shared_lock<boost::shared_mutex> lock(_access);
-	JsonModelMap::const_iterator iter = _models.find(id);
+	//boost::shared_lock<boost::shared_mutex> lock(_access);
+	//JsonModelMap::const_iterator iter = _models.find(id);
 
-	if(iter != _models.end())
-		return iter->second;
+	//if(iter != _models.end())
+		//return iter->second;
 
 	return JsonModelPtr();
 }
 
 void JsonModelStorage::Delete(const std::string& id)
 {
-	DBConnectionPtr conn = GetConnection();
-	conn->remove(_ns, QUERY(_fieldId << id));
+	//DBConnectionPtr conn = GetConnection();
+	//conn->remove(_ns, QUERY(_fieldId << id));
 
 	// Get upgradable access
-	boost::upgrade_lock<boost::shared_mutex> lock(_access);
+	//boost::upgrade_lock<boost::shared_mutex> lock(_access);
 	// Get exclusive access
-	boost::upgrade_to_unique_lock<boost::shared_mutex> uniqueLock(lock);
-	_models.erase(id);
+	//boost::upgrade_to_unique_lock<boost::shared_mutex> uniqueLock(lock);
+	//_models.erase(id);
 }
 
 JsonModelMapIterator JsonModelStorage::All()
 {
-	return JsonModelMapIterator(_models, _access);
+        return JsonModelMapIterator(_models, _access);
 }
 
 StringPtr JsonModelStorage::AllAsJson()
@@ -88,7 +79,7 @@ StringPtr JsonModelStorage::AllAsJson()
 	while(iter.HasMore()) {
 		has = true;
 		JsonModelPtr model = iter.PeekNextValue();
-		json.append(model->JsonString() + ",");
+		//json.append(model->JsonString() + ",");
 		iter.MoveNext();
 	}
 
@@ -103,8 +94,10 @@ void JsonModelStorage::LoadAll()
 	LoadAllImpl();
 }
 
+    /*
 JsonModelPtr JsonModelStorage::CreateImpl(const JsonObj& json)
 {
+
 	try
 	{
 		JsonModelPtr jmodel(new JsonModel(json));
@@ -161,10 +154,15 @@ JsonModelPtr JsonModelStorage::CreateImpl(const JsonObj& json)
 	{
 		FUGU_THROW(ex.what(), "JsonModelStorage::CreateImpl");
 	}
+    
+    
+    return JsonModelPtr();
 }
+ */
 
-void JsonModelStorage::LoadAllImpl(mongo::Query query)
+void JsonModelStorage::LoadAllImpl()
 {
+    /*
 	try
 	{
 		JsonModelMap fromdb;
@@ -202,6 +200,7 @@ void JsonModelStorage::LoadAllImpl(mongo::Query query)
 	{
 		FUGU_THROW(ex.what(), "JsonModelStorage::LoadAll");
 	}
+     */ 
 }
 
 }

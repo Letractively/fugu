@@ -3,7 +3,7 @@
 namespace fugu {
 
 HtmlReply::HtmlReply(StringPtr html)
-	:Reply(ReplyType::HTTP_REPLY)
+	:Reply(HTTP_REPLY)
 	,_stream(&_streambuf)
 	,_html(html)
 {

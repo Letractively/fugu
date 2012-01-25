@@ -3,17 +3,16 @@
 
 #include "prerequisites.h"
 #include "iterators.h"
-#include <dbclient.h>
 #include <boost/thread/shared_mutex.hpp>
 #include <boost/enable_shared_from_this.hpp>
+#include <boost/function.hpp>
 
 namespace fugu {
 
-class JsonModel : public JsonObj
+class JsonModel
 {
 public:
 	JsonModel();
-	explicit JsonModel(const JsonObj& obj);
 	virtual ~JsonModel();
 	std::string JsonString() const;
 	StringPtr JsonStringPtr() const;
@@ -28,7 +27,7 @@ public:
 typedef std::map<std::string, JsonModelPtr> JsonModelMap;
 typedef ConstMapIterator<JsonModelMap> JsonModelMapIterator;
 
-class IJsonModelStorage
+class DBConnectionPtr
 {
 };
 
@@ -42,8 +41,6 @@ public:
 	JsonModelStorage(const std::string& ns, const std::string& idFieldName, GetConnectionHandler getconn);
 	virtual ~JsonModelStorage();
 
-	// Creates new model by json object, and add it to the database, or update existing
-	JsonModelPtr Create(const JsonObj& jsonObj);
 	// Creates new model by json string, and add it to the database, or update existing
 	JsonModelPtr Create(const std::string& json);
 	// Gets model by id
@@ -57,8 +54,8 @@ public:
 	void LoadAll();
 
 protected:
-	virtual JsonModelPtr CreateImpl(const JsonObj& json);
-	virtual void LoadAllImpl(mongo::Query query = mongo::Query());
+	//virtual JsonModelPtr CreateImpl(const JsonObj& json);
+	virtual void LoadAllImpl();
 
 protected:
 	std::string _ns;

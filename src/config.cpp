@@ -12,8 +12,8 @@ Config::Config(const std::string& filename)
 	if(filename.empty())
 		FUGU_THROW("Config file name is emty", "Config::Config");
 
-	if (!boost::filesystem::exists(filename))
-		FUGU_THROW("Can't find config file '+" + filename + "'", "Config::Config");
+	//if (!boost::filesystem::exists(filename))
+		//FUGU_THROW("Can't find config file '+" + filename + "'", "Config::Config");
 
 	boost::property_tree::read_json(filename, _pt);
 }

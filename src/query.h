@@ -2,9 +2,10 @@
 #define __FUGU_QUERY__
 
 #include "prerequisites.h"
-#include <dbclient.h>
 
 namespace fugu {
+
+class JsonObj {};
 
 enum QueryMethod { 
 	QUERY_DELETE	= 0,
