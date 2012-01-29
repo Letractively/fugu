@@ -25,10 +25,13 @@
       <runprofile version="9">
         <runcommandpicklist>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"  fugu.conf</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"  ./fugu.conf</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}"</runcommand>
-        <rundir></rundir>
+        <runcommand>"${OUTPUT_PATH}"  ./fugu.conf</runcommand>
+        <rundir>/home/toto/dev/fugu/trunk/build/netbeans/dist/Debug/GNU-Linux-x86</rundir>
         <buildfirst>true</buildfirst>
+        <console-type>1</console-type>
         <terminal-type>0</terminal-type>
         <remove-instrumentation>0</remove-instrumentation>
         <environment>

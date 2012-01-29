@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="80">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <logicalFolder name="f1" displayName="common" projectFiles="true" kind="ROOT">
+    <logicalFolder name="f1" displayName="common" projectFiles="true">
       <itemPath>../../src/config.cpp</itemPath>
       <itemPath>../../src/config.h</itemPath>
       <itemPath>../../src/exception.cpp</itemPath>
@@ -16,11 +16,29 @@
       <itemPath>../../src/stringutils.cpp</itemPath>
       <itemPath>../../src/stringutils.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="f2" displayName="db" projectFiles="true" kind="ROOT">
-      <logicalFolder name="f1" displayName="hiredis" projectFiles="true" kind="ROOT">
+    <logicalFolder name="f2" displayName="db" projectFiles="true">
+      <logicalFolder name="f1" displayName="hiredis" projectFiles="true">
+        <logicalFolder name="f1" displayName="adapters" projectFiles="true">
+        </logicalFolder>
+        <itemPath>../../src/hiredis/async.c</itemPath>
+        <itemPath>../../src/hiredis/async.h</itemPath>
+        <itemPath>../../src/hiredis/dict.c</itemPath>
+        <itemPath>../../src/hiredis/dict.h</itemPath>
+        <itemPath>../../src/hiredis/fmacros.h</itemPath>
+        <itemPath>../../src/hiredis/hiredis.c</itemPath>
+        <itemPath>../../src/hiredis/hiredis.h</itemPath>
+        <itemPath>../../src/hiredis/net.c</itemPath>
+        <itemPath>../../src/hiredis/net.h</itemPath>
+        <itemPath>../../src/hiredis/sds.c</itemPath>
+        <itemPath>../../src/hiredis/sds.h</itemPath>
+        <itemPath>../../src/hiredis/util.h</itemPath>
       </logicalFolder>
+      <itemPath>../../src/redisconnection.cpp</itemPath>
+      <itemPath>../../src/redisconnection.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="f3" displayName="handlers" projectFiles="true" kind="ROOT">
+    <logicalFolder name="f3" displayName="handlers" projectFiles="true">
+      <logicalFolder name="f1" displayName="adapters" projectFiles="true">
+      </logicalFolder>
       <itemPath>../../src/handler.cpp</itemPath>
       <itemPath>../../src/handler.h</itemPath>
       <itemPath>../../src/handlerrouter.cpp</itemPath>
@@ -28,7 +46,7 @@
       <itemPath>../../src/pinghandler.cpp</itemPath>
       <itemPath>../../src/pinghandler.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="f4" displayName="net" projectFiles="true" kind="ROOT">
+    <logicalFolder name="f4" displayName="net" projectFiles="true">
       <itemPath>../../src/bytebuffer.cpp</itemPath>
       <itemPath>../../src/bytebuffer.h</itemPath>
       <itemPath>../../src/connection.cpp</itemPath>
@@ -79,7 +97,11 @@
           <stripSymbols>true</stripSymbols>
           <incDir>
             <pElem>../../../../libuv/include</pElem>
+            <pElem>../../src/hiredis/adapters</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>USE_LIBUV</Elem>
+          </preprocessorList>
         </ccTool>
         <linkerTool>
           <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fuguservice</output>
@@ -89,6 +111,7 @@
             <linkerOptionItem>-lpthread</linkerOptionItem>
             <linkerOptionItem>-lboost_thread</linkerOptionItem>
             <linkerLibFileItem>../../../../libuv/uv.a</linkerLibFileItem>
+            <linkerOptionItem> -lrt</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

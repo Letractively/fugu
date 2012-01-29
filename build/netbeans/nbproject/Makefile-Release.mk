@@ -39,20 +39,26 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/1445274692/libuvconnection.o \
 	${OBJECTDIR}/_ext/1445274692/handlerrouter.o \
 	${OBJECTDIR}/_ext/1445274692/connection.o \
+	${OBJECTDIR}/_ext/1401901489/net.o \
 	${OBJECTDIR}/_ext/1445274692/config.o \
 	${OBJECTDIR}/_ext/1445274692/jsonmodel.o \
 	${OBJECTDIR}/_ext/1379188117/http_parser.o \
+	${OBJECTDIR}/_ext/1401901489/dict.o \
 	${OBJECTDIR}/_ext/1445274692/stringutils.o \
 	${OBJECTDIR}/_ext/1445274692/pinghandler.o \
-	${OBJECTDIR}/_ext/1445274692/entrypoint.o \
+	${OBJECTDIR}/_ext/1401901489/sds.o \
 	${OBJECTDIR}/_ext/1445274692/webapplication.o \
 	${OBJECTDIR}/_ext/1445274692/htmlreply.o \
 	${OBJECTDIR}/_ext/1445274692/httpparser.o \
+	${OBJECTDIR}/_ext/1445274692/entrypoint.o \
 	${OBJECTDIR}/_ext/1445274692/registrator.o \
 	${OBJECTDIR}/_ext/1445274692/handler.o \
 	${OBJECTDIR}/_ext/1445274692/query.o \
 	${OBJECTDIR}/_ext/1445274692/bytebuffer.o \
 	${OBJECTDIR}/_ext/1445274692/logger.o \
+	${OBJECTDIR}/_ext/1401901489/async.o \
+	${OBJECTDIR}/_ext/1401901489/hiredis.o \
+	${OBJECTDIR}/_ext/1445274692/redisconnection.o \
 	${OBJECTDIR}/_ext/1445274692/reply.o \
 	${OBJECTDIR}/_ext/1445274692/exception.o
 
@@ -106,6 +112,11 @@ ${OBJECTDIR}/_ext/1445274692/connection.o: ../../src/connection.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/connection.o ../../src/connection.cpp
 
+${OBJECTDIR}/_ext/1401901489/net.o: ../../src/hiredis/net.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1401901489
+	${RM} $@.d
+	$(COMPILE.c) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1401901489/net.o ../../src/hiredis/net.c
+
 ${OBJECTDIR}/_ext/1445274692/config.o: ../../src/config.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
@@ -121,6 +132,11 @@ ${OBJECTDIR}/_ext/1379188117/http_parser.o: ../../src/http_parser/http_parser.c
 	${RM} $@.d
 	$(COMPILE.c) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1379188117/http_parser.o ../../src/http_parser/http_parser.c
 
+${OBJECTDIR}/_ext/1401901489/dict.o: ../../src/hiredis/dict.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1401901489
+	${RM} $@.d
+	$(COMPILE.c) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1401901489/dict.o ../../src/hiredis/dict.c
+
 ${OBJECTDIR}/_ext/1445274692/stringutils.o: ../../src/stringutils.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
@@ -131,10 +147,10 @@ ${OBJECTDIR}/_ext/1445274692/pinghandler.o: ../../src/pinghandler.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/pinghandler.o ../../src/pinghandler.cpp
 
-${OBJECTDIR}/_ext/1445274692/entrypoint.o: ../../src/entrypoint.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
+${OBJECTDIR}/_ext/1401901489/sds.o: ../../src/hiredis/sds.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1401901489
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/entrypoint.o ../../src/entrypoint.cpp
+	$(COMPILE.c) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1401901489/sds.o ../../src/hiredis/sds.c
 
 ${OBJECTDIR}/_ext/1445274692/webapplication.o: ../../src/webapplication.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
@@ -150,6 +166,11 @@ ${OBJECTDIR}/_ext/1445274692/httpparser.o: ../../src/httpparser.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/httpparser.o ../../src/httpparser.cpp
+
+${OBJECTDIR}/_ext/1445274692/entrypoint.o: ../../src/entrypoint.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/entrypoint.o ../../src/entrypoint.cpp
 
 ${OBJECTDIR}/_ext/1445274692/registrator.o: ../../src/registrator.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
@@ -175,6 +196,21 @@ ${OBJECTDIR}/_ext/1445274692/logger.o: ../../src/logger.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/logger.o ../../src/logger.cpp
+
+${OBJECTDIR}/_ext/1401901489/async.o: ../../src/hiredis/async.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1401901489
+	${RM} $@.d
+	$(COMPILE.c) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1401901489/async.o ../../src/hiredis/async.c
+
+${OBJECTDIR}/_ext/1401901489/hiredis.o: ../../src/hiredis/hiredis.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1401901489
+	${RM} $@.d
+	$(COMPILE.c) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1401901489/hiredis.o ../../src/hiredis/hiredis.c
+
+${OBJECTDIR}/_ext/1445274692/redisconnection.o: ../../src/redisconnection.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/redisconnection.o ../../src/redisconnection.cpp
 
 ${OBJECTDIR}/_ext/1445274692/reply.o: ../../src/reply.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
