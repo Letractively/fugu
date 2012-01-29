@@ -32,6 +32,12 @@ class Query;
 
 namespace fugu {
 
+class RedisCommandContext;
+typedef boost::shared_ptr<RedisCommandContext> RedisCommandContextPtr;
+
+class RedisDBConnection;
+typedef boost::shared_ptr<RedisDBConnection> RedisDBConnectionPtr;
+
 //typedef mongo::BSONObj JsonObj;
 //typedef boost::shared_ptr<mongo::DBClientConnection> DBConnectionPtr;
 
@@ -73,7 +79,8 @@ class Query;
 typedef boost::shared_ptr<Query> QueryPtr;
 
 class Handler;
-typedef boost::shared_ptr<Handler> HandlerPtr;
+typedef Handler* HandlerPtr;
+//typedef boost::shared_ptr<Handler> HandlerPtr;
 
 class JsonModel;
 typedef boost::shared_ptr<JsonModel> JsonModelPtr;

@@ -2,27 +2,30 @@
 #define __FUGU_QUERY_CONTEXT__
 
 #include "prerequisites.h"
-
+#include <iostream>
 namespace fugu {
 
 class Context : private boost::noncopyable
 {
 public:
-	Context(SessionPtr session, ConnectionPtr connection, QueryPtr query, ConfigPtr config)//, DatabasePtr database)
+	Context(SessionPtr session, ConnectionPtr connection, QueryPtr query, ConfigPtr config, RedisDBConnectionPtr database)
 		:_session(session)
 		,_connection(connection)
 		,_query(query)
 		,_config(config)
-		//,_database(database)
+		,_database(database)
 	{}
 
-	virtual ~Context(){}
+	virtual ~Context()
+    {
+        std::cout <<"Context dsstroeyd" << std::endl;
+    }
 
 	SessionPtr Session() const { return _session; }
 	ConnectionPtr Connection() const { return _connection; }
 	QueryPtr Query() const { return _query; }
 	ConfigPtr Cfg() const { return _config; }
-	//DatabasePtr Db() const { return _database; }
+	RedisDBConnectionPtr Db() const { return _database; }
 
 private:
 	// User session
@@ -34,7 +37,7 @@ private:
 	// Configuration
 	ConfigPtr _config;
 	// Database
-	//DatabasePtr _database;
+	RedisDBConnectionPtr _database;
 };
 
 }

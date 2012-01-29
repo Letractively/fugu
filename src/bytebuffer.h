@@ -6,18 +6,18 @@
 
 namespace fugu {
 
-static const int BYTE_BUFFER_DEFAULT_CAPACITY = 4096;
+static const int BYTE_BUFFER_DEFAULT_SIZE = 4096;
     
 class ByteBuffer {
 public:
-    ByteBuffer(size_t capacity = BYTE_BUFFER_DEFAULT_CAPACITY);
+    ByteBuffer(size_t size = BYTE_BUFFER_DEFAULT_SIZE);
     ByteBuffer(const char* bytes, size_t len);
     ByteBuffer(const char* bytes); // uses strlen
     ~ByteBuffer();
 
-    const char* Data() const ;
-    size_t Length() const ;
-    size_t Capacity() const ;
+    const char* Data() const { return bytes_ + start_; }
+    size_t Length() { return end_ - start_; }
+    size_t Capacity() { return size_ - start_; }
 
     bool ReadUInt8(boost::uint8_t& val);
     bool ReadUInt16(boost::uint16_t& val);
@@ -33,7 +33,6 @@ public:
 
     void Resize(size_t size);
     void Shift(size_t size);
-    void ResetMemory();
 
 private:
     char* bytes_;

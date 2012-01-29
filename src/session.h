@@ -4,6 +4,7 @@
 #include "prerequisites.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/thread/shared_mutex.hpp>
+#include <set>
 
 namespace fugu {
 
@@ -33,7 +34,7 @@ private:
 	// The last user activity
 	boost::posix_time::ptime _lastActivityAt;
 	// Session Handlers, the Handlers can cache the states and data
-	Handlers _Handlers;
+	Handlers _handlers;
 };
 
 // Manager of the user sessions

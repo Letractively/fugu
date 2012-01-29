@@ -2,13 +2,44 @@
 #include "htmlreply.h"
 #include "jsonreply.h"
 #include "route.h"
-//#include "jsonmodel.h"
 #include "exception.h"
+#include "logger.h"
+#include "context.h"
+#include "connection.h"
+//#include "jsonmodel.h"
 
 namespace fugu {
 
+Handler::Handler()
+    :_inUse(false)
+{
+}
+
 Handler::~Handler()
 {
+    Log("Handler destroyed");
+}
+
+void Handler::Process(ContextPtr ctx)
+{
+    try
+    {
+        ProcessImpl(ctx);
+    }
+	catch(Exception& fe)
+    {
+        ReturnAndDestroy(Error(fe, true), ctx);
+	}
+	catch(std::exception& e)
+	{
+        ReturnAndDestroy(ReplyPtr(), ctx);
+		//return Handler::Error(FUGU_EXCEPT(e.what() ,"HandlerRouter::Route"), true);
+	}
+}
+
+bool Handler::Single()
+{
+    return true;
 }
 
 RoutePtr Handler::Route() const
@@ -41,10 +72,33 @@ ReplyPtr Handler::Error(std::exception& ex, bool critical)
 	return reply;
 }
 
+void Handler::InUse(bool state)
+{
+    _inUse = state;
+}
+
+bool Handler::InUse() const
+{
+    return _inUse;
+}
+
+void Handler::Return(ReplyPtr reply, ContextPtr ctx)
+{
+    ctx->Connection()->Send(reply);
+}
+
+void Handler::ReturnAndDestroy(ReplyPtr reply, ContextPtr ctx)
+{
+    ctx->Connection()->Send(reply);
+    if(!OnDestroy.empty())
+        OnDestroy(this);
+}
+    
 HandlerPtr HandlerFactory::Create(RoutePtr route)
 {
 	HandlerPtr handler(CreateImpl());
 	handler->_route = route;
+    handler->OnDestroy = boost::bind(&HandlerFactory::DoDestroy, this, _1);
 	return handler;
 }
 

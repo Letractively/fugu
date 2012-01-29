@@ -49,13 +49,15 @@ ReplyPtr HandlerRouter::Route(ContextPtr ctx)
 					+ riter->second->HandlerName() + "' doesn't exists", "HandlerRouter::Route");
 
 		HandlerFactoryPtr factory = fiter->second;
+        // Create by route parameters
 		HandlerPtr handler = factory->Create(riter->second);
 
-		return handler->Process(ctx);
+        handler->Process(ctx);
+            
 	}
 	catch(Exception& fe)
-	{
-		return Handler::Error(fe, true);
+    {
+        //ctx->Connection()->Send(Handler::Error(fe, true));
 	}
 	catch(std::exception& e)
 	{
