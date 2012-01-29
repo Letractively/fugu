@@ -21,7 +21,7 @@ public:
     typedef boost::function< void(QueryPtr, ConnectionPtr)> RequestHandler;
 
     // Construct a connection with the given io_service.
-    explicit LibuvConnection(RequestHandler handler);
+    LibuvConnection(uv_stream_t* server, uv_loop_t* eventloop);
     ~LibuvConnection();
     // Client address
     std::string Address() const;
@@ -35,17 +35,10 @@ public:
     void Close();
 
 private:
-    // Read data from the socket
-    void DoRecive();
-    // Handle completion of a read operation.
-    void HandleRecive(std::size_t bytesTransferred);
-    // Write existing buffer to the socket
-    void DoSend(ReplyPtr reply);
-    // Handle completion of a write operation.
-    void HandleSend(ReplyPtr reply);
+    static void OnRead(uv_stream_t* tcp, ssize_t nread, uv_buf_t buf);
 
 private:
-    uv_tcp_t handle;
+    uv_tcp_t _handle;
     uv_write_t write_req;
     // Web sockets connection
     bool _webSocketsConnection;

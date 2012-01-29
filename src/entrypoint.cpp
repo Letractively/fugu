@@ -2,7 +2,8 @@
 #include "webapplication.h"
 //#include "user.h"
 #include "exception.h"
-//#include "uv.h"
+#include "uv.h"
+#include <ev.h>
 
 //#include "nedmalloc/malloc.c.h"
 
@@ -10,6 +11,8 @@ int main(int argc, char* argv[])
 {
 	try
 	{
+         ev_default_loop(EVBACKEND_EPOLL);
+         
 		//UserManager* i = nedalloc::New<UserManager>();
 		// Check command line arguments.
 		if (argc < 2)
@@ -18,7 +21,7 @@ int main(int argc, char* argv[])
 			return 1;
 		}
 		// Initialise server.
-		fugu::WebApplication app(argv[1]);
+		fugu::WebApplication app("./fugu.conf");//(argv[1]);
 
 		//uv_listen(NULL, 0, NULL);
 
