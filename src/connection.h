@@ -16,6 +16,7 @@ namespace fugu {
 
 enum ConnectionState
 {
+
 	CONTINUE_READ = 0,
 	SEND_REPLY_AND_CLOSE,
 	SEND_REPLY_AND_CONTINUE_READ
