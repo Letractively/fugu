@@ -35,6 +35,8 @@
       </logicalFolder>
       <itemPath>../../src/redisconnection.cpp</itemPath>
       <itemPath>../../src/redisconnection.h</itemPath>
+      <itemPath>../../src/redisconnectionpool.cpp</itemPath>
+      <itemPath>../../src/redisconnectionpool.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f3" displayName="handlers" projectFiles="true">
       <logicalFolder name="f1" displayName="adapters" projectFiles="true">
@@ -60,8 +62,6 @@
       <itemPath>../../src/jsonmodel.h</itemPath>
       <itemPath>../../src/jsonreply.cpp</itemPath>
       <itemPath>../../src/jsonreply.h</itemPath>
-      <itemPath>../../src/libuvconnection.cpp</itemPath>
-      <itemPath>../../src/libuvconnection.h</itemPath>
       <itemPath>../../src/query.cpp</itemPath>
       <itemPath>../../src/query.h</itemPath>
       <itemPath>../../src/reply.cpp</itemPath>
@@ -134,6 +134,14 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
+        <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fuguservice</output>
+          <linkerLibItems>
+            <linkerOptionItem>-lboost_system</linkerOptionItem>
+            <linkerOptionItem>-lboost_thread</linkerOptionItem>
+            <linkerOptionItem> -lrt</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
       </compileType>
     </conf>
   </confs>

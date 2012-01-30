@@ -7,14 +7,20 @@ namespace fugu {
 
 class Context : private boost::noncopyable
 {
+friend class WebApplication;
 public:
-	Context(SessionPtr session, ConnectionPtr connection, QueryPtr query, ConfigPtr config, RedisDBConnectionPtr database)
+
+    Context(){}
+    /*
+	Context(SessionPtr session, ConnectionPtr connection, 
+            QueryPtr query, ConfigPtr config, RedisDBConnectionPoolPtr database)
 		:_session(session)
 		,_connection(connection)
 		,_query(query)
 		,_config(config)
 		,_database(database)
 	{}
+     */
 
 	virtual ~Context()
     {
@@ -25,7 +31,7 @@ public:
 	ConnectionPtr Connection() const { return _connection; }
 	QueryPtr Query() const { return _query; }
 	ConfigPtr Cfg() const { return _config; }
-	RedisDBConnectionPtr Db() const { return _database; }
+	RedisDBConnectionPoolPtr RedisDb() const { return _redisDBPool; }
 
 private:
 	// User session
@@ -37,7 +43,7 @@ private:
 	// Configuration
 	ConfigPtr _config;
 	// Database
-	RedisDBConnectionPtr _database;
+	RedisDBConnectionPoolPtr _redisDBPool;
 };
 
 }

@@ -15,6 +15,7 @@
 #include <boost/function.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/any.hpp>
+#include <boost/pool/object_pool.hpp>
 
 using boost::asio::ip::tcp;
 
@@ -24,23 +25,20 @@ typedef boost::any AsyncArg;
 
 typedef boost::function< void(RedisCommandContext*)> RedisCompletedCallback;
 
-class RedisCommandContext  : public boost::enable_shared_from_this<RedisCommandContext>
-                                ,private boost::noncopyable 
+class RedisCommandContext  : private boost::noncopyable 
 {
-friend class RedisDBConnection;
-
-public:
-    RedisCommandContext(RedisCompletedCallback completed);
-    RedisCommandContext(RedisCompletedCallback completed, AsyncArg arg);
-    RedisCommandContext();
-    ~RedisCommandContext();
+public: 
+    friend class RedisDBConnection;
 
     redisReply* Reply() const;
     AsyncArg Arg() const;
     
 private:
+    RedisCommandContext(RedisCompletedCallback completed);
+    RedisCommandContext(RedisCompletedCallback completed, AsyncArg arg);
+    RedisCommandContext();
+    ~RedisCommandContext();
     void NotifiCompleted();
-    static void OnCommandCompleted(redisAsyncContext *c, void *r, void *privdata);
     
 private:
     RedisCompletedCallback _completed;
@@ -53,6 +51,8 @@ class RedisDBConnection : public boost::enable_shared_from_this<RedisDBConnectio
                         ,private boost::noncopyable 
 {
 public:
+    //typedef boost::object_pool<RedisCommandContext> RedisCommandContextPool;
+    
     RedisDBConnection(boost::asio::io_service& io_service);
 
     //void Connect(const std::string& host = "127.0.0.1", int port = 6379);
@@ -73,11 +73,12 @@ public:
     void cleanup(void *privdata);
 
 private:
-    void NotifiCommandCompleted();
+    static void OnCommandCompleted(redisAsyncContext *c, void *r, void *privdata);
     
 private:
     redisAsyncContext *context_;
     boost::asio::ip::tcp::socket socket_;
+    //RedisCommandContextPool _pool;
     bool read_requested_;
     bool write_requested_;
     bool read_in_progress_;

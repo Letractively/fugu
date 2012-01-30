@@ -17,8 +17,8 @@ CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/netbeans.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux-x86
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux-x86
-CND_ARTIFACT_NAME_Release=netbeans
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/netbeans
+CND_ARTIFACT_NAME_Release=fuguservice
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/fuguservice
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux-x86/package
 CND_PACKAGE_NAME_Release=netbeans.tar
 CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/netbeans.tar

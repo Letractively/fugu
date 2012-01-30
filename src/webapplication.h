@@ -19,6 +19,7 @@ class WebApplication : private boost::noncopyable
 {
 public:
 	typedef boost::object_pool<Connection> ConnectionPool;
+    typedef boost::object_pool<Context> ContextPool;
 
 	// Construct the server to listen on the specified TCP address and port, and
 	// serve up files from the given directory.
@@ -41,8 +42,6 @@ private:
 	void ProcessRequest(QueryPtr request, ConnectionPtr conn);
 
 private:
-	// Connection pool
-	ConnectionPool _connectionPool;
 	// Fugu service configuration
 	ConfigPtr _config;
 	// The io_service used to handle asynchronous incoming connections, 
@@ -58,7 +57,10 @@ private:
 	HandlerRouter _router;
 	Registrator _registrator;
 	DatabasePtr _database;
-    RedisDBConnectionPtr _redisDB;
+    // Pools
+    RedisDBConnectionPoolPtr _redisDBPool;
+	ConnectionPool _connectionPool;
+    ContextPool _ctxPool;
 };
 
 }

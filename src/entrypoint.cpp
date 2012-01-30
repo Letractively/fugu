@@ -12,11 +12,11 @@ int main(int argc, char* argv[])
 	{
 		//UserManager* i = nedalloc::New<UserManager>();
 		// Check command line arguments.
-		if (argc < 2)
-		{
-			std::cerr << "Usage: fuguservice.exe <confing file path>\n";
-			return 1;
-		}
+		//if (argc < 2)
+		//{
+            //std::cerr << "Usage: fuguservice.exe <confing file path>\n";
+			//return 1;
+		//}
 		// Initialise server.
 		fugu::WebApplication app("./fugu.conf");//argv[1]);
 

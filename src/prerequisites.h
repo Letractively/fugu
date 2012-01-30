@@ -38,6 +38,9 @@ typedef boost::shared_ptr<RedisCommandContext> RedisCommandContextPtr;
 class RedisDBConnection;
 typedef boost::shared_ptr<RedisDBConnection> RedisDBConnectionPtr;
 
+class RedisDBConnectionPool;
+typedef boost::shared_ptr<RedisDBConnectionPool> RedisDBConnectionPoolPtr;
+
 //typedef mongo::BSONObj JsonObj;
 //typedef boost::shared_ptr<mongo::DBClientConnection> DBConnectionPtr;
 

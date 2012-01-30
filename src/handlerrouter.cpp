@@ -5,6 +5,7 @@
 #include "query.h"
 #include "context.h"
 #include "config.h"
+#include "logger.h"
 #include <boost/thread/locks.hpp>
 #include <boost/foreach.hpp>
 
@@ -33,7 +34,7 @@ void HandlerRouter::RegisterFactory(HandlerFactory* factory)
 							HandlerFactoryPtr(factory)));
 }
 
-ReplyPtr HandlerRouter::Route(ContextPtr ctx)
+void HandlerRouter::Route(ContextPtr ctx)
 {
 	try
 	{
@@ -57,11 +58,12 @@ ReplyPtr HandlerRouter::Route(ContextPtr ctx)
 	}
 	catch(Exception& fe)
     {
+        Log(fe.what());
         //ctx->Connection()->Send(Handler::Error(fe, true));
 	}
 	catch(std::exception& e)
-	{
-            return ReplyPtr();
+    {
+            Log(e.what());
 		//return Handler::Error(FUGU_EXCEPT(e.what() ,"HandlerRouter::Route"), true);
 	}
 }

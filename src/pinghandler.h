@@ -27,8 +27,8 @@ public:
 	const std::string& Name() const;
     
 private:
-    typedef boost::object_pool<PingHandler> PingHandlerPool;
-   PingHandlerPool _pool;
+    typedef boost::object_pool<PingHandler> PingHandlerAllocator;
+    PingHandlerAllocator _allocator;
 
 };
 

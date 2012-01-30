@@ -5,7 +5,7 @@
 //#include "database.h"
 #include "query.h"
 #include "logger.h"
-#include "redisconnection.h"
+#include "redisconnectionpool.h"
 #include <boost/cstdint.hpp>
 #include <boost/thread/thread.hpp>
 
@@ -16,8 +16,7 @@ WebApplication::WebApplication(const std::string& configPath)
 	,_router(_config)
 	,_acceptor(_service)
 	,_registrator(_router)
-    ,_redisDB(new RedisDBConnection(_service))
-	//,_database(new Database(_service, _config))
+    ,_redisDBPool(new RedisDBConnectionPool(_service))
 {
 	// Open the acceptor with the option to reuse the address (i.e. SO_REUSEADDR).
 	boost::asio::ip::tcp::resolver resolver(_service);
@@ -85,9 +84,20 @@ void WebApplication::ProcessRequest(QueryPtr query, ConnectionPtr conn)
 			//UserPtr user = _userMgr.GetUser(query->UserHash());
 			//session = _sessionMgr.CreateSession(user);
 		//}
+
+        Context* ctx = _ctxPool.construct();
+        ctx->_connection = conn;
+        ctx->_query = query;
+        ctx->_config = _config;
+        ctx->_redisDBPool = _redisDBPool;
+        ctx->_session = SessionPtr();
         
-		ContextPtr ctx(new Context(SessionPtr(), conn, query, _config, _redisDB));
-		ReplyPtr reply = _router.Route(ctx);
+        
+        ContextPtr ctxPtr(ctx, 
+                        boost::bind(&ContextPool::destroy, 
+                        &_ctxPool, ctx));
+        
+		_router.Route(ctxPtr);
 	}
 	catch(std::exception& ex)
 	{

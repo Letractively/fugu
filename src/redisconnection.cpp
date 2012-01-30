@@ -40,23 +40,8 @@ void RedisCommandContext::NotifiCompleted()
 {
     //_completed(shared_from_this());
     _completed(this);
-    delete this;
 }
 
-void RedisCommandContext::OnCommandCompleted(redisAsyncContext *c, void *reply, void *privdata)
-{
-    if(privdata && reply) 
-    { 
-        //TODO: and dynamic cast
-        RedisCommandContext* cmd = reinterpret_cast<RedisCommandContext*>(privdata);
-        if(!cmd->_completed.empty())
-        {
-            cmd->_reply = reinterpret_cast<redisReply*>(reply);
-            cmd->NotifiCompleted();
-        }
-    }
-    
-}
 
 RedisDBConnection::RedisDBConnection(boost::asio::io_service& io_service)
 : socket_(io_service)
@@ -96,7 +81,10 @@ int RedisDBConnection::AsyncCommand(RedisCompletedCallback callback, AsyncArg ar
     va_list ap;
     int status;
     va_start(ap,format);
-    status = redisvAsyncCommand(context_,&RedisCommandContext::OnCommandCompleted, new RedisCommandContext(callback) ,format,ap);
+            
+    RedisCommandContext* cmdCtx = new RedisCommandContext(callback);//_pool.construct(callback);
+    status = redisvAsyncCommand(context_, &RedisDBConnection::OnCommandCompleted 
+                                ,cmdCtx ,format,ap);
     va_end(ap);
     return status;
 }
@@ -106,7 +94,11 @@ int RedisDBConnection::AsyncCommand(RedisCompletedCallback callback, const char 
     va_list ap;
     int status;
     va_start(ap,format);
-    status = redisvAsyncCommand(context_,&RedisCommandContext::OnCommandCompleted, new RedisCommandContext(callback) ,format,ap);
+    
+    RedisCommandContext* cmdCtx = new RedisCommandContext;//_pool.construct();
+    status = redisvAsyncCommand(context_, &RedisDBConnection::OnCommandCompleted, 
+                                cmdCtx ,format,ap);
+    
     va_end(ap);
     return status;
 }
@@ -119,6 +111,25 @@ int RedisDBConnection::AsyncCommand(const char *format, ...)
     status = redisvAsyncCommand(context_,NULL, NULL ,format,ap);
     va_end(ap);
     return status;
+}
+
+void RedisDBConnection::OnCommandCompleted(redisAsyncContext *c, void *reply, void *privdata)
+{
+    RedisDBConnection* conn = reinterpret_cast<RedisDBConnection*>(c->data);
+    
+    if(privdata) 
+    { 
+        //TODO: and dynamic cast
+        RedisCommandContext* cmd = reinterpret_cast<RedisCommandContext*>(privdata);
+        if(reply && !cmd->_completed.empty())
+        {
+            cmd->_reply = reinterpret_cast<redisReply*>(reply);
+            cmd->NotifiCompleted();
+        }
+        
+        delete cmd;
+        //conn->_pool.destroy(cmd);
+    }  
 }
 
 void RedisDBConnection::operate()

@@ -36,7 +36,6 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/_ext/1445274692/jsonreply.o \
 	${OBJECTDIR}/_ext/1445274692/session.o \
-	${OBJECTDIR}/_ext/1445274692/libuvconnection.o \
 	${OBJECTDIR}/_ext/1445274692/handlerrouter.o \
 	${OBJECTDIR}/_ext/1445274692/connection.o \
 	${OBJECTDIR}/_ext/1401901489/net.o \
@@ -54,6 +53,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/1445274692/registrator.o \
 	${OBJECTDIR}/_ext/1445274692/handler.o \
 	${OBJECTDIR}/_ext/1445274692/query.o \
+	${OBJECTDIR}/_ext/1445274692/redisconnectionpool.o \
 	${OBJECTDIR}/_ext/1445274692/bytebuffer.o \
 	${OBJECTDIR}/_ext/1445274692/logger.o \
 	${OBJECTDIR}/_ext/1401901489/async.o \
@@ -98,11 +98,6 @@ ${OBJECTDIR}/_ext/1445274692/session.o: ../../src/session.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
 	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/session.o ../../src/session.cpp
-
-${OBJECTDIR}/_ext/1445274692/libuvconnection.o: ../../src/libuvconnection.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
-	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/libuvconnection.o ../../src/libuvconnection.cpp
 
 ${OBJECTDIR}/_ext/1445274692/handlerrouter.o: ../../src/handlerrouter.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
@@ -188,6 +183,11 @@ ${OBJECTDIR}/_ext/1445274692/query.o: ../../src/query.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
 	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/query.o ../../src/query.cpp
+
+${OBJECTDIR}/_ext/1445274692/redisconnectionpool.o: ../../src/redisconnectionpool.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
+	${RM} $@.d
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/redisconnectionpool.o ../../src/redisconnectionpool.cpp
 
 ${OBJECTDIR}/_ext/1445274692/bytebuffer.o: ../../src/bytebuffer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692

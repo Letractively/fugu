@@ -2,7 +2,7 @@
 #include "config.h"
 #include "query.h"
 #include "context.h"
-#include "redisconnection.h"
+#include "redisconnectionpool.h"
 #include "connection.h"
 #include <sstream>
 
@@ -11,9 +11,10 @@ namespace fugu {
 void PingHandler::ProcessImpl(ContextPtr ctx)
 {
     _context = ctx;
-    ctx->Db()->AsyncCommand("SET key test");
-    ctx->Db()->AsyncCommand(boost::bind(&PingHandler::RedisCommandReply, this,  _1), this
-                            , "eval \"return {1,2,{3,'Hello World!'}}\" 0");
+    ctx->RedisDb()->GetConnection()->AsyncCommand("SET key test");
+    ctx->RedisDb()->GetConnection()->AsyncCommand(
+                                boost::bind(&PingHandler::RedisCommandReply, this,  _1), this
+                                ,"eval \"return {1,2,{3,'Hello World!'}}\" 0");
 }
 	
 void PingHandler::RedisCommandReply(RedisCommandContext* ctx)
@@ -30,12 +31,12 @@ void PingHandler::RedisCommandReply(RedisCommandContext* ctx)
 
 Handler* PingHandlerFactory::CreateImpl()
 {
-    return _pool.construct();
+    return _allocator.construct();
 }
 
 void PingHandlerFactory::DoDestroy(Handler* handler)
 {
-    _pool.destroy(static_cast<PingHandler*>(handler));
+    _allocator.destroy(static_cast<PingHandler*>(handler));
 }
 
 const std::string& PingHandlerFactory::Name() const
