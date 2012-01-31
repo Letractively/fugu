@@ -48,11 +48,11 @@ RedisDBConnection::RedisDBConnection(boost::asio::io_service& io_service)
     ,_strand(io_service)
 {
     context_ = redisAsyncConnect("127.0.0.1", 6379);
-            if(context_->err) {
-                    /* Let *ac leak for now... */
-                    printf("Error: %s\n", context_->errstr);
-                    return;
-            }
+    if(context_->err) {
+            /* Let *ac leak for now... */
+            printf("Error: %s\n", context_->errstr);
+            return;
+    }
     
 	/*hiredis already connected
 	 *use the existing native socket
