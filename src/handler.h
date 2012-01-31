@@ -2,6 +2,7 @@
 #define __FUGU_HANDLER_H__
 
 #include "prerequisites.h"
+#include "exception.h"
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
@@ -21,11 +22,14 @@ public:
 	//bool LongRunning() const virtual = 0;
 	RoutePtr Route() const;
 	static ReplyPtr Error(std::exception& ex, bool critical);
+    static ReplyPtr Error(Exception& ex, bool critical);
 
-protected:
-    virtual void ProcessImpl(ContextPtr ctx)=0;
     // Single for session
     virtual bool Single();
+    virtual bool UseRedisDB();
+    
+protected:
+    virtual void ProcessImpl(ContextPtr ctx)=0;
     
 	ReplyPtr Html(StringPtr html);
 	ReplyPtr PartialView(JsonModelPtr view);

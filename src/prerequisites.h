@@ -85,6 +85,9 @@ class Handler;
 typedef Handler* HandlerPtr;
 //typedef boost::shared_ptr<Handler> HandlerPtr;
 
+class HandlerFactory;
+typedef boost::shared_ptr<HandlerFactory> HandlerFactoryPtr;
+
 class JsonModel;
 typedef boost::shared_ptr<JsonModel> JsonModelPtr;
 
@@ -97,9 +100,10 @@ typedef boost::shared_ptr<Config> ConfigPtr;
 class Database;
 typedef boost::shared_ptr<Database> DatabasePtr;
 
+class RouteResolver;
 class WebServer;
 class Config;
-class HandlerRouter;
+
 }
 
 #endif

@@ -36,7 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/_ext/1445274692/jsonreply.o \
 	${OBJECTDIR}/_ext/1445274692/session.o \
-	${OBJECTDIR}/_ext/1445274692/handlerrouter.o \
+	${OBJECTDIR}/_ext/1445274692/routeesolver.o \
 	${OBJECTDIR}/_ext/1445274692/connection.o \
 	${OBJECTDIR}/_ext/1401901489/net.o \
 	${OBJECTDIR}/_ext/1445274692/config.o \
@@ -97,10 +97,10 @@ ${OBJECTDIR}/_ext/1445274692/session.o: ../../src/session.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/session.o ../../src/session.cpp
 
-${OBJECTDIR}/_ext/1445274692/handlerrouter.o: ../../src/handlerrouter.cpp 
+${OBJECTDIR}/_ext/1445274692/routeesolver.o: ../../src/routeesolver.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/handlerrouter.o ../../src/handlerrouter.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/routeesolver.o ../../src/routeesolver.cpp
 
 ${OBJECTDIR}/_ext/1445274692/connection.o: ../../src/connection.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692

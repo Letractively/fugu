@@ -6,6 +6,7 @@
 #include "query.h"
 #include "logger.h"
 #include "redisconnectionpool.h"
+#include "handler.h"
 #include <boost/cstdint.hpp>
 #include <boost/thread/thread.hpp>
 
@@ -54,7 +55,7 @@ void WebApplication::DoAccept()
 			//(_service, boost::bind(&WebApplication::ProcessRequest, this,_1,_2)));
 
 	// The next connection to be accepted.
-	ConnectionPtr conn(new Connection(_service, boost::bind(&WebApplication::ProcessRequest, this,_1,_2)));
+	ConnectionPtr conn(new Connection(_service, boost::bind(&WebApplication::HandleRequest, this,_1,_2)));
 	_acceptor.async_accept(conn->Socket(), boost::bind(&WebApplication::HandleAccept, this,
 		boost::asio::placeholders::error, conn));
 }
@@ -74,7 +75,7 @@ void WebApplication::HandleStop()
 	_service.stop();
 }
 
-void WebApplication::ProcessRequest(QueryPtr query, ConnectionPtr conn)
+void WebApplication::HandleRequest(QueryPtr query, ConnectionPtr conn)
 {
 	try
 	{
@@ -97,7 +98,13 @@ void WebApplication::ProcessRequest(QueryPtr query, ConnectionPtr conn)
                         boost::bind(&ContextPool::destroy, 
                         &_ctxPool, ctx));
         
-		_router.Route(ctxPtr);
+		HandlerPtr handler = _router.Resolve(query);
+        
+        if(handler->UseRedisDB()) {
+            //ctx->_connection = ctx->RedisDb()->GetConnection();
+        }
+        
+        handler->Process(ctxPtr);
 	}
 	catch(std::exception& ex)
 	{

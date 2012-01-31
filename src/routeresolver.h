@@ -9,19 +9,17 @@
 
 namespace fugu {
 
-class HandlerFactory;
-typedef boost::shared_ptr<HandlerFactory> HandlerFactoryPtr;
 typedef std::map<std::string, HandlerFactoryPtr> HandlerFactories;
 
-class HandlerRouter : private boost::noncopyable
+class RouteResolver : private boost::noncopyable
 {
 public:
-	HandlerRouter(ConfigPtr config);
-	~HandlerRouter();
+	RouteResolver(ConfigPtr config);
+	~RouteResolver();
 	// Registration for all factories should be when the application starts
 	void RegisterFactory(HandlerFactory* factory);
 	// Free lock
-	void Route(ContextPtr ctx);
+	HandlerPtr Resolve(QueryPtr query);
 
 private:
 	HandlerFactories _factories;

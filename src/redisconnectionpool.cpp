@@ -1,9 +1,14 @@
 #include "redisconnectionpool.h"
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 namespace fugu {
    
 RedisDBConnectionPool::RedisDBConnectionPool(boost::asio::io_service& ioservice)
     :_ioservice(ioservice)
+    ,expireSeconds(10)
+    ,_timer(ioservice)
 {
 }
 

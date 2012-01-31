@@ -1,12 +1,12 @@
 #include "registrator.h"
-#include "handlerrouter.h"
+#include "routeresolver.h"
 #include "pinghandler.h"
 //#include "dbviewhandler.h"
 //#include "templatepagehandler.h"
 
 namespace fugu {
 
-Registrator::Registrator(HandlerRouter& router)
+Registrator::Registrator(RouteResolver& router)
 	:_router(router)
 {
 	_router.RegisterFactory(new PingHandlerFactory);

@@ -1,4 +1,4 @@
-#include "handlerrouter.h"
+#include "routeresolver.h"
 #include "handler.h"
 #include "route.h"
 #include "exception.h"
@@ -6,26 +6,27 @@
 #include "context.h"
 #include "config.h"
 #include "logger.h"
+#include "redisconnectionpool.h"
 #include <boost/thread/locks.hpp>
 #include <boost/foreach.hpp>
 
 namespace fugu {
 
-HandlerRouter::HandlerRouter(ConfigPtr config)
+RouteResolver::RouteResolver(ConfigPtr config)
 {
 	config->GetRoutes(_routes);
 }
 
-HandlerRouter::~HandlerRouter()
+RouteResolver::~RouteResolver()
 {
 }
 
-void HandlerRouter::RegisterFactory(HandlerFactory* factory)
+void RouteResolver::RegisterFactory(HandlerFactory* factory)
 {
 	HandlerFactories::iterator iter = _factories.find(factory->Name());
 	if(iter != _factories.end()) {
 		FUGU_THROW("HandlerFactory : '" + factory->Name() + "' already registered", 
-					"HandlerRouter::RegisterFactory");
+					"RouteResolver::RegisterFactory");
 	}
 
 	_factories.insert(
@@ -34,37 +35,35 @@ void HandlerRouter::RegisterFactory(HandlerFactory* factory)
 							HandlerFactoryPtr(factory)));
 }
 
-void HandlerRouter::Route(ContextPtr ctx)
+HandlerPtr RouteResolver::Resolve(QueryPtr query)
 {
 	try
 	{
-		Routes::const_iterator riter = _routes.find(ctx->Query()->Uri());
+		Routes::const_iterator riter = _routes.find(query->Uri());
 
 		if(riter == _routes.end())
-			FUGU_THROW("Route for url '" + ctx->Query()->Uri()+"' doesn't exists", "HandlerRouter::Route");
+			FUGU_THROW("Route for url '" + query->Uri()+"' doesn't exists", "RouteResolver::Route");
 
 		HandlerFactories::iterator fiter = _factories.find(riter->second->HandlerName());
 
 		if(fiter == _factories.end())
 			FUGU_THROW("Handler factory with name '" 
-					+ riter->second->HandlerName() + "' doesn't exists", "HandlerRouter::Route");
+					+ riter->second->HandlerName() + "' doesn't exists", "RouteResolver::Route");
 
 		HandlerFactoryPtr factory = fiter->second;
         // Create by route parameters
 		HandlerPtr handler = factory->Create(riter->second);
-
-        handler->Process(ctx);
+        
+        return handler;
             
 	}
 	catch(Exception& fe)
     {
-        Log(fe.what());
-        //ctx->Connection()->Send(Handler::Error(fe, true));
+        throw fe;
 	}
 	catch(std::exception& e)
     {
-            Log(e.what());
-		//return Handler::Error(FUGU_EXCEPT(e.what() ,"HandlerRouter::Route"), true);
+        FUGU_THROW(e.what() ,"RouteResolver::Route");
 	}
 }
 

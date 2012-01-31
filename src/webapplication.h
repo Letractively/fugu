@@ -4,7 +4,7 @@
 #include "prerequisites.h"
 #include "session.h"
 #include "user.h"
-#include "handlerrouter.h"
+#include "routeresolver.h"
 #include "registrator.h"
 #include "connection.h"
 #include <boost/asio.hpp>
@@ -39,7 +39,8 @@ private:
 	// Handle a request to stop the server.
 	void HandleStop();
 	// Handle request data
-	void ProcessRequest(QueryPtr request, ConnectionPtr conn);
+	void HandleRequest(QueryPtr request, ConnectionPtr conn);
+    //void HandleRedisConnection(QueryPtr query, ConnectionPtr conn);
 
 private:
 	// Fugu service configuration
@@ -54,7 +55,7 @@ private:
 	//User manager
 	UserManager _userMgr;
 	// The handler for all incoming requests.
-	HandlerRouter _router;
+	RouteResolver _router;
 	Registrator _registrator;
 	DatabasePtr _database;
     // Pools

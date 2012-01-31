@@ -44,7 +44,8 @@ void RedisCommandContext::NotifiCompleted()
 
 
 RedisDBConnection::RedisDBConnection(boost::asio::io_service& io_service)
-: socket_(io_service)
+    : socket_(io_service)
+    ,_strand(io_service)
 {
     context_ = redisAsyncConnect("127.0.0.1", 6379);
             if(context_->err) {
@@ -76,13 +77,18 @@ RedisDBConnection::RedisDBConnection(boost::asio::io_service& io_service)
 	context_->data = this;
 }
 
+RedisDBConnection::~RedisDBConnection()
+{
+    redisAsyncDisconnect(context_);
+}
+
 int RedisDBConnection::AsyncCommand(RedisCompletedCallback callback, AsyncArg arg, const char *format, ...)
 {
     va_list ap;
     int status;
     va_start(ap,format);
             
-    RedisCommandContext* cmdCtx = new RedisCommandContext(callback);//_pool.construct(callback);
+    RedisCommandContext* cmdCtx = _pool.construct(callback);
     status = redisvAsyncCommand(context_, &RedisDBConnection::OnCommandCompleted 
                                 ,cmdCtx ,format,ap);
     va_end(ap);
@@ -94,8 +100,8 @@ int RedisDBConnection::AsyncCommand(RedisCompletedCallback callback, const char 
     va_list ap;
     int status;
     va_start(ap,format);
-    
-    RedisCommandContext* cmdCtx = new RedisCommandContext;//_pool.construct();
+      
+    RedisCommandContext* cmdCtx = _pool.construct();
     status = redisvAsyncCommand(context_, &RedisDBConnection::OnCommandCompleted, 
                                 cmdCtx ,format,ap);
     
@@ -118,7 +124,7 @@ void RedisDBConnection::OnCommandCompleted(redisAsyncContext *c, void *reply, vo
     RedisDBConnection* conn = reinterpret_cast<RedisDBConnection*>(c->data);
     
     if(privdata) 
-    { 
+    {
         //TODO: and dynamic cast
         RedisCommandContext* cmd = reinterpret_cast<RedisCommandContext*>(privdata);
         if(reply && !cmd->_completed.empty())
@@ -127,23 +133,24 @@ void RedisDBConnection::OnCommandCompleted(redisAsyncContext *c, void *reply, vo
             cmd->NotifiCompleted();
         }
         
-        delete cmd;
-        //conn->_pool.destroy(cmd);
+        conn->_pool.destroy(cmd);
     }  
 }
 
 void RedisDBConnection::operate()
 {
-	if(read_requested_ && !read_in_progress_) {
+	if(read_requested_ && !read_in_progress_) {    
 		read_in_progress_ = true;
-		socket_.async_read_some(boost::asio::null_buffers(),
-                       	boost::bind(&RedisDBConnection::handle_read,this,boost::asio::placeholders::error));
+		socket_.async_read_some(boost::asio::null_buffers()
+                                ,_strand.wrap( boost::bind(&RedisDBConnection::handle_read, this
+                                                ,boost::asio::placeholders::error)));
 	}
 
 	if(write_requested_ && !write_in_progress_) {
 		write_in_progress_ = true;
-		socket_.async_write_some(boost::asio::null_buffers(),
-                       	boost::bind(&RedisDBConnection::handle_write,this,boost::asio::placeholders::error));
+		socket_.async_write_some(boost::asio::null_buffers()
+                ,_strand.wrap(boost::bind(&RedisDBConnection::handle_write, this
+                    ,boost::asio::placeholders::error)));
 	}
 }
 

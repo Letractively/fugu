@@ -43,10 +43,10 @@
       </logicalFolder>
       <itemPath>../../src/handler.cpp</itemPath>
       <itemPath>../../src/handler.h</itemPath>
-      <itemPath>../../src/handlerrouter.cpp</itemPath>
-      <itemPath>../../src/handlerrouter.h</itemPath>
       <itemPath>../../src/pinghandler.cpp</itemPath>
       <itemPath>../../src/pinghandler.h</itemPath>
+      <itemPath>../../src/routeesolver.cpp</itemPath>
+      <itemPath>../../src/routeresolver.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f4" displayName="net" projectFiles="true">
       <itemPath>../../src/bytebuffer.cpp</itemPath>

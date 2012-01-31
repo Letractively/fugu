@@ -28,16 +28,21 @@ void Handler::Process(ContextPtr ctx)
     }
 	catch(Exception& fe)
     {
-        ReturnAndDestroy(Error(fe, true), ctx);
+        throw fe;
+        //ReturnAndDestroy(Error(fe, true), ctx);
 	}
 	catch(std::exception& e)
 	{
-        ReturnAndDestroy(ReplyPtr(), ctx);
-		//return Handler::Error(FUGU_EXCEPT(e.what() ,"HandlerRouter::Route"), true);
+        FUGU_THROW(e.what() ,"HandlerRouter::Route");
 	}
 }
 
 bool Handler::Single()
+{
+    return true;
+}
+
+bool Handler::UseRedisDB()
 {
     return true;
 }
@@ -66,6 +71,13 @@ ReplyPtr Handler::Json(StringPtr json)
 }
 
 ReplyPtr Handler::Error(std::exception& ex, bool critical)
+{
+	JsonReplyPtr reply(new JsonReply());
+	reply->SetError(ex.what(), critical);
+	return reply;
+}
+
+static ReplyPtr Error(Exception& ex, bool critical)
 {
 	JsonReplyPtr reply(new JsonReply());
 	reply->SetError(ex.what(), critical);

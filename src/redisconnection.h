@@ -33,11 +33,12 @@ public:
     redisReply* Reply() const;
     AsyncArg Arg() const;
     
-private:
     RedisCommandContext(RedisCompletedCallback completed);
     RedisCommandContext(RedisCompletedCallback completed, AsyncArg arg);
     RedisCommandContext();
     ~RedisCommandContext();
+    
+private:
     void NotifiCompleted();
     
 private:
@@ -51,10 +52,11 @@ class RedisDBConnection : public boost::enable_shared_from_this<RedisDBConnectio
                         ,private boost::noncopyable 
 {
 public:
-    //typedef boost::object_pool<RedisCommandContext> RedisCommandContextPool;
+    typedef boost::object_pool<RedisCommandContext> RedisCommandContextPool;
     
     RedisDBConnection(boost::asio::io_service& io_service);
-
+    ~RedisDBConnection();
+    
     //void Connect(const std::string& host = "127.0.0.1", int port = 6379);
     // Execute query to Redis with result in callback
     int AsyncCommand(RedisCompletedCallback callback, AsyncArg arg, const char *format, ...);
@@ -76,9 +78,11 @@ private:
     static void OnCommandCompleted(redisAsyncContext *c, void *r, void *privdata);
     
 private:
+	// Strand to ensure the connection's handlers are not called concurrently.
+	boost::asio::io_service::strand _strand;
     redisAsyncContext *context_;
     boost::asio::ip::tcp::socket socket_;
-    //RedisCommandContextPool _pool;
+    RedisCommandContextPool _pool;
     bool read_requested_;
     bool write_requested_;
     bool read_in_progress_;
