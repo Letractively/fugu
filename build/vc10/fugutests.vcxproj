@@ -28,21 +28,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\fugutests.cpp" />
-    <ClCompile Include="..\..\src\hiredis\async.c" />
-    <ClCompile Include="..\..\src\hiredis\dict.c" />
-    <ClCompile Include="..\..\src\hiredis\hiredis.c" />
-    <ClCompile Include="..\..\src\hiredis\net.c" />
-    <ClCompile Include="..\..\src\hiredis\sds.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\src\hiredis\adapters\libuv.h" />
-    <ClInclude Include="..\..\src\hiredis\async.h" />
-    <ClInclude Include="..\..\src\hiredis\dict.h" />
-    <ClInclude Include="..\..\src\hiredis\fmacros.h" />
-    <ClInclude Include="..\..\src\hiredis\hiredis.h" />
-    <ClInclude Include="..\..\src\hiredis\net.h" />
-    <ClInclude Include="..\..\src\hiredis\sds.h" />
-    <ClInclude Include="..\..\src\hiredis\util.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>fugutests</ProjectName>
@@ -144,7 +129,7 @@
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ws2_32.lib;psapi.lib;iphlpapi.lib;uv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;psapi.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>bin\fugutestsd.exe</OutputFile>
       <AdditionalLibraryDirectories>$(LIBUV_HOME)\Debug\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SuppressStartupBanner>true</SuppressStartupBanner>
