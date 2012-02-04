@@ -13,7 +13,6 @@
 #include <boost/bind.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/function.hpp>
-#include <boost/enable_shared_from_this.hpp>
 #include <boost/any.hpp>
 #include <boost/pool/object_pool.hpp>
 
@@ -24,6 +23,7 @@ namespace fugu {
 typedef boost::any AsyncArg;
 
 typedef boost::function< void(RedisCommandContext*)> RedisCompletedCallback;
+typedef boost::function<void(ContextPtr)> RedisConnectedCallback;
 
 class RedisCommandContext  : private boost::noncopyable 
 {
@@ -76,8 +76,10 @@ public:
 
 private:
     static void OnCommandCompleted(redisAsyncContext *c, void *r, void *privdata);
+    static void OnConnectedCallback(redisAsyncContext *c);
     
 private:
+    RedisConnectedCallback OnConnected;
 	// Strand to ensure the connection's handlers are not called concurrently.
 	boost::asio::io_service::strand _strand;
     redisAsyncContext *context_;

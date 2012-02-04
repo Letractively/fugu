@@ -48,6 +48,7 @@ RedisDBConnection::RedisDBConnection(boost::asio::io_service& io_service)
     ,_strand(io_service)
 {
     context_ = redisAsyncConnect("127.0.0.1", 6379);
+    //context_->onConnect
     if(context_->err) {
             /* Let *ac leak for now... */
             printf("Error: %s\n", context_->errstr);
@@ -119,6 +120,11 @@ int RedisDBConnection::AsyncCommand(const char *format, ...)
     return status;
 }
 
+void RedisDBConnection::OnConnectedCallback(redisAsyncContext *c)
+{
+    RedisDBConnection* conn = reinterpret_cast<RedisDBConnection*>(c->data);
+    //conn->OnConnected()
+}
 void RedisDBConnection::OnCommandCompleted(redisAsyncContext *c, void *reply, void *privdata)
 {
     RedisDBConnection* conn = reinterpret_cast<RedisDBConnection*>(c->data);
@@ -127,7 +133,7 @@ void RedisDBConnection::OnCommandCompleted(redisAsyncContext *c, void *reply, vo
     {
         //TODO: and dynamic cast
         RedisCommandContext* cmd = reinterpret_cast<RedisCommandContext*>(privdata);
-        if(reply && !cmd->_completed.empty())
+        if(!cmd->_completed.empty())
         {
             cmd->_reply = reinterpret_cast<redisReply*>(reply);
             cmd->NotifiCompleted();
@@ -168,7 +174,7 @@ void RedisDBConnection::handle_read(boost::system::error_code ec)
 void RedisDBConnection::handle_write(boost::system::error_code ec)
 {
 	write_in_progress_ = false;
-	if(!ec) {
+      	if(!ec) {
 		redisAsyncHandleWrite(context_);
 	}
 

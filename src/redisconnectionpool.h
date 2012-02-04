@@ -1,9 +1,11 @@
 #ifndef __REDOS_CONNECTION_POOL_H__
 #define __REDOS_CONNECTION_POOL_H__
 
+#include "prerequisites.h"
+#include "redisconnection.h"
 #include <vector>
 #include <boost/asio.hpp>
-#include "redisconnection.h"
+#include <boost/lockfree/fifo.hpp>
 
 using boost::asio::ip::tcp;
 
@@ -14,17 +16,22 @@ class RedisDBConnectionPool : public boost::enable_shared_from_this<RedisDBConne
 {
 public:
     typedef boost::object_pool<RedisDBConnection> RedisDBConnectionMemoryPool;
+    typedef boost::lockfree::fifo<RedisDBConnection*> RedisDBConnectionQueque;
     
     RedisDBConnectionPool(boost::asio::io_service& io_service);
-    // boost::function<void(RedisDBConnectionPtr)> Connected
-    RedisDBConnectionPtr GetConnection();
+    // Queque connection to redis db
+    void Queque(ContextPtr ctx, RedisConnectedCallback callback);
+    
+private:
+    void OnFreeConnection(RedisDBConnectionPtr connection);
     
 private:
     unsigned int expireSeconds;
 	boost::asio::deadline_timer _timer;
-    RedisDBConnectionMemoryPool _memorypool;
+    RedisDBConnectionMemoryPool _allocator;
     boost::asio::io_service& _ioservice;
     std::vector<RedisDBConnectionPtr> _conns;
+    RedisDBConnectionQueque _connQueque;
 };
 
 }

@@ -11,17 +11,17 @@ namespace fugu {
 void PingHandler::ProcessImpl(ContextPtr ctx)
 {
     _context = ctx;
-    ctx->RedisDb()->GetConnection()->AsyncCommand("SET key test");
-    ctx->RedisDb()->GetConnection()->AsyncCommand(
-                                boost::bind(&PingHandler::RedisCommandReply, this,  _1), this
-                                ,"eval \"return {1,2,{3,'Hello World!'}}\" 0");
+    ctx->RedisDb()->AsyncCommand("SET key test");
+    ctx->RedisDb()->AsyncCommand(
+                            boost::bind(&PingHandler::RedisCommandReply, this,  _1), this
+                            ,"eval \"return {1,2,{3,'Hello World!'}}\" 0");
 }
 	
 void PingHandler::RedisCommandReply(RedisCommandContext* ctx)
 {
 	StringPtr ptr(new std::string(
-		"<html><head><title>ping</title></head><body><h1>fugu service "
-    + std::string(ctx->Reply()->str)
+		std::string("<html><head><title>ping</title></head><body><h1>fugu service ")
+    //+( ctx->Reply()->str == NULL ? std::string(ctx->Reply()->str) : std::string("Bo") )
 		//+ ctx->Cfg()->Version() 
 		+ "</h1></body></html>"
 	));

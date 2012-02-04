@@ -2,7 +2,7 @@
 #include <string.h>
 #include <netinet/in.h>
 
-namespace fugu {
+namespace redis4cpp {
 
 template<class T> inline T _min(T a, T b) { return (a > b) ? b : a; }
 template<class T> inline T _max(T a, T b) { return (a < b) ? b : a; }
@@ -32,6 +32,12 @@ ByteBuffer::ByteBuffer(const char* bytes) {
 
 ByteBuffer::~ByteBuffer() {
     delete bytes_;
+}
+
+const std::string& ByteBuffer::Str() const
+{
+    _b.append(Data(), Data() + Length());
+    return _b;
 }
 
 bool ByteBuffer::ReadUInt8(boost::uint8_t& val) {

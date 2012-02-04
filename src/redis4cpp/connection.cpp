@@ -1,0 +1,36 @@
+#include "connection.h"
+#include <boost/lexical_cast.hpp>
+#include <boost/memory_order.hpp>
+
+namespace redis4cpp {
+    
+Connection::Connection(boost::asio::io_service& io_service)
+    :_ioservice(io_service)
+    ,_socket(io_service)
+    ,strand_(io_service)
+    ,_sender(_ioservice, _socket, _sendedcommands, strand_)
+    ,_reciever(_ioservice, _socket, _sendedcommands, strand_)
+    //,boost::asio::ip::address::from_string("127.0.0.1"), boost::asio::ip::address::from_string("127.0.0.1"))
+{
+    using boost::asio::ip::tcp;
+    
+    tcp::resolver resolver(io_service);
+    tcp::resolver::query query(tcp::v4(), "127.0.0.1", "6379");
+    tcp::resolver::iterator iterator = resolver.resolve(query);
+    
+    _socket.connect(iterator->endpoint());
+
+    // Put the socket into non-blocking mode.
+    tcp::socket::non_blocking_io non_blocking_io(true);
+    _socket.io_control(non_blocking_io);
+    
+    _reciever.DoReceieve();
+}
+
+void Connection::AsyncCommand(CommandBase* cmd)
+{
+    _sender.AsyncCommand(cmd);
+}
+
+}
+

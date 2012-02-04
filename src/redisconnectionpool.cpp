@@ -12,18 +12,34 @@ RedisDBConnectionPool::RedisDBConnectionPool(boost::asio::io_service& ioservice)
 {
 }
 
-RedisDBConnectionPtr RedisDBConnectionPool::GetConnection()
+void RedisDBConnectionPool::OnFreeConnection(RedisDBConnectionPtr  connection)
 {
-    RedisDBConnection* connection = _memorypool.construct(_ioservice);
+    _connQueque.enqueue(connection.get());
+    connection.reset();
+}
+
+void RedisDBConnectionPool::Queque(ContextPtr ctx, RedisConnectedCallback callback)
+{
+    RedisDBConnectionPtr connectionPtr;
+    RedisDBConnection* connection;
     
-    RedisDBConnectionPtr connectionPtr =
-                            RedisDBConnectionPtr(connection, 
-                                boost::bind(&RedisDBConnectionMemoryPool::destroy, 
-                                &_memorypool, connection));
+    if(_connQueque.empty())
+    {
+        connection = _allocator.construct(_ioservice);
+    }
+    else
+    {
+         if(!_connQueque.dequeue(connection)) 
+         {
+             connection = _allocator.construct(_ioservice);
+         }
+    }
     
-    _conns.push_back(connectionPtr);
+    connectionPtr = RedisDBConnectionPtr(connection, 
+                                boost::bind(&RedisDBConnectionPool::OnFreeConnection, 
+                                this, connectionPtr));
             
-    return connectionPtr;
+    //return connectionPtr;
 }
 
 }

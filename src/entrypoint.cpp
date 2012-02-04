@@ -2,14 +2,24 @@
 #include "webapplication.h"
 //#include "user.h"
 #include "exception.h"
-//#include "uv.h"
+#include "redis4cpp/commands.h"
 
+//#include "uv.h"
+//#include "lockfreequeque.h"
 //#include "nedmalloc/malloc.c.h"
 
+struct test{};
 int main(int argc, char* argv[]) 
 {
 	try
 	{
+        //typedef boost::shared_ptr<int> IntPtr;
+        //boost::lockfree::fifo<int*> fifo;
+        //IntPtr p;
+        //fifo.dequeue(p);
+        
+        //fugu::LockFreeQueue<test> q;
+        
 		//UserManager* i = nedalloc::New<UserManager>();
 		// Check command line arguments.
 		//if (argc < 2)

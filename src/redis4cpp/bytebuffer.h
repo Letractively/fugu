@@ -4,7 +4,7 @@
 #include <boost/cstdint.hpp>
 #include <string>
 
-namespace fugu {
+namespace redis4cpp {
 
 static const int BYTE_BUFFER_DEFAULT_SIZE = 4096;
     
@@ -15,9 +15,10 @@ public:
     ByteBuffer(const char* bytes); // uses strlen
     ~ByteBuffer();
 
+    const std::string& Str() const;
     const char* Data() const { return bytes_ + start_; }
-    size_t Length() { return end_ - start_; }
-    size_t Capacity() { return size_ - start_; }
+    size_t Length() const { return end_ - start_; }
+    size_t Capacity() const { return size_ - start_; }
 
     bool ReadUInt8(boost::uint8_t& val);
     bool ReadUInt16(boost::uint16_t& val);
@@ -35,6 +36,7 @@ public:
     void Shift(size_t size);
 
 private:
+    mutable std::string _b;
     char* bytes_;
     size_t size_;
     size_t start_;

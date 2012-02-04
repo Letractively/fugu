@@ -54,7 +54,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/1445274692/handler.o \
 	${OBJECTDIR}/_ext/1445274692/query.o \
 	${OBJECTDIR}/_ext/1445274692/redisconnectionpool.o \
-	${OBJECTDIR}/_ext/1445274692/bytebuffer.o \
 	${OBJECTDIR}/_ext/1445274692/logger.o \
 	${OBJECTDIR}/_ext/1401901489/async.o \
 	${OBJECTDIR}/_ext/1401901489/hiredis.o \
@@ -186,11 +185,6 @@ ${OBJECTDIR}/_ext/1445274692/redisconnectionpool.o: ../../src/redisconnectionpoo
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/redisconnectionpool.o ../../src/redisconnectionpool.cpp
-
-${OBJECTDIR}/_ext/1445274692/bytebuffer.o: ../../src/bytebuffer.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/bytebuffer.o ../../src/bytebuffer.cpp
 
 ${OBJECTDIR}/_ext/1445274692/logger.o: ../../src/logger.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692

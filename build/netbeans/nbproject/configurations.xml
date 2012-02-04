@@ -7,6 +7,7 @@
       <itemPath>../../src/exception.cpp</itemPath>
       <itemPath>../../src/exception.h</itemPath>
       <itemPath>../../src/iterators.h</itemPath>
+      <itemPath>../../src/lockfreequeque.h</itemPath>
       <itemPath>../../src/logger.cpp</itemPath>
       <itemPath>../../src/logger.h</itemPath>
       <itemPath>../../src/prerequisites.h</itemPath>
@@ -49,8 +50,6 @@
       <itemPath>../../src/routeresolver.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f4" displayName="net" projectFiles="true">
-      <itemPath>../../src/bytebuffer.cpp</itemPath>
-      <itemPath>../../src/bytebuffer.h</itemPath>
       <itemPath>../../src/connection.cpp</itemPath>
       <itemPath>../../src/connection.h</itemPath>
       <itemPath>../../src/context.h</itemPath>
@@ -97,7 +96,7 @@
           <stripSymbols>true</stripSymbols>
           <incDir>
             <pElem>../../../../libuv/include</pElem>
-            <pElem>../../src/hiredis/adapters</pElem>
+            <pElem>../../src</pElem>
           </incDir>
           <preprocessorList>
             <Elem>USE_LIBUV</Elem>
@@ -112,6 +111,18 @@
             <linkerOptionItem>-lboost_thread</linkerOptionItem>
             <linkerLibFileItem>../../../../libuv/uv.a</linkerLibFileItem>
             <linkerOptionItem> -lrt</linkerOptionItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../redis4cpp"
+                            CT="2"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../redis4cpp"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libredis4cpp.so">
+              </makeArtifact>
+            </linkerLibProjectItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

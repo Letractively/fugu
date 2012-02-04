@@ -90,7 +90,6 @@ void WebApplication::HandleRequest(QueryPtr query, ConnectionPtr conn)
         ctx->_connection = conn;
         ctx->_query = query;
         ctx->_config = _config;
-        ctx->_redisDBPool = _redisDBPool;
         ctx->_session = SessionPtr();
         
         
@@ -101,15 +100,23 @@ void WebApplication::HandleRequest(QueryPtr query, ConnectionPtr conn)
 		HandlerPtr handler = _router.Resolve(query);
         
         if(handler->UseRedisDB()) {
-            //ctx->_connection = ctx->RedisDb()->GetConnection();
+            _redisDBPool->Queque(ctxPtr, boost::bind(&Handler::Process, handler, _1));
+            return;
+        }
+        else {
+            handler->Process(ctxPtr);
         }
         
-        handler->Process(ctxPtr);
 	}
 	catch(std::exception& ex)
 	{
 		Log(ex.what());
 	}
+}
+
+void WebApplication::HandleRedisConnection(ContextPtr ctx)
+{
+    //handler->Process(ctx);
 }
 
 }

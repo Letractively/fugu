@@ -54,7 +54,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/1445274692/handler.o \
 	${OBJECTDIR}/_ext/1445274692/query.o \
 	${OBJECTDIR}/_ext/1445274692/redisconnectionpool.o \
-	${OBJECTDIR}/_ext/1445274692/bytebuffer.o \
 	${OBJECTDIR}/_ext/1445274692/logger.o \
 	${OBJECTDIR}/_ext/1401901489/async.o \
 	${OBJECTDIR}/_ext/1401901489/hiredis.o \
@@ -77,13 +76,15 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-lpthread -lboost_system -lpthread -lboost_thread ../../../../libuv/uv.a -lrt
+LDLIBSOPTIONS=-lpthread -lboost_system -lpthread -lboost_thread ../../../../libuv/uv.a -lrt -Wl,-rpath ../redis4cpp/dist/Debug/GNU-Linux-x86 -L../redis4cpp/dist/Debug/GNU-Linux-x86 -lredis4cpp
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fuguservice
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fuguservice: ../../../../libuv/uv.a
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fuguservice: ../redis4cpp/dist/Debug/GNU-Linux-x86/libredis4cpp.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fuguservice: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
@@ -92,22 +93,22 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fuguservice: ${OBJECTFILES}
 ${OBJECTDIR}/_ext/1445274692/jsonreply.o: ../../src/jsonreply.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/jsonreply.o ../../src/jsonreply.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/jsonreply.o ../../src/jsonreply.cpp
 
 ${OBJECTDIR}/_ext/1445274692/session.o: ../../src/session.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/session.o ../../src/session.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/session.o ../../src/session.cpp
 
 ${OBJECTDIR}/_ext/1445274692/routeesolver.o: ../../src/routeesolver.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/routeesolver.o ../../src/routeesolver.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/routeesolver.o ../../src/routeesolver.cpp
 
 ${OBJECTDIR}/_ext/1445274692/connection.o: ../../src/connection.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/connection.o ../../src/connection.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/connection.o ../../src/connection.cpp
 
 ${OBJECTDIR}/_ext/1401901489/net.o: ../../src/hiredis/net.c 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1401901489
@@ -117,12 +118,12 @@ ${OBJECTDIR}/_ext/1401901489/net.o: ../../src/hiredis/net.c
 ${OBJECTDIR}/_ext/1445274692/config.o: ../../src/config.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/config.o ../../src/config.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/config.o ../../src/config.cpp
 
 ${OBJECTDIR}/_ext/1445274692/jsonmodel.o: ../../src/jsonmodel.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/jsonmodel.o ../../src/jsonmodel.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/jsonmodel.o ../../src/jsonmodel.cpp
 
 ${OBJECTDIR}/_ext/1379188117/http_parser.o: ../../src/http_parser/http_parser.c 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1379188117
@@ -137,12 +138,12 @@ ${OBJECTDIR}/_ext/1401901489/dict.o: ../../src/hiredis/dict.c
 ${OBJECTDIR}/_ext/1445274692/stringutils.o: ../../src/stringutils.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/stringutils.o ../../src/stringutils.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/stringutils.o ../../src/stringutils.cpp
 
 ${OBJECTDIR}/_ext/1445274692/pinghandler.o: ../../src/pinghandler.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/pinghandler.o ../../src/pinghandler.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/pinghandler.o ../../src/pinghandler.cpp
 
 ${OBJECTDIR}/_ext/1401901489/sds.o: ../../src/hiredis/sds.c 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1401901489
@@ -152,52 +153,47 @@ ${OBJECTDIR}/_ext/1401901489/sds.o: ../../src/hiredis/sds.c
 ${OBJECTDIR}/_ext/1445274692/webapplication.o: ../../src/webapplication.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/webapplication.o ../../src/webapplication.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/webapplication.o ../../src/webapplication.cpp
 
 ${OBJECTDIR}/_ext/1445274692/htmlreply.o: ../../src/htmlreply.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/htmlreply.o ../../src/htmlreply.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/htmlreply.o ../../src/htmlreply.cpp
 
 ${OBJECTDIR}/_ext/1445274692/httpparser.o: ../../src/httpparser.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/httpparser.o ../../src/httpparser.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/httpparser.o ../../src/httpparser.cpp
 
 ${OBJECTDIR}/_ext/1445274692/entrypoint.o: ../../src/entrypoint.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/entrypoint.o ../../src/entrypoint.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/entrypoint.o ../../src/entrypoint.cpp
 
 ${OBJECTDIR}/_ext/1445274692/registrator.o: ../../src/registrator.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/registrator.o ../../src/registrator.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/registrator.o ../../src/registrator.cpp
 
 ${OBJECTDIR}/_ext/1445274692/handler.o: ../../src/handler.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/handler.o ../../src/handler.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/handler.o ../../src/handler.cpp
 
 ${OBJECTDIR}/_ext/1445274692/query.o: ../../src/query.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/query.o ../../src/query.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/query.o ../../src/query.cpp
 
 ${OBJECTDIR}/_ext/1445274692/redisconnectionpool.o: ../../src/redisconnectionpool.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/redisconnectionpool.o ../../src/redisconnectionpool.cpp
-
-${OBJECTDIR}/_ext/1445274692/bytebuffer.o: ../../src/bytebuffer.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
-	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/bytebuffer.o ../../src/bytebuffer.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/redisconnectionpool.o ../../src/redisconnectionpool.cpp
 
 ${OBJECTDIR}/_ext/1445274692/logger.o: ../../src/logger.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/logger.o ../../src/logger.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/logger.o ../../src/logger.cpp
 
 ${OBJECTDIR}/_ext/1401901489/async.o: ../../src/hiredis/async.c 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1401901489
@@ -212,20 +208,21 @@ ${OBJECTDIR}/_ext/1401901489/hiredis.o: ../../src/hiredis/hiredis.c
 ${OBJECTDIR}/_ext/1445274692/redisconnection.o: ../../src/redisconnection.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/redisconnection.o ../../src/redisconnection.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/redisconnection.o ../../src/redisconnection.cpp
 
 ${OBJECTDIR}/_ext/1445274692/reply.o: ../../src/reply.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/reply.o ../../src/reply.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/reply.o ../../src/reply.cpp
 
 ${OBJECTDIR}/_ext/1445274692/exception.o: ../../src/exception.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1445274692
 	${RM} $@.d
-	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src/hiredis/adapters -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/exception.o ../../src/exception.cpp
+	$(COMPILE.cc) -g -s -DUSE_LIBUV -I../../../../libuv/include -I../../src -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1445274692/exception.o ../../src/exception.cpp
 
 # Subprojects
 .build-subprojects:
+	cd ../redis4cpp && ${MAKE}  -f Makefile CONF=Debug
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
@@ -234,6 +231,7 @@ ${OBJECTDIR}/_ext/1445274692/exception.o: ../../src/exception.cpp
 
 # Subprojects
 .clean-subprojects:
+	cd ../redis4cpp && ${MAKE}  -f Makefile CONF=Debug clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl

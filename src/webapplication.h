@@ -40,7 +40,7 @@ private:
 	void HandleStop();
 	// Handle request data
 	void HandleRequest(QueryPtr request, ConnectionPtr conn);
-    //void HandleRedisConnection(QueryPtr query, ConnectionPtr conn);
+    void HandleRedisConnection(ContextPtr ctx);
 
 private:
 	// Fugu service configuration
