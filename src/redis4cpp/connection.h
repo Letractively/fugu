@@ -1,5 +1,5 @@
-#ifndef __REDIS4CPP_CONNECTION_H__
-#define __REDIS4CPP_CONNECTION_H__
+#ifndef __REDIS4CPP_DataAccess_H__
+#define __REDIS4CPP_DataAccess_H__
 
 #include "interface.h"
 #include "sender.h"
@@ -7,10 +7,10 @@
 
 namespace redis4cpp {
 
-class Connection
+class DataAccess
 {
 public:
-    Connection(boost::asio::io_service& io_service);
+    DataAccess(boost::asio::io_service& io_service);
 
     // Add to lock-free queque, or send if curretly not processing
     void AsyncCommand(CommandBase* cmd);

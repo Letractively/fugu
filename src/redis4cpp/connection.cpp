@@ -4,7 +4,7 @@
 
 namespace redis4cpp {
     
-Connection::Connection(boost::asio::io_service& io_service)
+DataAccess::DataAccess(boost::asio::io_service& io_service)
     :_ioservice(io_service)
     ,_socket(io_service)
     ,strand_(io_service)
@@ -21,13 +21,13 @@ Connection::Connection(boost::asio::io_service& io_service)
     _socket.connect(iterator->endpoint());
 
     // Put the socket into non-blocking mode.
-    tcp::socket::non_blocking_io non_blocking_io(true);
-    _socket.io_control(non_blocking_io);
+    //tcp::socket::non_blocking_io non_blocking_io(true);
+    //_socket.io_control(non_blocking_io);
     
     _reciever.DoReceieve();
 }
 
-void Connection::AsyncCommand(CommandBase* cmd)
+void DataAccess::AsyncCommand(CommandBase* cmd)
 {
     _sender.AsyncCommand(cmd);
 }

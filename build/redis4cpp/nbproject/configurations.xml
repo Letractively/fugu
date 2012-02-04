@@ -41,7 +41,7 @@
           </incDir>
         </ccTool>
         <linkerTool>
-          <output>../redisclient/${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libredis4cpp.so</output>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libredis4cpp.so</output>
         </linkerTool>
       </compileType>
     </conf>
@@ -66,9 +66,6 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
-        <linkerTool>
-          <output>../redisclient/${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libredis4cpp.so</output>
-        </linkerTool>
       </compileType>
     </conf>
   </confs>

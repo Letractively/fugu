@@ -60,11 +60,11 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ../redisclient/${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libredis4cpp.so
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libredis4cpp.so
 
-../redisclient/${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libredis4cpp.so: ${OBJECTFILES}
-	${MKDIR} -p ../redisclient/${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -shared -o ../redisclient/${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libredis4cpp.so -fPIC ${OBJECTFILES} ${LDLIBSOPTIONS} 
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libredis4cpp.so: ${OBJECTFILES}
+	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
+	${LINK.cc} -shared -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libredis4cpp.so -fPIC ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 ${OBJECTDIR}/_ext/1591920417/sender.o: ../../src/redis4cpp/sender.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1591920417
@@ -102,7 +102,7 @@ ${OBJECTDIR}/_ext/1591920417/commands.o: ../../src/redis4cpp/commands.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ../redisclient/${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libredis4cpp.so
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libredis4cpp.so
 
 # Subprojects
 .clean-subprojects:

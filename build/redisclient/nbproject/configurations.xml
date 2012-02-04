@@ -34,11 +34,15 @@
         <linkerTool>
           <commandlineTool>g++</commandlineTool>
           <linkerLibItems>
+            <linkerOptionItem> -lboost_system</linkerOptionItem>
+            <linkerOptionItem> -lrt</linkerOptionItem>
+            <linkerLibStdlibItem>PosixThreads</linkerLibStdlibItem>
+            <linkerOptionItem>-lboost_thread</linkerOptionItem>
             <linkerLibProjectItem>
               <makeArtifact PL="../redis4cpp"
                             CT="2"
                             CN="Debug"
-                            AC="true"
+                            AC="false"
                             BL="true"
                             WD="../redis4cpp"
                             BC="${MAKE}  -f Makefile CONF=Debug"
@@ -46,10 +50,6 @@
                             OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libredis4cpp.so">
               </makeArtifact>
             </linkerLibProjectItem>
-            <linkerOptionItem> -lboost_system</linkerOptionItem>
-            <linkerOptionItem> -lrt</linkerOptionItem>
-            <linkerLibStdlibItem>PosixThreads</linkerLibStdlibItem>
-            <linkerOptionItem>-lboost_thread</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -62,11 +62,15 @@
       <compileType>
         <cTool>
           <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
           <incDir>
             <pElem>../../src</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
         <fortranCompilerTool>
@@ -76,6 +80,7 @@
           <developmentMode>5</developmentMode>
         </asmTool>
         <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
           <linkerLibItems>
             <linkerOptionItem> -lboost_system</linkerOptionItem>
             <linkerOptionItem> -lrt</linkerOptionItem>
@@ -89,7 +94,7 @@
                             WD="../redis4cpp"
                             BC="${MAKE}  -f Makefile CONF=Release"
                             CC="${MAKE}  -f Makefile CONF=Release clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libredis4cpp.so">
+                            OP="../redisclient/${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libredis4cpp.so">
               </makeArtifact>
             </linkerLibProjectItem>
           </linkerLibItems>

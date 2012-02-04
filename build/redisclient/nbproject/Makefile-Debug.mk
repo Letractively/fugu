@@ -51,7 +51,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-Wl,-rpath ../redis4cpp/dist/Debug/GNU-Linux-x86 -L../redis4cpp/dist/Debug/GNU-Linux-x86 -lredis4cpp -lboost_system -lrt -lpthread -lboost_thread
+LDLIBSOPTIONS=-lboost_system -lrt -lpthread -lboost_thread -Wl,-rpath ../redis4cpp/dist/Debug/GNU-Linux-x86 -L../redis4cpp/dist/Debug/GNU-Linux-x86 -lredis4cpp
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}

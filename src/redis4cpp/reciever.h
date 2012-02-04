@@ -13,7 +13,7 @@ namespace redis4cpp {
 
 class Receiver
 {
-friend class Connection;
+friend class DataAccess;
 
 public:
     Receiver(boost::asio::io_service& io_service

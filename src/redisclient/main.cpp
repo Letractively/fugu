@@ -18,24 +18,59 @@ using namespace std;
 
 boost::mutex _print;
 
-void PrintResult(redis4cpp::CommandBasePtr cmd)
+void PrintResult(redis4cpp::CommandBase* cmd)
 {
-    boost::mutex::scoped_lock lock(_print);
-    std::cout << cmd->Result() << std::endl;
+    try
+    {
+        boost::mutex::scoped_lock lock(_print);
+        std::cout << cmd->Result() << std::endl;
+    }
+    catch(std::exception& e)
+    {
+        std::cerr << "PrintResult Exception: " << e.what() << "\n";
+    }
+    
+    delete cmd;
 }
 
-void LoopExecute(redis4cpp::Connection* conn)
+void LoopExecute(redis4cpp::DataAccess* db)
 {
-    while(true) {
-        //boost::this_thread::sleep(boost::posix_time::milliseconds(1));
-        conn->AsyncCommand(
-            new redis4cpp::CommandBase("*3\r\n$3\r\nSET\r\n$5\r\nmykey\r\n$7\r\nmyvalue\r\n",
-                                    boost::bind(&PrintResult, _1)));
-        conn->AsyncCommand(
-            new redis4cpp::CommandBase("*2\r\n$3\r\nGET\r\n$5\r\nmykey\r\n",
-                boost::bind(&PrintResult, _1)));
+    try
+    {
+        redis4cpp::CommandBase* cmd1 = new redis4cpp::CommandBase("SET", boost::bind(&PrintResult, _1));
+        cmd1->AddArgument("nmykey");
+        cmd1->AddArgument("nmyvalue");
+        db->AsyncCommand(cmd1);
         
-        usleep(10);
+        /*
+        redis4cpp::CommandBase* cmd = new redis4cpp::CommandBase("GET", boost::bind(&PrintResult, _1));
+        cmd->AddArgument("nmykey");
+        db->AsyncCommand(cmd);
+            
+        redis4cpp::CommandBase* cmd2 = new redis4cpp::CommandBase("SET", boost::bind(&PrintResult, _1));
+        cmd2->AddArgument("nmykey");
+        cmd2->AddArgument("nmyvalue");
+        db->AsyncCommand(cmd2);
+         */
+        
+        /*
+        int count;
+        while(count < 1000000) {
+            db->AsyncCommand(
+                new redis4cpp::CommandBase("*3\r\n$3\r\nSET\r\n$5\r\nmykey\r\n$7\r\nmyvalue\r\n",
+                                        boost::bind(&PrintResult, _1)));
+            db->AsyncCommand(
+                new redis4cpp::CommandBase("*2\r\n$3\r\nGET\r\n$5\r\nmykey\r\n",
+                    boost::bind(&PrintResult, _1)));
+
+            usleep(100);
+            count++;
+        }
+        */ 
+    }
+    catch(std::exception& e)
+    {
+        std::cerr << "LoopExecute Exception: " << e.what() << "\n";
     }
 }
 
@@ -43,33 +78,28 @@ void LoopExecute(redis4cpp::Connection* conn)
 
 int main(int argc, char** argv) {
 
-  try
-  {            
-    boost::asio::io_service io_service;
-    redis4cpp::Connection conn(io_service);
+    try
+    {            
+        boost::asio::io_service io_service;
+        redis4cpp::DataAccess db(io_service);
 
-    // Create a pool of threads to run all of the io_services.
-    boost::thread_group threads;
+        // Create a pool of threads to run all of the io_services.
+        boost::thread_group threads;
 
-    // Create threads for read/write async operations
-    for (std::size_t i = 0; i < 3; ++i)
-        threads.create_thread(boost::bind(&boost::asio::io_service::run, &io_service));
+        // Create threads for read/write async operations
+        for (std::size_t i = 0; i < 1; ++i)
+            threads.create_thread(boost::bind(&boost::asio::io_service::run, &io_service));
 
-    boost::thread thread(boost::bind(&LoopExecute,  &conn));
+        boost::thread thread(boost::bind(&LoopExecute,  &db));
 
-    // wait for them
-    threads.join_all();
-  }
-  catch (std::exception& e)
-  {
-    std::cerr << "Exception: " << e.what() << "\n";
-  }
+        // wait for them
+        threads.join_all();
+    }
+    catch (std::exception& e)
+    {
+        std::cerr << "Exception: " << e.what() << "\n";
+    }
 
   return 0;
-  
-    //redis4cpp::Connection 
-    //redis4cpp::CommandBase cmd1("*3\r\n$3\r\nSET\r\n$5\r\nmykey\r\n$7\r\nmyvalue\r\n");
-   // redis4cpp::CommandBase cmd2("*23\r\n$3\r\nSET\r\n$5\r\nmykey\r\n");
-    //return 0;
 }
 

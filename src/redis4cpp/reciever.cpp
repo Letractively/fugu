@@ -19,12 +19,12 @@ void Receiver::HandleReceive(const boost::system::error_code& error, std::size_t
 {
     if(!error)
     {
-        CommandBasePtr cmd;
+        CommandBase* cmd;
         if(_sendedcommands.dequeue(cmd))
         {
             cmd->SetResult(data_);
-            cmd->Completed();
-            //strand_.wrap((boost::bind(&CommandBase::Completed, cmd)))();
+            //cmd->Completed();
+            _strand.wrap((boost::bind(&CommandBase::Completed, cmd)))();
         }
 
         DoReceieve();
@@ -35,9 +35,9 @@ void Receiver::DoReceieve()
 {
     _socket.async_read_some(
         boost::asio::buffer(data_, max_length),
-            _strand.wrap(boost::bind(&Receiver::HandleReceive, this, 
+                boost::bind(&Receiver::HandleReceive, this, 
                         boost::asio::placeholders::error, 
-                        boost::asio::placeholders::bytes_transferred)));
+                        boost::asio::placeholders::bytes_transferred));
 }
 
 }

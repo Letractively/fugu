@@ -15,7 +15,7 @@ const short multicast_port = 6379;
 
 class Sender
 {
-friend class Connection;
+friend class DataAccess;
 public:
     Sender(boost::asio::io_service& io_service
             ,boost::asio::ip::tcp::socket& socket
@@ -35,9 +35,7 @@ private:
     FifoCommands _tosendcommands;
     FifoCommands& _sendedcommands;
     boost::asio::ip::tcp::socket& _socket;
-    
-    typedef enum {Locked, Unlocked} LockState;
-    volatile boost::atomic<LockState> _state;
+    boost::atomic<bool> _inprocess;
 };
 
 }
