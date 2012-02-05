@@ -6,8 +6,8 @@
       <itemPath>../../src/redis4cpp/bytebuffer.h</itemPath>
       <itemPath>../../src/redis4cpp/commands.cpp</itemPath>
       <itemPath>../../src/redis4cpp/commands.h</itemPath>
-      <itemPath>../../src/redis4cpp/connection.cpp</itemPath>
-      <itemPath>../../src/redis4cpp/connection.h</itemPath>
+      <itemPath>../../src/redis4cpp/dataaccess.cpp</itemPath>
+      <itemPath>../../src/redis4cpp/dataaccess.h</itemPath>
       <itemPath>../../src/redis4cpp/interface.h</itemPath>
       <itemPath>../../src/redis4cpp/interfaceimpl.cpp</itemPath>
       <itemPath>../../src/redis4cpp/reciever.cpp</itemPath>

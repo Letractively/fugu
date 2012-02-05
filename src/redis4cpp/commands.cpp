@@ -40,14 +40,12 @@ int redisFormatCommandArgv(char **target, int argc, const char **argv, const siz
 
 CommandBase::CommandBase(const std::string& command)
     :_arguments(0)
-    ,_stream(&_streambuf)
 {            
     WriteStringArg(command);
 }
 
 CommandBase::CommandBase(const std::string& command, CommandCompleted completed)
     :_arguments(0)
-    ,_stream(&_streambuf)
     ,_completed(completed)
 {
     WriteStringArg(command);

@@ -46,9 +46,7 @@ private:
     boost::uint16_t _arguments;
     std::string _out;
     std::string _result;
-    CommandCompleted _completed;
-	boost::asio::streambuf _streambuf;
-	std::ostream _stream;
+    CommandCompleted _completed;;
 };
 
 }

@@ -34,8 +34,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/_ext/1591920417/dataaccess.o \
 	${OBJECTDIR}/_ext/1591920417/sender.o \
-	${OBJECTDIR}/_ext/1591920417/connection.o \
 	${OBJECTDIR}/_ext/1591920417/bytebuffer.o \
 	${OBJECTDIR}/_ext/1591920417/reciever.o \
 	${OBJECTDIR}/_ext/1591920417/interfaceimpl.o \
@@ -66,15 +66,15 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libredis4cpp.so: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -shared -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libredis4cpp.so -fPIC ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
+${OBJECTDIR}/_ext/1591920417/dataaccess.o: ../../src/redis4cpp/dataaccess.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1591920417
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -I../../src -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1591920417/dataaccess.o ../../src/redis4cpp/dataaccess.cpp
+
 ${OBJECTDIR}/_ext/1591920417/sender.o: ../../src/redis4cpp/sender.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1591920417
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -I../../src -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1591920417/sender.o ../../src/redis4cpp/sender.cpp
-
-${OBJECTDIR}/_ext/1591920417/connection.o: ../../src/redis4cpp/connection.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/1591920417
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -I../../src -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1591920417/connection.o ../../src/redis4cpp/connection.cpp
 
 ${OBJECTDIR}/_ext/1591920417/bytebuffer.o: ../../src/redis4cpp/bytebuffer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1591920417

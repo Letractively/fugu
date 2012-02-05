@@ -23,7 +23,7 @@ void Sender::AsyncCommand(CommandBase* cmd)
 
 void Sender::HandleSended(const boost::system::error_code& error, CommandBase* cmd)
 {
-    _inprocess = false;
+    _inprocess.store(false, boost::memory_order_acquire);
     
     if (!error)
     {
@@ -36,16 +36,12 @@ void Sender::HandleSended(const boost::system::error_code& error, CommandBase* c
     }
     else
     {
-        //delete cmd;
+        delete cmd;
     }
 }
 
 void Sender::DoSend(CommandBase* cmd)
-{            
-    //if(_state.exchange(Locked, boost::memory_order_acquire) == Locked)
-    //if(_state.compare_exchange_strong(expected, 1, boost::memory_order_acquire))
-    //if(_inprocess.exchange(true, boost::memory_order_acquire))
-    
+{                
     if(cmd != NULL)
         _tosendcommands.enqueue(cmd);
         
@@ -65,7 +61,6 @@ void Sender::DoSend(CommandBase* cmd)
                                 //,tosend->OutputBuffer()
                                 ,boost::bind(&Sender::HandleSended, this
                                 ,boost::asio::placeholders::error, tosend));
-            int k = 0;
         }
     }
 }

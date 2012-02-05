@@ -10,7 +10,7 @@
 #include <boost/thread/locks.hpp>
 
 #include "../redis4cpp/interface.h"
-#include "../redis4cpp/connection.h"
+#include "../redis4cpp/dataaccess.h"
 
 #include <unistd.h>
 

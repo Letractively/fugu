@@ -1,4 +1,4 @@
-#include "connection.h"
+#include "dataaccess.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/memory_order.hpp>
 
@@ -10,7 +10,6 @@ DataAccess::DataAccess(boost::asio::io_service& io_service)
     ,strand_(io_service)
     ,_sender(_ioservice, _socket, _sendedcommands, strand_)
     ,_reciever(_ioservice, _socket, _sendedcommands, strand_)
-    //,boost::asio::ip::address::from_string("127.0.0.1"), boost::asio::ip::address::from_string("127.0.0.1"))
 {
     using boost::asio::ip::tcp;
     
@@ -21,8 +20,8 @@ DataAccess::DataAccess(boost::asio::io_service& io_service)
     _socket.connect(iterator->endpoint());
 
     // Put the socket into non-blocking mode.
-    //tcp::socket::non_blocking_io non_blocking_io(true);
-    //_socket.io_control(non_blocking_io);
+    tcp::socket::non_blocking_io non_blocking_io(true);
+    _socket.io_control(non_blocking_io);
     
     _reciever.DoReceieve();
 }
