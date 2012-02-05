@@ -55,13 +55,13 @@ LDLIBSOPTIONS=-lboost_system -lrt -lpthread -lboost_thread -Wl,-rpath ../redis4c
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/redisclient
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ../redis4cpp/${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/redisclient
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/redisclient: ../redis4cpp/dist/Debug/GNU-Linux-x86/libredis4cpp.so
+../redis4cpp/${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/redisclient: ../redis4cpp/dist/Debug/GNU-Linux-x86/libredis4cpp.so
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/redisclient: ${OBJECTFILES}
-	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	g++ -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/redisclient ${OBJECTFILES} ${LDLIBSOPTIONS} 
+../redis4cpp/${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/redisclient: ${OBJECTFILES}
+	${MKDIR} -p ../redis4cpp/${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
+	g++ -o ../redis4cpp/${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/redisclient ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 ${OBJECTDIR}/_ext/526502843/main.o: ../../src/redisclient/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/526502843
@@ -75,7 +75,7 @@ ${OBJECTDIR}/_ext/526502843/main.o: ../../src/redisclient/main.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/redisclient
+	${RM} ../redis4cpp/${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/redisclient
 
 # Subprojects
 .clean-subprojects:

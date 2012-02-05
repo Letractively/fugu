@@ -40,6 +40,7 @@ int redisFormatCommandArgv(char **target, int argc, const char **argv, const siz
 
 CommandBase::CommandBase(const std::string& command)
     :_arguments(0)
+    ,_alreadyBuild(false)
 {            
     WriteStringArg(command);
 }
@@ -47,6 +48,7 @@ CommandBase::CommandBase(const std::string& command)
 CommandBase::CommandBase(const std::string& command, CommandCompleted completed)
     :_arguments(0)
     ,_completed(completed)
+    ,_alreadyBuild(false)
 {
     WriteStringArg(command);
 }
@@ -94,14 +96,18 @@ void CommandBase::WriteStringArg(const std::string& arg)
 
 BufferRef CommandBase::OutputBuffer()
 {
-    _out.insert(0, "*" + boost::lexical_cast<std::string>(_arguments) + CRLF);
+    if(!_alreadyBuild) {
+        _alreadyBuild = true;
+        _out.insert(0, "*" + boost::lexical_cast<std::string>(_arguments) + CRLF);
+    }
+    
     return _out;
 }
     
 void CommandBase::Completed()
 {
     if(!_completed.empty())
-        _completed(this);
+        _completed(shared_from_this());
 }
 
 }

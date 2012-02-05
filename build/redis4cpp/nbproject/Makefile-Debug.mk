@@ -37,6 +37,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/1591920417/dataaccess.o \
 	${OBJECTDIR}/_ext/1591920417/sender.o \
 	${OBJECTDIR}/_ext/1591920417/bytebuffer.o \
+	${OBJECTDIR}/_ext/1591920417/replyparser.o \
 	${OBJECTDIR}/_ext/1591920417/reciever.o \
 	${OBJECTDIR}/_ext/1591920417/interfaceimpl.o \
 	${OBJECTDIR}/_ext/1591920417/commands.o
@@ -80,6 +81,11 @@ ${OBJECTDIR}/_ext/1591920417/bytebuffer.o: ../../src/redis4cpp/bytebuffer.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/1591920417
 	${RM} $@.d
 	$(COMPILE.cc) -g -I../../src -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1591920417/bytebuffer.o ../../src/redis4cpp/bytebuffer.cpp
+
+${OBJECTDIR}/_ext/1591920417/replyparser.o: ../../src/redis4cpp/replyparser.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1591920417
+	${RM} $@.d
+	$(COMPILE.cc) -g -I../../src -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1591920417/replyparser.o ../../src/redis4cpp/replyparser.cpp
 
 ${OBJECTDIR}/_ext/1591920417/reciever.o: ../../src/redis4cpp/reciever.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1591920417

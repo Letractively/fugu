@@ -16,9 +16,10 @@ class Receiver
 friend class DataAccess;
 
 public:
+    typedef boost::function<void(ReceiveBuffer&, std::size_t bytes_recvd)> ReplyReceived;
     Receiver(boost::asio::io_service& io_service
             ,boost::asio::ip::tcp::socket& socket
-            ,FifoCommands& sendedcommands
+            ,ReplyReceived received
             ,boost::asio::io_service::strand& strand);
 
 private:
@@ -28,11 +29,9 @@ private:
 private:
     // Strand to ensure the connection's handlers are not called concurrently.
     boost::asio::io_service::strand& _strand;
-    // Free-lock buffer commands of to send
-    FifoCommands& _sendedcommands;
     boost::asio::ip::tcp::socket& _socket;
-    enum { max_length = 1024 };
-    char data_[max_length];
+    ReplyReceived _received;
+    ReceiveBuffer _buffer;
 };
 
 }

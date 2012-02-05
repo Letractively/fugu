@@ -30,12 +30,11 @@ void Sender::HandleSended(const boost::system::error_code& error, CommandBase* c
         // Add to sended commands queue, this command is next to respond result
         _sendedcommands.enqueue(cmd);
         
-        if(!_tosendcommands.empty()) {
-            DoSend();
-        }
+        DoSend();
     }
     else
     {
+        std::cout << "Sender::HandleSended error: " << error.message() << std::endl;
         delete cmd;
     }
 }
@@ -58,7 +57,6 @@ void Sender::DoSend(CommandBase* cmd)
         {
             boost::asio::async_write(_socket
                                 ,boost::asio::buffer(tosend->OutputBuffer())
-                                //,tosend->OutputBuffer()
                                 ,boost::bind(&Sender::HandleSended, this
                                 ,boost::asio::placeholders::error, tosend));
         }

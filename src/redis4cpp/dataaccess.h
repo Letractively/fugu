@@ -15,9 +15,12 @@ public:
     // Add to lock-free queque, or send if curretly not processing
     void AsyncCommand(CommandBase* cmd);
   
+
+    void HandleReceive(ReceiveBuffer&, std::size_t bytes_recvd);
+    
 private:
     boost::asio::io_service& _ioservice;
-    boost::asio::io_service::strand strand_;
+    boost::asio::io_service::strand _strand;
     boost::asio::ip::tcp::socket _socket;
     // Free-lock buffer commands of to send
     FifoCommands _sendedcommands;

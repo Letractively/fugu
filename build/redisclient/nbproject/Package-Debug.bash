@@ -12,7 +12,7 @@ CND_DISTDIR=dist
 CND_BUILDDIR=build
 NBTMPDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/redisclient
+OUTPUT_PATH=../redis4cpp/${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/redisclient
 OUTPUT_BASENAME=redisclient
 PACKAGE_TOP_DIR=redisclient/
 

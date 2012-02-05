@@ -32,6 +32,7 @@
           </incDir>
         </ccTool>
         <linkerTool>
+          <output>../redis4cpp/${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/redisclient</output>
           <commandlineTool>g++</commandlineTool>
           <linkerLibItems>
             <linkerOptionItem> -lboost_system</linkerOptionItem>
@@ -80,7 +81,7 @@
           <developmentMode>5</developmentMode>
         </asmTool>
         <linkerTool>
-          <output>${TESTDIR}/TestFiles/f1</output>
+          <output>../redis4cpp/${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/redisclient</output>
           <linkerLibItems>
             <linkerOptionItem> -lboost_system</linkerOptionItem>
             <linkerOptionItem> -lrt</linkerOptionItem>
@@ -94,7 +95,7 @@
                             WD="../redis4cpp"
                             BC="${MAKE}  -f Makefile CONF=Release"
                             CC="${MAKE}  -f Makefile CONF=Release clean"
-                            OP="../redisclient/${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libredis4cpp.so">
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libredis4cpp.so">
               </makeArtifact>
             </linkerLibProjectItem>
           </linkerLibItems>

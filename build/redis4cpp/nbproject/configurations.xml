@@ -1,30 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="80">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <logicalFolder name="f1" displayName="interface" projectFiles="true">
-      <itemPath>../../src/redis4cpp/bytebuffer.cpp</itemPath>
-      <itemPath>../../src/redis4cpp/bytebuffer.h</itemPath>
+    <logicalFolder name="f3" displayName="commands" projectFiles="true" kind="ROOT">
       <itemPath>../../src/redis4cpp/commands.cpp</itemPath>
       <itemPath>../../src/redis4cpp/commands.h</itemPath>
-      <itemPath>../../src/redis4cpp/dataaccess.cpp</itemPath>
-      <itemPath>../../src/redis4cpp/dataaccess.h</itemPath>
+      <itemPath>../../src/redis4cpp/replyparser.cpp</itemPath>
+      <itemPath>../../src/redis4cpp/replyparser.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f1" displayName="interface" projectFiles="true">
       <itemPath>../../src/redis4cpp/interface.h</itemPath>
       <itemPath>../../src/redis4cpp/interfaceimpl.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f2" displayName="network" projectFiles="true" kind="ROOT">
+      <itemPath>../../src/redis4cpp/bytebuffer.cpp</itemPath>
+      <itemPath>../../src/redis4cpp/bytebuffer.h</itemPath>
+      <itemPath>../../src/redis4cpp/dataaccess.cpp</itemPath>
+      <itemPath>../../src/redis4cpp/dataaccess.h</itemPath>
       <itemPath>../../src/redis4cpp/reciever.cpp</itemPath>
       <itemPath>../../src/redis4cpp/reciever.h</itemPath>
       <itemPath>../../src/redis4cpp/sender.cpp</itemPath>
       <itemPath>../../src/redis4cpp/sender.h</itemPath>
-    </logicalFolder>
-    <logicalFolder name="TestFiles"
-                   displayName="Test Files"
-                   projectFiles="false"
-                   kind="TEST_LOGICAL_FOLDER">
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false"
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="tests"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
     </logicalFolder>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>

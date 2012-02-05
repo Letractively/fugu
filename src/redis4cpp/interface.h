@@ -10,6 +10,7 @@
 #include <boost/lockfree/fifo.hpp>
 #include <boost/pool/object_pool.hpp>
 #include <boost/atomic.hpp>
+#include <boost/smart_ptr.hpp>
 
 namespace redis4cpp {
 
@@ -20,10 +21,14 @@ typedef boost::lockfree::fifo<CommandBase*> FifoCommands;
 
 typedef const std::string& BufferRef;
 
+typedef boost::array<char, 5*15000>  ReceiveBuffer;
+
+typedef boost::shared_array<char> RerplyPtr;
+
 class CommandBase : public boost::enable_shared_from_this<CommandBase>
 {
 public:
-    typedef boost::function<void(CommandBase*)> CommandCompleted;
+    typedef boost::function<void(CommandBasePtr)> CommandCompleted;
     CommandBase(const std::string& command);
     CommandBase(const std::string& command, CommandCompleted completed);
     //~CommandBase() { std::cout << "destroy command" << std::endl; }
@@ -35,18 +40,19 @@ public:
     void AddArgument(double arg);
     
     BufferRef OutputBuffer();
-    void SetResult(const std::string& result) { _result = result; }
-    const std::string& Result() const { return _result; }
+    void SetResult(RerplyPtr reply) { _result = reply; }
+    RerplyPtr Result() const { return _result; }
     void Completed();
     
 protected:
     void WriteStringArg(const std::string& arg);
     
 private:
+    bool _alreadyBuild;
     boost::uint16_t _arguments;
     std::string _out;
-    std::string _result;
-    CommandCompleted _completed;;
+    RerplyPtr _result;
+    CommandCompleted _completed;
 };
 
 }
