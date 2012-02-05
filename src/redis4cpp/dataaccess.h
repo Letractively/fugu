@@ -15,7 +15,8 @@ public:
     // Add to lock-free queque, or send if curretly not processing
     void AsyncCommand(CommandBase* cmd);
   
-
+private:
+    void HandleSend(CommandBase* cmd);
     void HandleReceive(ReceiveBuffer&, std::size_t bytes_recvd);
     
 private:

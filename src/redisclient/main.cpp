@@ -14,8 +14,6 @@
 #include "../redis4cpp/interface.h"
 #include "../redis4cpp/dataaccess.h"
 
-#include <unistd.h>
-
 using namespace std;
 
 boost::shared_mutex _print;
@@ -35,33 +33,43 @@ void PrintResult(redis4cpp::CommandBasePtr cmd)
     {
         std::cerr << "PrintResult Exception: " << e.what() << "\n";
     }
-    
-    //delete cmd;
 }
 
-void ExecutionLoop(redis4cpp::DataAccess* db)
+void ExecutionGetLoop(redis4cpp::DataAccess* db)
 {
     try
     {
         int count = 0;
-        while(count < 100) {
-
-            redis4cpp::CommandBase* set = new redis4cpp::CommandBase("SET", boost::bind(&PrintResult, _1));
-            set->AddArgument("nmykey");
-            set->AddArgument(count);
-            db->AsyncCommand(set);
-
-
+        while(count < 100) 
+        {
             redis4cpp::CommandBase* get = new redis4cpp::CommandBase("GET", boost::bind(&PrintResult, _1));
             get->AddArgument("nmykey");
             db->AsyncCommand(get);
         
             count++;
-            
-            //usleep(100);
         }
         
-        //std:: cout << results.str() << std::endl;
+    }
+    catch(std::exception& e)
+    {
+        std::cerr << "ExecutionLoop Exception: " << e.what() << "\n";
+    }
+}
+void ExecutionSetLoop(redis4cpp::DataAccess* db)
+{
+    try
+    {
+        int count = 0;
+        while(count < 100) 
+        {
+            redis4cpp::CommandBase* set = new redis4cpp::CommandBase("SET", boost::bind(&PrintResult, _1));
+            set->AddArgument("nmykey");
+            set->AddArgument(count);
+            db->AsyncCommand(set);
+            
+            count++;
+        }
+        
     }
     catch(std::exception& e)
     {
@@ -83,7 +91,8 @@ int main(int argc, char** argv) {
         for (std::size_t i = 0; i < 1; ++i)
             threads.create_thread(boost::bind(&boost::asio::io_service::run, &io_service));
 
-        boost::thread thread(boost::bind(&ExecutionLoop,  &db));
+        boost::thread setthread(boost::bind(&ExecutionSetLoop,  &db));
+        boost::thread getthread(boost::bind(&ExecutionGetLoop,  &db));
 
         // wait for them
         threads.join_all();

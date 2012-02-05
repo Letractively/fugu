@@ -5,14 +5,14 @@
 
 namespace redis4cpp {
 
-enum ReplyState
+enum ReplyType
 {
-    REPLY_STRING
-    ,REPLY_ARRAY
-    ,REPLY_INTEGER
-    ,REPLY_NIL
-    ,REPLY_STATUS
-    ,REPLY_ERROR
+    BAD_REPLY           = 0,
+    STATUS_REPLY        = 1,
+    ERROR_REPLY         = 2,
+    INTEGER_REPLY       = 3,
+    BULK_REPLY          = 4,
+    MULTI_BULK_REPLY    = 5
 };
 
 class Reply
@@ -34,7 +34,7 @@ private:
     RerplyPtr ParseMultiBulk(ReceiveBufferIter iter);
     
 private:
-    ReplyState _currState;
+    ReplyType _currState;
     int _cursor;
     ReceiveBuffer& _reply;
     std::size_t _bytesRecvd;

@@ -2,12 +2,6 @@
 #define __REDIS4CPP_RECIEVER_H__
 
 #include "interface.h"
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <boost/asio.hpp>
-#include "boost/bind.hpp"
-#include "boost/date_time/posix_time/posix_time_types.hpp"
 
 namespace redis4cpp {
 
@@ -27,11 +21,11 @@ private:
     void HandleReceive(const boost::system::error_code& error, std::size_t bytes_recvd);
     
 private:
+    boost::asio::ip::tcp::socket& _socket;
     // Strand to ensure the connection's handlers are not called concurrently.
     boost::asio::io_service::strand& _strand;
-    boost::asio::ip::tcp::socket& _socket;
-    ReplyReceived _received;
     ReceiveBuffer _buffer;
+    ReplyReceived ReceivedCallback;
 };
 
 }

@@ -6,12 +6,12 @@ namespace redis4cpp {
     
 Sender::Sender(boost::asio::io_service& io_service
                 ,boost::asio::ip::tcp::socket& socket
-                ,FifoCommands& sendedcommands
+                ,QuerySended sended
                 ,boost::asio::io_service::strand& strand)
 
     : _socket(socket)
+    ,QuerySendedCallback(sended)
     ,_strand(strand)
-    ,_sendedcommands(sendedcommands)
     ,_inprocess(false)
 {
 }    
@@ -27,9 +27,7 @@ void Sender::HandleSended(const boost::system::error_code& error, CommandBase* c
     
     if (!error)
     {
-        // Add to sended commands queue, this command is next to respond result
-        _sendedcommands.enqueue(cmd);
-        
+        QuerySendedCallback(cmd);
         DoSend();
     }
     else

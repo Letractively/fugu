@@ -52,27 +52,27 @@ RerplyPtr ReplyParser::ParseNext(ReceiveBufferIter iter)
     {
         // Single line reply
         case '+':
-            _currState = REPLY_STATUS;
+            _currState = STATUS_REPLY;
             return ParseLine(_reply.begin());
             
         // Error message
         case '-':
-            _currState = REPLY_ERROR;
+            _currState = ERROR_REPLY;
             return ParseLine(_reply.begin());
 
         // Integer number    
         case ':':
-            _currState = REPLY_INTEGER;
+            _currState = INTEGER_REPLY;
             return ParseLine(_reply.begin());
             
         // Bulk reply
         case '$':
-            _currState = REPLY_STRING;
+            _currState = BULK_REPLY;
             return ParseBulk(_reply.begin());
             
         // Multi-bulk reply
         case '*':
-            _currState = REPLY_ARRAY;
+            _currState = MULTI_BULK_REPLY;
             return ParseMultiBulk(_reply.begin());
             
         default:

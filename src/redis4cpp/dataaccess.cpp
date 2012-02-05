@@ -9,7 +9,8 @@ DataAccess::DataAccess(boost::asio::io_service& io_service)
     :_ioservice(io_service)
     ,_socket(io_service)
     ,_strand(io_service)
-    ,_sender(_ioservice, _socket, _sendedcommands, _strand)
+    ,_sender(_ioservice, _socket, 
+                boost::bind(&DataAccess::HandleSend, this, _1), _strand)
     ,_reciever(_ioservice, _socket,
                 boost::bind(&DataAccess::HandleReceive, this, _1, _2), _strand)
 {
@@ -33,6 +34,12 @@ void DataAccess::AsyncCommand(CommandBase* cmd)
     _sender.AsyncCommand(cmd);
 }
 
+void DataAccess::HandleSend(CommandBase* cmd)
+{
+    // Add to sended commands queue, this command is next to respond result
+    _sendedcommands.enqueue(cmd);
+}
+
 void DataAccess::HandleReceive(ReceiveBuffer& buffer, std::size_t bytesRecvd)
 {
     ReplyParser parser(buffer, bytesRecvd);
@@ -41,9 +48,8 @@ void DataAccess::HandleReceive(ReceiveBuffer& buffer, std::size_t bytesRecvd)
     while( (reply = parser.NextReply()) != NULL && _sendedcommands.dequeue(cmd))
     {
         cmd->SetResult(reply);
-        cmd->Completed();
-
-        //_strand.dispatch(boost::bind(&CommandBase::Completed, cmd));
+        _strand.dispatch(boost::bind(&CommandBase::Completed, cmd));
+        //cmd->Completed();
         //_strand.wrap((boost::bind(&CommandBase::Completed, cmd))();
     }
 }
