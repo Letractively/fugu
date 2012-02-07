@@ -40,8 +40,8 @@ public:
     void AddArgument(double arg);
     
     BufferRef OutputBuffer();
-    void SetResult(RerplyPtr reply) { _result = reply; }
-    RerplyPtr Result() const { return _result; }
+    void SetResult(const std::string& data) { _result = data; }
+    const std::string& Result() const { return _result; }
     void Completed();
     
 protected:
@@ -51,7 +51,7 @@ private:
     bool _alreadyBuild;
     boost::uint16_t _arguments;
     std::string _out;
-    RerplyPtr _result;
+    std::string _result;
     CommandCompleted _completed;
 };
 

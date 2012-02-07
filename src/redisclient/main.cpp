@@ -26,7 +26,7 @@ void PrintResult(redis4cpp::CommandBasePtr cmd)
     try
     {
         boost::lock_guard<boost::shared_mutex> guard(_print);
-        std::cout << "//command: " << cmd->OutputBuffer() << "//result: " << cmd->Result().get() << std::endl;
+        std::cout << "//command: " << cmd->OutputBuffer() << "//result: " << cmd->Result() << std::endl;
         std::cout << "******************************************************************" << std::endl;
     }
     catch(std::exception& e)
@@ -40,10 +40,10 @@ void ExecutionGetLoop(redis4cpp::DataAccess* db)
     try
     {
         int count = 0;
-        while(count < 100) 
+        while(count < 10) 
         {
             redis4cpp::CommandBase* get = new redis4cpp::CommandBase("GET", boost::bind(&PrintResult, _1));
-            get->AddArgument("nmykey");
+            get->AddArgument("nmykey1");
             db->AsyncCommand(get);
         
             count++;
@@ -60,7 +60,7 @@ void ExecutionSetLoop(redis4cpp::DataAccess* db)
     try
     {
         int count = 0;
-        while(count < 100) 
+        while(count < 10) 
         {
             redis4cpp::CommandBase* set = new redis4cpp::CommandBase("SET", boost::bind(&PrintResult, _1));
             set->AddArgument("nmykey");
@@ -88,10 +88,10 @@ int main(int argc, char** argv) {
         boost::thread_group threads;
 
         // Create threads for read/write async operations
-        for (std::size_t i = 0; i < 1; ++i)
+        for (std::size_t i = 0; i < 2; ++i)
             threads.create_thread(boost::bind(&boost::asio::io_service::run, &io_service));
 
-        boost::thread setthread(boost::bind(&ExecutionSetLoop,  &db));
+        //boost::thread setthread(boost::bind(&ExecutionSetLoop,  &db));
         boost::thread getthread(boost::bind(&ExecutionGetLoop,  &db));
 
         // wait for them

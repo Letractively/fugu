@@ -42,15 +42,15 @@ void DataAccess::HandleSend(CommandBase* cmd)
 
 void DataAccess::HandleReceive(ReceiveBuffer& buffer, std::size_t bytesRecvd)
 {
-    ReplyParser parser(buffer, bytesRecvd);
-    RerplyPtr reply;
+    std::string data;
+    
+    ReplyParser parser(buffer.data(), bytesRecvd);
+
     CommandBasePtr cmd;
-    while( (reply = parser.NextReply()) != NULL && _sendedcommands.dequeue(cmd))
+    while(parser.NextReply(data) && _sendedcommands.dequeue(cmd))
     {
-        cmd->SetResult(reply);
+        cmd->SetResult(data);
         _strand.dispatch(boost::bind(&CommandBase::Completed, cmd));
-        //cmd->Completed();
-        //_strand.wrap((boost::bind(&CommandBase::Completed, cmd))();
     }
 }
 

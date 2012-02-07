@@ -22,22 +22,22 @@ class Reply
 class ReplyParser
 {
 public:
-    typedef ReceiveBuffer::iterator ReceiveBufferIter;
-    ReplyParser(ReceiveBuffer& buff, std::size_t bytesRecvd);
+    ReplyParser(const char* reply, std::size_t bytesRecvd);
     
-    RerplyPtr NextReply();
+    bool NextReply(std::string& data);
     
 private:
-    RerplyPtr ParseNext(ReceiveBufferIter iter);
-    RerplyPtr ParseLine(ReceiveBufferIter iter);
-    RerplyPtr ParseBulk(ReceiveBufferIter iter);
-    RerplyPtr ParseMultiBulk(ReceiveBufferIter iter);
+    bool ParseNext(std::string& data);
+    bool ParseLine(std::string& data);
+    bool ParseBulk(std::string& data);
+    bool ParseMultiBulk(std::string& data);
     
+    long long ParseLongLong();
 private:
     ReplyType _currState;
-    int _cursor;
-    ReceiveBuffer& _reply;
-    std::size_t _bytesRecvd;
+    std::size_t _cursor;
+    const char* _reply;
+    std::size_t _length;
 };
 
 }

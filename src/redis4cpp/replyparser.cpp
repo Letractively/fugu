@@ -2,49 +2,24 @@
 
 namespace redis4cpp {
     
-static long long ReadLongLong(char *s) {
-    long long v = 0;
-    int dec, mult = 1;
-    char c;
-
-    if (*s == '-') {
-        mult = -1;
-        s++;
-    } else if (*s == '+') {
-        mult = 1;
-        s++;
-    }
-
-    while ((c = *(s++)) != '\r') {
-        dec = c - '0';
-        if (dec >= 0 && dec < 10) {
-            v *= 10;
-            v += dec;
-        } else {
-            /* Should not happen... */
-            return -1;
-        }
-    }
-
-    return mult*v;
-}
-
-ReplyParser::ReplyParser(ReceiveBuffer& buff, std::size_t bytesRecvd)
-    :_reply(buff)
-    ,_bytesRecvd(bytesRecvd)
+ReplyParser::ReplyParser(const char* reply, std::size_t bytesRecvd)
+    :_reply(reply)
+    ,_length(bytesRecvd)
     ,_cursor(0)
 {
 }
 
-RerplyPtr ReplyParser::NextReply()
+bool ReplyParser::NextReply(std::string& data)
 {
-    if(_cursor >= _bytesRecvd)
-        return RerplyPtr();
+    data.clear();
     
-    return ParseNext(_reply.begin() + _cursor);
+    if(_cursor >= _length)
+        return false;
+    
+    return ParseNext(data);
 }
 
-RerplyPtr ReplyParser::ParseNext(ReceiveBufferIter iter)
+bool ReplyParser::ParseNext(std::string& data)
 {
     char type = _reply[_cursor];
     _cursor++;
@@ -53,78 +28,109 @@ RerplyPtr ReplyParser::ParseNext(ReceiveBufferIter iter)
         // Single line reply
         case '+':
             _currState = STATUS_REPLY;
-            return ParseLine(_reply.begin());
+            return ParseLine(data);
             
         // Error message
         case '-':
             _currState = ERROR_REPLY;
-            return ParseLine(_reply.begin());
+            return ParseLine(data);
 
         // Integer number    
         case ':':
             _currState = INTEGER_REPLY;
-            return ParseLine(_reply.begin());
+            return ParseLine(data);
             
         // Bulk reply
         case '$':
             _currState = BULK_REPLY;
-            return ParseBulk(_reply.begin());
+            return ParseBulk(data);
             
         // Multi-bulk reply
         case '*':
             _currState = MULTI_BULK_REPLY;
-            return ParseMultiBulk(_reply.begin());
+            return ParseMultiBulk(data);
             
         default:
             //"Protocol error, got %s as reply type byte"
-            std::cout << "Unknown reply" << std::endl;
+            std::cout << "Unknown reply type: '" << type << "'" << std::endl;
     };
     
-    return RerplyPtr();
+    return false;
 }
 
-RerplyPtr ReplyParser::ParseLine(ReceiveBufferIter iter)
-{
-    int begin = _cursor;
-    while(_cursor <= _bytesRecvd)
-    {
-        if(_reply[_cursor] == '\r' && _reply[_cursor +1] == '\n')
-        {
-            int len = _cursor - begin;
-            char* ret = new char[len];
-            memcpy(ret, _reply.data() + begin, len);
-            _cursor += len + 2;
-            return  RerplyPtr(ret);
-        }
-        
-        _cursor++;
+
+bool ReplyParser::ParseLine(std::string& data)
+{    
+    const char *p = _reply + _cursor;
+    std::cout << "ParseLine: " << p << std::endl;
+    const char* endline = strchr(p, '\r');
+    if(endline && *(endline+1) == '\n') {
+        std::size_t linelen = endline - p;
+        data.append(p, linelen);
+        _cursor += linelen + 2;
+        return true;
     }
-    
-    return RerplyPtr();
+
+    // CRLF not found at all
+    return false;
 }
 
-RerplyPtr ReplyParser::ParseBulk(ReceiveBufferIter iter)
+bool ReplyParser::ParseBulk(std::string& data)
 {
-    // $6\r\nfoobar\r\n
-    
-    long long len = ReadLongLong(_reply.data() + _cursor);
-    _cursor += 3;
+    long long len = ParseLongLong();
     if(len < 0) {
-        return RerplyPtr(new char[1]{'\0'} );
+        data.append("NULL");
+        return true;
     }
     else {
-        char* ret = new char[len];
-        memcpy(ret, _reply.data() + _cursor, len);
-        _cursor += (len + 2);
-        return  RerplyPtr(ret);
+        
+        const char *s = _reply + _cursor;
+        std::cout << "ParseBulk: " << s << std::endl;
+        data.append(s, len);
+        _cursor += len + 2;
+        return true;
     }
-    
-    return RerplyPtr();
+            
+    return false;
 }
 
-RerplyPtr ReplyParser::ParseMultiBulk(ReceiveBufferIter iter)
+bool ReplyParser::ParseMultiBulk(std::string& data)
 {
-    return RerplyPtr();
+    return false;
 }
     
+long long ReplyParser::ParseLongLong()
+{
+    const char *s = _reply + _cursor;
+    
+    long long v = 0;
+    int dec, mult = 1;
+    char c;
+
+    if (*s == '-') {
+        mult = -1;
+        s++;
+        _cursor++;
+    } else if (*s == '+') {
+        mult = 1;
+        s++;
+        _cursor++;
+    }
+
+    while ((c = *(s++)) != '\r') {
+        _cursor++;
+        dec = c - '0';
+        if (dec >= 0 && dec < 10) {
+            v *= 10;
+            v += dec;
+        } else {
+            /* Should not happen... */
+            throw std::runtime_error("ReplyParser::ParseLongLong: invalid digit");
+        }
+    }
+
+    _cursor += 2;
+    return mult*v;
+}
+
 }
