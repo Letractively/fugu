@@ -15,11 +15,11 @@ Receiver::Receiver(boost::asio::io_service& io_service
 {
 }
   
-void Receiver::HandleReceive(const boost::system::error_code& error, std::size_t bytes_recvd)
+void Receiver::HandleReceive(const boost::system::error_code& error, std::size_t bytesRecvd)
 {
     if(!error)
     {
-        ReceivedCallback(_buffer, bytes_recvd);
+        _strand.dispatch(boost::bind(ReceivedCallback, _buffer, bytesRecvd));
         
         DoReceieve();
     }

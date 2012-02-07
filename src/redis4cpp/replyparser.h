@@ -32,7 +32,7 @@ private:
     bool ParseBulk(std::string& data);
     bool ParseMultiBulk(std::string& data);
     
-    long long ParseLongLong();
+    bool ParseLongLong(long long& ll);
 private:
     ReplyType _currState;
     std::size_t _cursor;

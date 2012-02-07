@@ -42,8 +42,9 @@ void ExecutionGetLoop(redis4cpp::DataAccess* db)
         int count = 0;
         while(count < 10) 
         {
-            redis4cpp::CommandBase* get = new redis4cpp::CommandBase("GET", boost::bind(&PrintResult, _1));
-            get->AddArgument("nmykey1");
+            redis4cpp::CommandBase* get = new redis4cpp::CommandBase("EVAL", boost::bind(&PrintResult, _1));
+            get->AddArgument("return redis.call('get', 'nmykey');");
+            get->AddArgument(0);
             db->AsyncCommand(get);
         
             count++;
@@ -55,6 +56,7 @@ void ExecutionGetLoop(redis4cpp::DataAccess* db)
         std::cerr << "ExecutionLoop Exception: " << e.what() << "\n";
     }
 }
+
 void ExecutionSetLoop(redis4cpp::DataAccess* db)
 {
     try
@@ -91,9 +93,11 @@ int main(int argc, char** argv) {
         for (std::size_t i = 0; i < 2; ++i)
             threads.create_thread(boost::bind(&boost::asio::io_service::run, &io_service));
 
-        //boost::thread setthread(boost::bind(&ExecutionSetLoop,  &db));
-        boost::thread getthread(boost::bind(&ExecutionGetLoop,  &db));
-
+        boost::thread_group datathreads;
+        datathreads.create_thread(boost::bind(&ExecutionSetLoop,  &db));
+        datathreads.create_thread(boost::bind(&ExecutionGetLoop,  &db));
+        datathreads.join_all();
+        
         // wait for them
         threads.join_all();
     }

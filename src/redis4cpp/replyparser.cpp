@@ -77,18 +77,20 @@ bool ReplyParser::ParseLine(std::string& data)
 
 bool ReplyParser::ParseBulk(std::string& data)
 {
-    long long len = ParseLongLong();
-    if(len < 0) {
-        data.append("NULL");
-        return true;
-    }
-    else {
-        
-        const char *s = _reply + _cursor;
-        std::cout << "ParseBulk: " << s << std::endl;
-        data.append(s, len);
-        _cursor += len + 2;
-        return true;
+    long long len;
+    if(ParseLongLong(len)) {        
+        if(len < 0) {
+            data.append("NULL");
+            return true;
+        }
+        else {
+
+            const char *s = _reply + _cursor;
+            std::cout << "ParseBulk: " << s << std::endl;
+            data.append(s, len);
+            _cursor += len + 2; // Skip "\r\n"
+            return true;
+        } 
     }
             
     return false;
@@ -99,7 +101,7 @@ bool ReplyParser::ParseMultiBulk(std::string& data)
     return false;
 }
     
-long long ReplyParser::ParseLongLong()
+bool ReplyParser::ParseLongLong(long long& ll)
 {
     const char *s = _reply + _cursor;
     
@@ -126,11 +128,13 @@ long long ReplyParser::ParseLongLong()
         } else {
             /* Should not happen... */
             throw std::runtime_error("ReplyParser::ParseLongLong: invalid digit");
+            return false;
         }
     }
 
-    _cursor += 2;
-    return mult*v;
+    _cursor += 2; // Skip "\r\n"
+    ll= mult*v;
+    return true;
 }
 
 }

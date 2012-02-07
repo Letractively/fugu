@@ -50,7 +50,8 @@ void DataAccess::HandleReceive(ReceiveBuffer& buffer, std::size_t bytesRecvd)
     while(parser.NextReply(data) && _sendedcommands.dequeue(cmd))
     {
         cmd->SetResult(data);
-        _strand.dispatch(boost::bind(&CommandBase::Completed, cmd));
+        cmd->Completed();
+        //_strand.dispatch(boost::bind(&CommandBase::Completed, cmd));
     }
 }
 

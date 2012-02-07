@@ -44,6 +44,8 @@ public:
     const std::string& Result() const { return _result; }
     void Completed();
     
+     virtual bool Batched() { return false; }
+     
 protected:
     void WriteStringArg(const std::string& arg);
     
