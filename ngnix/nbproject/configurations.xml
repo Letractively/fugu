@@ -1,0 +1,1582 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="80">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df name="ngnix" root=".">
+      <df name="auto">
+        <df name="cc">
+        </df>
+        <df name="lib">
+          <df name="geoip">
+          </df>
+          <df name="google-perftools">
+          </df>
+          <df name="libatomic">
+          </df>
+          <df name="libgd">
+          </df>
+          <df name="libxslt">
+          </df>
+          <df name="md5">
+          </df>
+          <df name="openssl">
+          </df>
+          <df name="pcre">
+          </df>
+          <df name="perl">
+          </df>
+          <df name="sha1">
+          </df>
+          <df name="zlib">
+            <in>patch.zlib.h</in>
+          </df>
+        </df>
+        <df name="os">
+        </df>
+        <df name="types">
+        </df>
+      </df>
+      <df name="contrib">
+        <df name="unicode2nginx">
+        </df>
+      </df>
+      <df name="hello">
+        <in>ngx_http_hello_module.c</in>
+      </df>
+      <df name="html">
+      </df>
+      <df name="man">
+      </df>
+      <df name="objs">
+        <df name="addon">
+          <df name="hello">
+          </df>
+        </df>
+        <df name="src">
+          <df name="core">
+          </df>
+          <df name="event">
+            <df name="modules">
+            </df>
+          </df>
+          <df name="http">
+            <df name="modules">
+              <df name="perl">
+              </df>
+            </df>
+          </df>
+          <df name="mail">
+          </df>
+          <df name="misc">
+          </df>
+          <df name="os">
+            <df name="unix">
+            </df>
+            <df name="win32">
+            </df>
+          </df>
+        </df>
+        <in>ngx_auto_config.h</in>
+        <in>ngx_auto_headers.h</in>
+        <in>ngx_modules.c</in>
+      </df>
+      <df name="src">
+        <df name="core">
+          <in>nginx.c</in>
+          <in>nginx.h</in>
+          <in>ngx_array.c</in>
+          <in>ngx_array.h</in>
+          <in>ngx_buf.c</in>
+          <in>ngx_buf.h</in>
+          <in>ngx_conf_file.c</in>
+          <in>ngx_conf_file.h</in>
+          <in>ngx_config.h</in>
+          <in>ngx_connection.c</in>
+          <in>ngx_connection.h</in>
+          <in>ngx_core.h</in>
+          <in>ngx_cpuinfo.c</in>
+          <in>ngx_crc.h</in>
+          <in>ngx_crc32.c</in>
+          <in>ngx_crc32.h</in>
+          <in>ngx_crypt.c</in>
+          <in>ngx_crypt.h</in>
+          <in>ngx_cycle.c</in>
+          <in>ngx_cycle.h</in>
+          <in>ngx_file.c</in>
+          <in>ngx_file.h</in>
+          <in>ngx_hash.c</in>
+          <in>ngx_hash.h</in>
+          <in>ngx_inet.c</in>
+          <in>ngx_inet.h</in>
+          <in>ngx_list.c</in>
+          <in>ngx_list.h</in>
+          <in>ngx_log.c</in>
+          <in>ngx_log.h</in>
+          <in>ngx_md5.c</in>
+          <in>ngx_md5.h</in>
+          <in>ngx_murmurhash.c</in>
+          <in>ngx_murmurhash.h</in>
+          <in>ngx_open_file_cache.c</in>
+          <in>ngx_open_file_cache.h</in>
+          <in>ngx_output_chain.c</in>
+          <in>ngx_palloc.c</in>
+          <in>ngx_palloc.h</in>
+          <in>ngx_parse.c</in>
+          <in>ngx_parse.h</in>
+          <in>ngx_queue.c</in>
+          <in>ngx_queue.h</in>
+          <in>ngx_radix_tree.c</in>
+          <in>ngx_radix_tree.h</in>
+          <in>ngx_rbtree.c</in>
+          <in>ngx_rbtree.h</in>
+          <in>ngx_regex.c</in>
+          <in>ngx_regex.h</in>
+          <in>ngx_resolver.c</in>
+          <in>ngx_resolver.h</in>
+          <in>ngx_sha1.h</in>
+          <in>ngx_shmtx.c</in>
+          <in>ngx_shmtx.h</in>
+          <in>ngx_slab.c</in>
+          <in>ngx_slab.h</in>
+          <in>ngx_spinlock.c</in>
+          <in>ngx_string.c</in>
+          <in>ngx_string.h</in>
+          <in>ngx_times.c</in>
+          <in>ngx_times.h</in>
+        </df>
+        <df name="event">
+          <df name="modules">
+            <in>ngx_aio_module.c</in>
+            <in>ngx_devpoll_module.c</in>
+            <in>ngx_epoll_module.c</in>
+            <in>ngx_eventport_module.c</in>
+            <in>ngx_kqueue_module.c</in>
+            <in>ngx_poll_module.c</in>
+            <in>ngx_rtsig_module.c</in>
+            <in>ngx_select_module.c</in>
+            <in>ngx_win32_select_module.c</in>
+          </df>
+          <in>ngx_event.c</in>
+          <in>ngx_event.h</in>
+          <in>ngx_event_accept.c</in>
+          <in>ngx_event_busy_lock.c</in>
+          <in>ngx_event_busy_lock.h</in>
+          <in>ngx_event_connect.c</in>
+          <in>ngx_event_connect.h</in>
+          <in>ngx_event_mutex.c</in>
+          <in>ngx_event_openssl.c</in>
+          <in>ngx_event_openssl.h</in>
+          <in>ngx_event_pipe.c</in>
+          <in>ngx_event_pipe.h</in>
+          <in>ngx_event_posted.c</in>
+          <in>ngx_event_posted.h</in>
+          <in>ngx_event_timer.c</in>
+          <in>ngx_event_timer.h</in>
+        </df>
+        <df name="http">
+          <df name="modules">
+            <df name="perl">
+              <in>ngx_http_perl_module.c</in>
+              <in>ngx_http_perl_module.h</in>
+            </df>
+            <in>ngx_http_access_module.c</in>
+            <in>ngx_http_addition_filter_module.c</in>
+            <in>ngx_http_auth_basic_module.c</in>
+            <in>ngx_http_autoindex_module.c</in>
+            <in>ngx_http_browser_module.c</in>
+            <in>ngx_http_charset_filter_module.c</in>
+            <in>ngx_http_chunked_filter_module.c</in>
+            <in>ngx_http_dav_module.c</in>
+            <in>ngx_http_degradation_module.c</in>
+            <in>ngx_http_empty_gif_module.c</in>
+            <in>ngx_http_fastcgi_module.c</in>
+            <in>ngx_http_flv_module.c</in>
+            <in>ngx_http_geo_module.c</in>
+            <in>ngx_http_geoip_module.c</in>
+            <in>ngx_http_gzip_filter_module.c</in>
+            <in>ngx_http_gzip_static_module.c</in>
+            <in>ngx_http_headers_filter_module.c</in>
+            <in>ngx_http_image_filter_module.c</in>
+            <in>ngx_http_index_module.c</in>
+            <in>ngx_http_limit_conn_module.c</in>
+            <in>ngx_http_limit_req_module.c</in>
+            <in>ngx_http_log_module.c</in>
+            <in>ngx_http_map_module.c</in>
+            <in>ngx_http_memcached_module.c</in>
+            <in>ngx_http_mp4_module.c</in>
+            <in>ngx_http_not_modified_filter_module.c</in>
+            <in>ngx_http_proxy_module.c</in>
+            <in>ngx_http_random_index_module.c</in>
+            <in>ngx_http_range_filter_module.c</in>
+            <in>ngx_http_realip_module.c</in>
+            <in>ngx_http_referer_module.c</in>
+            <in>ngx_http_rewrite_module.c</in>
+            <in>ngx_http_scgi_module.c</in>
+            <in>ngx_http_secure_link_module.c</in>
+            <in>ngx_http_split_clients_module.c</in>
+            <in>ngx_http_ssi_filter_module.c</in>
+            <in>ngx_http_ssi_filter_module.h</in>
+            <in>ngx_http_ssl_module.c</in>
+            <in>ngx_http_ssl_module.h</in>
+            <in>ngx_http_static_module.c</in>
+            <in>ngx_http_stub_status_module.c</in>
+            <in>ngx_http_sub_filter_module.c</in>
+            <in>ngx_http_upstream_ip_hash_module.c</in>
+            <in>ngx_http_upstream_keepalive_module.c</in>
+            <in>ngx_http_userid_filter_module.c</in>
+            <in>ngx_http_uwsgi_module.c</in>
+            <in>ngx_http_xslt_filter_module.c</in>
+          </df>
+          <in>ngx_http.c</in>
+          <in>ngx_http.h</in>
+          <in>ngx_http_busy_lock.c</in>
+          <in>ngx_http_busy_lock.h</in>
+          <in>ngx_http_cache.h</in>
+          <in>ngx_http_config.h</in>
+          <in>ngx_http_copy_filter_module.c</in>
+          <in>ngx_http_core_module.c</in>
+          <in>ngx_http_core_module.h</in>
+          <in>ngx_http_file_cache.c</in>
+          <in>ngx_http_header_filter_module.c</in>
+          <in>ngx_http_parse.c</in>
+          <in>ngx_http_parse_time.c</in>
+          <in>ngx_http_postpone_filter_module.c</in>
+          <in>ngx_http_request.c</in>
+          <in>ngx_http_request.h</in>
+          <in>ngx_http_request_body.c</in>
+          <in>ngx_http_script.c</in>
+          <in>ngx_http_script.h</in>
+          <in>ngx_http_special_response.c</in>
+          <in>ngx_http_upstream.c</in>
+          <in>ngx_http_upstream.h</in>
+          <in>ngx_http_upstream_round_robin.c</in>
+          <in>ngx_http_upstream_round_robin.h</in>
+          <in>ngx_http_variables.c</in>
+          <in>ngx_http_variables.h</in>
+          <in>ngx_http_write_filter_module.c</in>
+        </df>
+        <df name="mail">
+          <in>ngx_mail.c</in>
+          <in>ngx_mail.h</in>
+          <in>ngx_mail_auth_http_module.c</in>
+          <in>ngx_mail_core_module.c</in>
+          <in>ngx_mail_handler.c</in>
+          <in>ngx_mail_imap_handler.c</in>
+          <in>ngx_mail_imap_module.c</in>
+          <in>ngx_mail_imap_module.h</in>
+          <in>ngx_mail_parse.c</in>
+          <in>ngx_mail_pop3_handler.c</in>
+          <in>ngx_mail_pop3_module.c</in>
+          <in>ngx_mail_pop3_module.h</in>
+          <in>ngx_mail_proxy_module.c</in>
+          <in>ngx_mail_smtp_handler.c</in>
+          <in>ngx_mail_smtp_module.c</in>
+          <in>ngx_mail_smtp_module.h</in>
+          <in>ngx_mail_ssl_module.c</in>
+          <in>ngx_mail_ssl_module.h</in>
+        </df>
+        <df name="misc">
+          <in>ngx_cpp_test_module.cpp</in>
+          <in>ngx_google_perftools_module.c</in>
+        </df>
+        <df name="os">
+          <df name="unix">
+            <in>ngx_aio_read.c</in>
+            <in>ngx_aio_read_chain.c</in>
+            <in>ngx_aio_write.c</in>
+            <in>ngx_aio_write_chain.c</in>
+            <in>ngx_alloc.c</in>
+            <in>ngx_alloc.h</in>
+            <in>ngx_atomic.h</in>
+            <in>ngx_channel.c</in>
+            <in>ngx_channel.h</in>
+            <in>ngx_daemon.c</in>
+            <in>ngx_darwin.h</in>
+            <in>ngx_darwin_config.h</in>
+            <in>ngx_darwin_init.c</in>
+            <in>ngx_darwin_sendfile_chain.c</in>
+            <in>ngx_errno.c</in>
+            <in>ngx_errno.h</in>
+            <in>ngx_file_aio_read.c</in>
+            <in>ngx_files.c</in>
+            <in>ngx_files.h</in>
+            <in>ngx_freebsd.h</in>
+            <in>ngx_freebsd_config.h</in>
+            <in>ngx_freebsd_init.c</in>
+            <in>ngx_freebsd_rfork_thread.c</in>
+            <in>ngx_freebsd_rfork_thread.h</in>
+            <in>ngx_freebsd_sendfile_chain.c</in>
+            <in>ngx_gcc_atomic_amd64.h</in>
+            <in>ngx_gcc_atomic_ppc.h</in>
+            <in>ngx_gcc_atomic_sparc64.h</in>
+            <in>ngx_gcc_atomic_x86.h</in>
+            <in>ngx_linux.h</in>
+            <in>ngx_linux_aio_read.c</in>
+            <in>ngx_linux_config.h</in>
+            <in>ngx_linux_init.c</in>
+            <in>ngx_linux_sendfile_chain.c</in>
+            <in>ngx_os.h</in>
+            <in>ngx_posix_config.h</in>
+            <in>ngx_posix_init.c</in>
+            <in>ngx_process.c</in>
+            <in>ngx_process.h</in>
+            <in>ngx_process_cycle.c</in>
+            <in>ngx_process_cycle.h</in>
+            <in>ngx_pthread_thread.c</in>
+            <in>ngx_readv_chain.c</in>
+            <in>ngx_recv.c</in>
+            <in>ngx_send.c</in>
+            <in>ngx_setproctitle.c</in>
+            <in>ngx_setproctitle.h</in>
+            <in>ngx_shmem.c</in>
+            <in>ngx_shmem.h</in>
+            <in>ngx_socket.c</in>
+            <in>ngx_socket.h</in>
+            <in>ngx_solaris.h</in>
+            <in>ngx_solaris_config.h</in>
+            <in>ngx_solaris_init.c</in>
+            <in>ngx_solaris_sendfilev_chain.c</in>
+            <in>ngx_sunpro_amd64.il</in>
+            <in>ngx_sunpro_atomic_sparc64.h</in>
+            <in>ngx_sunpro_sparc64.il</in>
+            <in>ngx_sunpro_x86.il</in>
+            <in>ngx_thread.h</in>
+            <in>ngx_time.c</in>
+            <in>ngx_time.h</in>
+            <in>ngx_udp_recv.c</in>
+            <in>ngx_user.c</in>
+            <in>ngx_user.h</in>
+            <in>ngx_writev_chain.c</in>
+            <in>rfork_thread.S</in>
+          </df>
+        </df>
+      </df>
+      <df name="workdir">
+        <df name="client_body_temp">
+        </df>
+        <df name="conf">
+        </df>
+        <df name="fastcgi_temp">
+        </df>
+        <df name="logs">
+        </df>
+        <df name="proxy_temp">
+        </df>
+        <df name="scgi_temp">
+        </df>
+        <df name="uwsgi_temp">
+        </df>
+      </df>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+      <itemPath>configure</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="0">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>default</compilerSet>
+      </toolsSet>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE}</buildCommand>
+          <cleanCommand>./configure
+${MAKE} clean
+${MAKE}</cleanCommand>
+          <executablePath>objs/nginx</executablePath>
+        </makeTool>
+      </makefileType>
+      <item path="auto/lib/zlib/patch.zlib.h" ex="true" tool="3" flavor="0">
+      </item>
+      <folder path="ngnix/src/core">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/event</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <item path="src/event/modules/ngx_epoll_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/event/ngx_event.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/event/ngx_event_accept.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/event/ngx_event_busy_lock.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/event/ngx_event_connect.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/event/ngx_event_openssl.h" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="src/event/ngx_event_pipe.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/event/ngx_event_posted.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/event/ngx_event_timer.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_access_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_auth_basic_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_autoindex_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_browser_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_charset_filter_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_chunked_filter_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_empty_gif_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_fastcgi_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_geo_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_gzip_filter_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_headers_filter_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_index_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_limit_conn_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_limit_req_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_log_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_map_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_memcached_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_not_modified_filter_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_proxy_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_range_filter_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_referer_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_rewrite_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_scgi_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_split_clients_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_ssi_filter_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_ssl_module.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="src/http/modules/ngx_http_static_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_upstream_ip_hash_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_upstream_keepalive_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_userid_filter_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/modules/ngx_http_uwsgi_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/ngx_http.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/ngx_http_busy_lock.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/ngx_http_copy_filter_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/ngx_http_core_module.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/ngx_http_file_cache.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/ngx_http_header_filter_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/ngx_http_parse.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/ngx_http_parse_time.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/ngx_http_postpone_filter_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/ngx_http_request.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/ngx_http_request_body.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/ngx_http_script.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/ngx_http_special_response.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/ngx_http_upstream.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/ngx_http_upstream_round_robin.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/ngx_http_variables.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/http/ngx_http_write_filter_module.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/mail/ngx_mail_ssl_module.h" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="src/os/unix/ngx_alloc.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/ngx_channel.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/ngx_daemon.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/ngx_darwin.h" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="src/os/unix/ngx_darwin_config.h" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="src/os/unix/ngx_errno.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/ngx_files.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/ngx_freebsd.h" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="src/os/unix/ngx_freebsd_config.h" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="src/os/unix/ngx_freebsd_rfork_thread.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="src/os/unix/ngx_gcc_atomic_amd64.h" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="src/os/unix/ngx_gcc_atomic_ppc.h" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="src/os/unix/ngx_gcc_atomic_sparc64.h" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="src/os/unix/ngx_linux_init.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/ngx_linux_sendfile_chain.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/ngx_posix_init.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/ngx_process.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/ngx_process_cycle.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/ngx_readv_chain.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/ngx_recv.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/ngx_send.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/ngx_setproctitle.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/ngx_shmem.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/ngx_socket.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/ngx_solaris.h" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="src/os/unix/ngx_solaris_config.h" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="src/os/unix/ngx_sunpro_amd64.il" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="src/os/unix/ngx_sunpro_atomic_sparc64.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="src/os/unix/ngx_sunpro_sparc64.il" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="src/os/unix/ngx_sunpro_x86.il" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="src/os/unix/ngx_time.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/ngx_udp_recv.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/ngx_user.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/ngx_writev_chain.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/os/unix/rfork_thread.S" ex="true" tool="4" flavor="0">
+      </item>
+    </conf>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>default</compilerSet>
+      </toolsSet>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
+          <executablePath></executablePath>
+        </makeTool>
+      </makefileType>
+    </conf>
+  </confs>
+</configurationDescriptor>
