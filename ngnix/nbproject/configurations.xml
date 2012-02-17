@@ -39,8 +39,33 @@
         <df name="unicode2nginx">
         </df>
       </df>
-      <df name="hello">
-        <in>ngx_http_hello_module.c</in>
+      <df name="fugu">
+        <df name="hiredis">
+          <df name="adapters">
+            <in>ae.h</in>
+            <in>libev.h</in>
+            <in>libevent.h</in>
+            <in>libuv.h</in>
+          </df>
+          <in>async.c</in>
+          <in>async.h</in>
+          <in>dict.c</in>
+          <in>dict.h</in>
+          <in>example-ae.c</in>
+          <in>example-libev.c</in>
+          <in>example-libevent.c</in>
+          <in>example.c</in>
+          <in>fmacros.h</in>
+          <in>hiredis.c</in>
+          <in>hiredis.h</in>
+          <in>net.c</in>
+          <in>net.h</in>
+          <in>sds.c</in>
+          <in>sds.h</in>
+          <in>test.c</in>
+          <in>util.h</in>
+        </df>
+        <in>ngx_http_fugu_module.c</in>
       </df>
       <df name="html">
       </df>
@@ -48,7 +73,7 @@
       </df>
       <df name="objs">
         <df name="addon">
-          <df name="hello">
+          <df name="fugu">
           </df>
         </df>
         <df name="src">
@@ -75,6 +100,7 @@
             </df>
           </df>
         </df>
+        <in>autoconf.err</in>
         <in>ngx_auto_config.h</in>
         <in>ngx_auto_headers.h</in>
         <in>ngx_modules.c</in>
@@ -390,9 +416,7 @@
         <makeTool>
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE}</buildCommand>
-          <cleanCommand>./configure
-${MAKE} clean
-${MAKE}</cleanCommand>
+          <cleanCommand>bash cleanandbuild</cleanCommand>
           <executablePath>objs/nginx</executablePath>
         </makeTool>
       </makefileType>
@@ -1363,6 +1387,8 @@ ${MAKE}</cleanCommand>
       </item>
       <item path="src/os/unix/ngx_gcc_atomic_sparc64.h" ex="true" tool="3" flavor="0">
       </item>
+      <item path="src/os/unix/ngx_gcc_atomic_x86.h" ex="true" tool="3" flavor="0">
+      </item>
       <item path="src/os/unix/ngx_linux_init.c" ex="false" tool="0" flavor="0">
         <cTool>
           <incDir>
@@ -1389,6 +1415,8 @@ ${MAKE}</cleanCommand>
             <pElem>src/event/modules</pElem>
           </incDir>
         </cTool>
+      </item>
+      <item path="src/os/unix/ngx_posix_config.h" ex="true" tool="3" flavor="0">
       </item>
       <item path="src/os/unix/ngx_posix_init.c" ex="false" tool="0" flavor="0">
         <cTool>
