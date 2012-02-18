@@ -46,6 +46,7 @@
             <in>libev.h</in>
             <in>libevent.h</in>
             <in>libuv.h</in>
+            <in>ngx_redis.h</in>
           </df>
           <in>async.c</in>
           <in>async.h</in>
@@ -102,7 +103,6 @@
             </df>
           </df>
         </df>
-        <in>autoconf.err</in>
         <in>ngx_auto_config.h</in>
         <in>ngx_auto_headers.h</in>
         <in>ngx_modules.c</in>
@@ -424,6 +424,18 @@
       </makefileType>
       <item path="auto/lib/zlib/patch.zlib.h" ex="true" tool="3" flavor="0">
       </item>
+      <folder path="ngnix/objs">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/event</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+      </folder>
       <folder path="ngnix/src/core">
         <cTool>
           <incDir>
@@ -438,7 +450,67 @@
       </folder>
       <item path="fugu/hiredis/adapters/libuv.h" ex="true" tool="3" flavor="0">
       </item>
+      <item path="fugu/hiredis/async.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>src/mail</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
       <item path="fugu/hiredis/dict.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>src/mail</pElem>
+            <pElem>src/event</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="fugu/hiredis/hiredis.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>src/mail</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="fugu/hiredis/net.c" ex="false" tool="0" flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/http</pElem>
+            <pElem>src/mail</pElem>
+            <pElem>objs</pElem>
+            <pElem>src/event</pElem>
+            <pElem>src/http/modules</pElem>
+            <pElem>.</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>src/event/modules</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="fugu/hiredis/sds.c" ex="false" tool="0" flavor="0">
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
@@ -468,82 +540,6 @@
           </incDir>
         </cTool>
       </item>
-      <item path="hello/hi/adapters/ae.h" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hi/adapters/libev.h" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hi/adapters/libevent.h" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hi/adapters/libuv.h" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hi/async.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hi/async.h" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hi/dict.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hi/dict.h" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hi/example-ae.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hi/example-libev.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hi/example-libevent.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hi/example.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hi/fmacros.h" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hi/hiredis.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hi/net.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hi/net.h" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hi/sds.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hi/sds.h" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hi/test.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hi/util.h" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hiredis/adapters/ae.h" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hiredis/adapters/libev.h" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hiredis/adapters/libevent.h" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hiredis/adapters/libuv.h" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hiredis/async.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hiredis/dict.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hiredis/example-ae.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hiredis/example-libev.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hiredis/example-libevent.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hiredis/example.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hiredis/hiredis.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hiredis/net.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hiredis/net.h" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hiredis/sds.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hiredis/sds.h" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hiredis/test.c" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="hello/hiredis/util.h" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="src/core/ngx_sha1.h" ex="true" tool="3" flavor="0">
-      </item>
       <item path="src/event/modules/ngx_epoll_module.c"
             ex="false"
             tool="0"
@@ -551,11 +547,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -563,11 +559,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -575,11 +571,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -587,11 +583,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -599,11 +595,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -613,11 +609,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -625,11 +621,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -637,11 +633,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -653,12 +649,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -670,12 +666,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -687,12 +683,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -704,12 +700,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -721,12 +717,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -738,12 +734,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -755,12 +751,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -772,12 +768,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -789,12 +785,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -806,12 +802,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -823,12 +819,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -840,12 +836,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -857,12 +853,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -874,12 +870,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -891,12 +887,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -908,12 +904,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -925,12 +921,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -942,12 +938,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -959,12 +955,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -976,12 +972,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -993,12 +989,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1010,12 +1006,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1027,12 +1023,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1044,12 +1040,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1061,12 +1057,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1083,12 +1079,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1100,12 +1096,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1117,12 +1113,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1134,12 +1130,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1151,12 +1147,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1165,12 +1161,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1179,12 +1175,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1196,12 +1192,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1210,12 +1206,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1224,12 +1220,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1241,12 +1237,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1255,12 +1251,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1269,12 +1265,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1286,12 +1282,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1300,12 +1296,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1314,12 +1310,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1328,12 +1324,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1345,12 +1341,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1359,12 +1355,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1376,12 +1372,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1390,12 +1386,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1407,12 +1403,12 @@
           <incDir>
             <pElem>src/core</pElem>
             <pElem>src/http</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
+            <pElem>objs</pElem>
             <pElem>src/http/modules</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1422,11 +1418,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1434,11 +1430,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1446,11 +1442,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1462,11 +1458,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1474,11 +1470,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1497,15 +1493,17 @@
       </item>
       <item path="src/os/unix/ngx_gcc_atomic_sparc64.h" ex="true" tool="3" flavor="0">
       </item>
+      <item path="src/os/unix/ngx_gcc_atomic_x86.h" ex="true" tool="3" flavor="0">
+      </item>
       <item path="src/os/unix/ngx_linux_init.c" ex="false" tool="0" flavor="0">
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1516,23 +1514,25 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
+      </item>
+      <item path="src/os/unix/ngx_posix_config.h" ex="true" tool="3" flavor="0">
       </item>
       <item path="src/os/unix/ngx_posix_init.c" ex="false" tool="0" flavor="0">
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1540,11 +1540,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1552,11 +1552,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1564,11 +1564,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1576,11 +1576,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1588,11 +1588,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1600,11 +1600,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1612,11 +1612,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1624,11 +1624,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1651,11 +1651,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1663,11 +1663,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1675,11 +1675,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
@@ -1687,11 +1687,11 @@
         <cTool>
           <incDir>
             <pElem>src/core</pElem>
-            <pElem>objs</pElem>
             <pElem>src/event</pElem>
-            <pElem>.</pElem>
-            <pElem>src/os/unix</pElem>
+            <pElem>objs</pElem>
             <pElem>src/event/modules</pElem>
+            <pElem>src/os/unix</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
       </item>
