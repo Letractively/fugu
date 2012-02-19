@@ -75,7 +75,6 @@ void disconnectCallback(const redisAsyncContext *c, int status) {
 
 static ngx_int_t ngx_http_hello_world_handler(ngx_http_request_t *r)
 {
-    
     ngx_int_t    rc;
     ngx_buf_t   *b;
     ngx_chain_t  out;
@@ -84,7 +83,8 @@ static ngx_int_t ngx_http_hello_world_handler(ngx_http_request_t *r)
     ngx_redis_attach((ngx_cycle_t*)ngx_cycle, redis_ctx);
     redisAsyncSetConnectCallback(redis_ctx,connectCallback);
     redisAsyncSetDisconnectCallback(redis_ctx,disconnectCallback);
-    redisAsyncCommand(redis_ctx, getCallback, (char*)"end-1", "GET key");
+    redisAsyncCommand(redis_ctx, NULL, (char*)"end-1", "SET key test");
+    redisAsyncCommand(redis_ctx, getCallback, (char*)"end-1", "eval 'return 1;' 0");
     
     // we response to 'GET' and 'HEAD' requests only 
     if (!(r->method & (NGX_HTTP_GET|NGX_HTTP_HEAD))) {

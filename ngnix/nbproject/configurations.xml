@@ -46,7 +46,6 @@
             <in>libev.h</in>
             <in>libevent.h</in>
             <in>libuv.h</in>
-            <in>ngx_redis.h</in>
           </df>
           <in>async.c</in>
           <in>async.h</in>
@@ -451,8 +450,6 @@
         </cTool>
       </folder>
       <item path="fugu/hiredis/adapters/libuv.h" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="fugu/hiredis/adapters/ngx_redis.h" ex="true" tool="3" flavor="0">
       </item>
       <item path="fugu/hiredis/async.c" ex="false" tool="0" flavor="0">
         <cTool>

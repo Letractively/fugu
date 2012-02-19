@@ -10,51 +10,55 @@
 
 ngx_int_t ngx_add_redis_event(ngx_cycle_t *cycle, ngx_fd_t fd, ngx_int_t event, ngx_event_handler_pt handler, void* data);
 
-   
+
+ngx_redis_context_t *ctx;
+
 void ngx_redis_read_event_handler(ngx_event_t* handle) 
 {
-    ngx_redis_context_t *e = (ngx_redis_context_t*)handle->data;
-    redisAsyncHandleRead(e->context);
+    //ngx_redis_context_t *e = (ngx_redis_context_t*)handle->data;
+    redisAsyncHandleRead(ctx->context);
 }
 
 void ngx_redis_write_event_handler(ngx_event_t* handle) 
 {
-    ngx_redis_context_t *e = (ngx_redis_context_t*)handle->data;
-    redisAsyncHandleWrite(e->context);
+    //ngx_redis_context_t *e = (ngx_redis_context_t*)handle->data;
+    redisAsyncHandleWrite(ctx->context);
 }
 
 void ngx_redis_add_read(void *privdata)
 {
-    ngx_redis_context_t *e = (ngx_redis_context_t*)privdata;
-    ngx_add_redis_event(e->loop, e->context->c.fd, NGX_READ_EVENT, ngx_redis_read_event_handler, privdata);
+    //ngx_redis_context_t *e = (ngx_redis_context_t*)privdata;
+    ngx_add_redis_event(ctx->loop, ctx->context->c.fd, NGX_READ_EVENT, ngx_redis_read_event_handler, privdata);
+    //ngx_add_channel_event(ctx->loop, ctx->context->c.fd, NGX_READ_EVENT, ngx_redis_read_event_handler);
 }
 
 void ngx_redis_del_read(void *privdata)
 {
-    ngx_redis_context_t *e = (ngx_redis_context_t*)privdata;
-    ngx_connection_t * conn = ngx_get_connection(e->context->c.fd, e->loop->log);
+    //ngx_redis_context_t *e = (ngx_redis_context_t*)privdata;
+    ngx_connection_t * conn = ngx_get_connection(ctx->context->c.fd, ctx->loop->log);
     ngx_del_event(conn->read, NGX_READ_EVENT, 0);
 }
 
 void ngx_redis_add_write(void *privdata)
 {
-    ngx_redis_context_t *e = (ngx_redis_context_t*)privdata;
-    ngx_add_redis_event(e->loop, e->context->c.fd, NGX_WRITE_EVENT, ngx_redis_write_event_handler, privdata);
+    //ngx_redis_context_t *e = (ngx_redis_context_t*)privdata;
+    ngx_add_redis_event(ctx->loop, ctx->context->c.fd, NGX_WRITE_EVENT, ngx_redis_write_event_handler, privdata);
+    //ngx_add_channel_event(ctx->loop, ctx->context->c.fd, NGX_WRITE_EVENT, ngx_redis_write_event_handler);
 }
 
 void ngx_redis_del_write(void *privdata)
 {
-    ngx_redis_context_t *e = (ngx_redis_context_t*)privdata;
-    ngx_connection_t * conn = ngx_get_connection(e->context->c.fd, e->loop->log);
+    //ngx_redis_context_t *e = (ngx_redis_context_t*)privdata;
+    ngx_connection_t * conn = ngx_get_connection(ctx->context->c.fd, ctx->loop->log);
     ngx_del_event(conn->write, NGX_WRITE_EVENT, 0);
 }
 
 void ngx_redis_cleanup(void *privdata)
 {
-    ngx_redis_context_t *e = (ngx_redis_context_t*)privdata;
+    //ngx_redis_context_t *e = (ngx_redis_context_t*)privdata;
     ngx_redis_del_read(privdata);
     ngx_redis_del_write(privdata);
-    free(e);
+    //free(e);
 }
 
 int ngx_redis_attach(ngx_cycle_t* cycle, redisAsyncContext *ac)
@@ -70,7 +74,6 @@ int ngx_redis_attach(ngx_cycle_t* cycle, redisAsyncContext *ac)
     e->context = ac;
     e->loop = cycle;
 
-    
     // Register functions to start/stop listening for events
     ac->ev.addRead = ngx_redis_add_read;
     ac->ev.delRead = ngx_redis_del_read;
@@ -78,6 +81,7 @@ int ngx_redis_attach(ngx_cycle_t* cycle, redisAsyncContext *ac)
     ac->ev.delWrite = ngx_redis_del_write;
     ac->ev.cleanup = ngx_redis_cleanup;
     ac->ev.data = e;
+    ctx = e;
     
     /*
     e->conn = ngx_get_connection(ac->c.fd, cycle->log);
@@ -144,7 +148,6 @@ ngx_int_t ngx_add_redis_event(ngx_cycle_t *cycle, ngx_fd_t fd, ngx_int_t event, 
     ev = (event == NGX_READ_EVENT) ? rev : wev;
 
     ev->handler = handler;
-    ev->data = data;
     
     if (ngx_add_conn && (ngx_event_flags & NGX_USE_EPOLL_EVENT) == 0) {
         if (ngx_add_conn(c) == NGX_ERROR) {
