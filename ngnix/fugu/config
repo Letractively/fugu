@@ -3,5 +3,6 @@ HTTP_MODULES="$HTTP_MODULES ngx_http_hello_world_module"
 NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/hiredis/sds.c 
                 $ngx_addon_dir/hiredis/net.c 
                 $ngx_addon_dir/hiredis/hiredis.c $ngx_addon_dir/hiredis/async.c 
-                $NGX_ADDON_SRCS $ngx_addon_dir/ngx_http_fugu_module.c 
+                $ngx_addon_dir/ngx_http_fugu_module.c
+                $ngx_addon_dir/ngx_redis_adapter.c
                 "

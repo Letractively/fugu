@@ -3,7 +3,7 @@
 #include <ngx_http.h>
 #include <ngx_core.h>
 
-#include "hiredis/adapters/ngx_redis.h"
+#include "ngx_redis_adapter.h"
 
 static char *ngx_http_hello_world(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
 
@@ -58,7 +58,7 @@ void getCallback(redisAsyncContext *c, void *r, void *privdata)
     printf("argv[%s]: %s\n", (char*)privdata, reply->str);
 
     /* Disconnect after receiving the reply to GET */
-    redisAsyncDisconnect(c);
+    //redisAsyncDisconnect(c);
 }
 
 void connectCallback(const redisAsyncContext *c) {
@@ -73,16 +73,15 @@ void disconnectCallback(const redisAsyncContext *c, int status) {
     printf("disconnected...\n");
 }
 
-
 static ngx_int_t ngx_http_hello_world_handler(ngx_http_request_t *r)
 {
+    
     ngx_int_t    rc;
     ngx_buf_t   *b;
-    //ngx_chain_t  out;
+    ngx_chain_t  out;
 
-    redisAsyncContext *redis_ctx = NULL;
-    redis_ctx = redisAsyncConnect("127.0.0.1", 6379);
-    redisNgxAttach((ngx_cycle_t*)ngx_cycle, redis_ctx);
+    redisAsyncContext* redis_ctx = redisAsyncConnect("127.0.0.1", 6379);
+    ngx_redis_attach((ngx_cycle_t*)ngx_cycle, redis_ctx);
     redisAsyncSetConnectCallback(redis_ctx,connectCallback);
     redisAsyncSetDisconnectCallback(redis_ctx,disconnectCallback);
     redisAsyncCommand(redis_ctx, getCallback, (char*)"end-1", "GET key");
@@ -91,7 +90,7 @@ static ngx_int_t ngx_http_hello_world_handler(ngx_http_request_t *r)
     if (!(r->method & (NGX_HTTP_GET|NGX_HTTP_HEAD))) {
         return NGX_HTTP_NOT_ALLOWED;
     }
-
+    
     //discard request body, since we don't need it here 
     rc = ngx_http_discard_request_body(r);
 
@@ -119,8 +118,8 @@ static ngx_int_t ngx_http_hello_world_handler(ngx_http_request_t *r)
     }
 
     /* attach this buffer to the buffer chain */
-    //out.buf = b;
-    //out.next = NULL;
+    out.buf = b;
+    out.next = NULL;
 
     /* adjust the pointers of the buffer */
     b->pos = ngx_hello_string;
@@ -140,7 +139,7 @@ static ngx_int_t ngx_http_hello_world_handler(ngx_http_request_t *r)
     }
 
     /* send the buffer chain of your response */
-    return NGX_AGAIN;//ngx_http_output_filter(r, &out);
+    return ngx_http_output_filter(r, &out);
 }
 
 static char *ngx_http_hello_world(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)

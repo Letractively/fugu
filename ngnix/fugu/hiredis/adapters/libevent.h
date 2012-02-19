@@ -1,5 +1,5 @@
 #include <sys/types.h>
-#include <event.h>
+#include <ngx_event.h>
 #include "../hiredis.h"
 #include "../async.h"
 
