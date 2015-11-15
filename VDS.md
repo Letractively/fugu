@@ -1,0 +1,1 @@
+http://daily-notes.ru/2011/10/vds_hetzner_hosting_begin/
